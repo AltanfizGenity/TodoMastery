@@ -11,7 +11,6 @@
     };
 
     $todoList = [...$todoList, newTodo];
-    console.log($todoList);
   }
 
   function cancel() {

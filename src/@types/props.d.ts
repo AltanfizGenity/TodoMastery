@@ -5,3 +5,5 @@ interface EventProps {
 interface TodoProps {
   todo: Todo;
 }
+
+interface QuickTodoEditProps extends TodoProps {}
