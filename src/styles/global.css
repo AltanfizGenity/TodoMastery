@@ -1,13 +1,4 @@
-@import "tailwindcss";
-
-@theme {
-  --color-primary: hsl(0, 66%, 55%);
-  --color-secondary: hsl(0, 51%, 71%);
-  --color-accent: hsl(0, 53%, 60%);
-  --color-text: hsl(0, 41%, 8%);
-  --color-background: hsl(0, 47%, 97%);
-  --color-muted: hsl(0, 20%, 80%);
-}
+@import "./theme.css";
 
 :root {
   --color-primary: hsl(0, 66%, 55%);
