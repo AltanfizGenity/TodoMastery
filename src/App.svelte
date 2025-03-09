@@ -5,11 +5,13 @@
   import TodoListView from "./lib/TodoListView.svelte";
 </script>
 
-<main id="todoist-app">
-  <TodoListView />
-  {#if $isQuickFormOpen}
-    <QuickAddForm />
-  {:else}
-    <QuickAddButton />
-  {/if}
-</main>
+<div id="todoist-app" class="p-12 min-h-dvh w-full h-full bg-background">
+  <main id="list-main-view" class="w-[80%] flex flex-col items-start gap-6">
+    <TodoListView />
+    {#if $isQuickFormOpen}
+      <QuickAddForm />
+    {:else}
+      <QuickAddButton />
+    {/if}
+  </main>
+</div>
