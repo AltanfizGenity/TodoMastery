@@ -18,8 +18,20 @@
   }
 </script>
 
-<form onsubmit={handleSubmit}>
-  <input type="text" name="title" placeholder="input task" />
-  <button type="button" onclick={cancel}>cancel</button>
-  <button type="submit">add task</button>
+<form
+  onsubmit={handleSubmit}
+  class="quick-add-form w-full p-4 rounded-xl border border-muted flex flex-col gap-4"
+>
+  <input type="text" name="title" placeholder="input task" class="outline-0" />
+  <div class="actions w-full flex justify-end items-center gap-4">
+    <button
+      type="button"
+      onclick={cancel}
+      class="px-4 py-2 bg-background text-text rounded-xl">cancel</button
+    >
+    <button
+      type="submit"
+      class="px-4 py-2 bg-primary text-background rounded-xl">add task</button
+    >
+  </div>
 </form>

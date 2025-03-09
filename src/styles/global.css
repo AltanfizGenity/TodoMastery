@@ -18,10 +18,6 @@
   --color-muted: hsl(0, 10%, 50%);
 }
 
-body {
-  background-color: var(--color-background);
-}
-
 button {
   @apply cursor-pointer;
 }

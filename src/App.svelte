@@ -5,7 +5,7 @@
   import TodoListView from "./lib/TodoListView.svelte";
 </script>
 
-<div id="todoist-app" class="p-12 min-h-dvh w-full h-full bg-background">
+<div id="todoist-app" class="p-12 min-h-dvh w-full h-full">
   <main id="list-main-view" class="w-[80%] flex flex-col items-start gap-6">
     <TodoListView />
     {#if $isQuickFormOpen}
