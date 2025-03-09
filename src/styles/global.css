@@ -19,3 +19,7 @@
 body {
   background-color: var(--color-background);
 }
+
+button {
+  @apply cursor-pointer;
+}
