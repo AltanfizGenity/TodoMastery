@@ -1,8 +1,8 @@
 import { writable } from "svelte/store";
 
-export let isQuickFormOpen = writable<boolean>(false);
-export let quickTodoEditData = writable<QuickTodoEdit>({
+export let quickFormState = writable<QuickFormState>({
   isOpen: false,
+  editMode: false,
   todoID: "",
 });
 export let todoList = writable<Todo[]>([]);

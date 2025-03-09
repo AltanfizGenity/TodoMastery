@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { isQuickFormOpen, quickTodoEditData } from "../stores/app.store";
+  import { quickFormState } from "../stores/app.store";
 
   function handleClick() {
-    isQuickFormOpen.set(true);
-    quickTodoEditData.set({ isOpen: false, todoID: "" });
+    quickFormState.set({ isOpen: true, editMode: false, todoID: "" });
   }
 </script>
 

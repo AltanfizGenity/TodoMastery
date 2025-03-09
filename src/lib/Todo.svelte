@@ -1,10 +1,6 @@
 <script lang="ts">
-  import {
-    todoList,
-    isQuickFormOpen,
-    quickTodoEditData,
-  } from "../stores/app.store";
-  import QuickEditTodo from "./QuickEditTodo.svelte";
+  import { todoList, quickFormState } from "../stores/app.store";
+  import QuickForm from "./QuickForm.svelte";
 
   let { todo }: TodoProps = $props();
 
@@ -13,13 +9,12 @@
   }
 
   function editTodo() {
-    isQuickFormOpen.set(false);
-    $quickTodoEditData = { isOpen: true, todoID: todo.id };
+    quickFormState.set({ editMode: true, isOpen: true, todoID: todo.id });
   }
 </script>
 
-{#if $quickTodoEditData.isOpen && $quickTodoEditData.todoID == todo.id}
-  <QuickEditTodo {todo} />
+{#if $quickFormState.isOpen && $quickFormState.todoID == todo.id}
+  <QuickForm />
 {:else}
   <div class="todo">
     <div class="title font-light">{todo.title}</div>
