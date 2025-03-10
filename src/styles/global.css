@@ -31,4 +31,25 @@ button {
       @apply text-primary;
     }
   }
+
+  .complete-todo-button {
+    .uncheck-icon {
+      @apply flex;
+    }
+
+    .check-icon {
+      @apply hidden;
+    }
+
+    &:hover,
+    &[aria-checked="true"] {
+      .uncheck-icon {
+        @apply hidden;
+      }
+
+      .check-icon {
+        @apply flex;
+      }
+    }
+  }
 }
