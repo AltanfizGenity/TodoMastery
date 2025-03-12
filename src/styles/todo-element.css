@@ -1,0 +1,42 @@
+@import "../styles/theme.css";
+
+.todo {
+  @apply flex justify-between items-center w-full py-4 border-b-1 border-[#ccc] cursor-pointer;
+}
+
+.todo:hover .actions {
+  @apply flex;
+}
+
+.actions {
+  @apply hidden gap-4 items-center;
+}
+
+.actions button {
+  @apply w-4 h-4 text-muted;
+}
+
+button:hover {
+  @apply text-primary;
+}
+
+.complete-todo-button {
+  .check-icon {
+    @apply hidden;
+  }
+
+  .uncheck-icon {
+    @apply flex;
+  }
+}
+
+.todo:hover,
+.todo.completed {
+  .check-icon {
+    @apply flex;
+  }
+
+  .uncheck-icon {
+    @apply hidden;
+  }
+}

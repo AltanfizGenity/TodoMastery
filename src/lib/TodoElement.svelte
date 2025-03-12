@@ -81,3 +81,7 @@
     </div>
   </div>
 {/if}
+
+<style>
+  @import "../styles/todo-element.css";
+</style>
