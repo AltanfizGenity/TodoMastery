@@ -12,13 +12,20 @@
     quickFormState.set({ editMode: true, isOpen: true, todoID: todo.id });
   }
 
-  function completeTodo() {}
+  function completeTodo() {
+    $todoList = $todoList.map((everyTodo) => {
+      if (everyTodo.id == todo.id) {
+        return { ...everyTodo, isComplete: true };
+      }
+      return everyTodo;
+    });
+  }
 </script>
 
 {#if $quickFormState.isOpen && $quickFormState.todoID == todo.id}
   <QuickForm />
 {:else}
-  <div class="todo">
+  <div class={`todo ${todo.isComplete ? "complete" : ""}`}>
     <div class="title font-light">{todo.title}</div>
     <div class="actions">
       <button

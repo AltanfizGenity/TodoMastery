@@ -3,6 +3,7 @@
   import { quickFormState } from "./stores/app.store";
   import TodoListView from "./lib/TodoListView.svelte";
   import QuickForm from "./lib/QuickForm.svelte";
+  import CompletedTodoListView from "./lib/CompletedTodoListView.svelte";
 </script>
 
 <div id="todoist-app" class="p-12 min-h-dvh w-full h-full">
@@ -13,5 +14,6 @@
     {:else}
       <QuickAddButton />
     {/if}
+    <CompletedTodoListView />
   </main>
 </div>
