@@ -3,7 +3,7 @@
 
   let currentTodo: Todo = $quickFormState.editMode
     ? ($todoList.find((todo) => todo.id == $quickFormState.todoID) as Todo)
-    : { id: "", title: "" };
+    : { id: "", title: "", isComplete: false };
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
@@ -34,6 +34,7 @@
     let newTodo: Todo = {
       title: formData.get("title") as string,
       id: Date.now().toString(),
+      isComplete: false,
     };
 
     $todoList = [...$todoList, newTodo];
