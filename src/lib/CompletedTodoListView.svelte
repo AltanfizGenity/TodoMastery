@@ -7,11 +7,15 @@
   );
 </script>
 
-<div class="completed-list-view w-full flex flex-col items-start">
+<div class="completed-list-view">
   <button class="show-completed-todo-button">Show completed</button>
-  <div class="complete-todo-list-view w-full">
+  <div class="list-view w-full">
     {#each completeTodos as todo}
       <TodoElement {todo} />
     {/each}
   </div>
 </div>
+
+<style lang="scss">
+  @forward "../style/completed-todo-list-view.scss";
+</style>

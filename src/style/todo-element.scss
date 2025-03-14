@@ -1,0 +1,37 @@
+@use "./scss/theme" as *;
+
+$icon-size: $text-xl;
+
+.todo {
+  width: $full;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: $padding-4;
+  cursor: pointer;
+}
+
+.todo:hover .title {
+  color: $color-secondary;
+}
+
+.actions {
+  display: none;
+  gap: $spacing-4;
+  align-items: center;
+}
+
+.todo:hover .actions {
+  display: flex;
+}
+
+.actions button {
+  width: $icon-size;
+  height: $icon-size;
+  padding: 0;
+  color: $color-muted;
+}
+
+button:hover {
+  color: $color-primary;
+}

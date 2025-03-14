@@ -1,0 +1,16 @@
+@use "./scss/theme" as *;
+
+.todo-mastery-app {
+  width: $full;
+  height: $full;
+  min-height: 100dvh;
+  padding: 5rem;
+}
+
+.list-main-view {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 2rem;
+}

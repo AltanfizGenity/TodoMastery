@@ -6,12 +6,8 @@
   }
 </script>
 
-<button
-  id="quick-add-button"
-  class="flex gap-2 items-center justify-center"
-  onclick={handleClick}
->
-  <div class="icon w-5 h-5 text-primary">
+<button class="quick-add-button" onclick={handleClick}>
+  <div class="icon">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -21,3 +17,7 @@
   </div>
   <div class="text">Add Task</div>
 </button>
+
+<style lang="scss">
+  @forward "../style/quick-add-button.scss";
+</style>

@@ -6,8 +6,8 @@
   import CompletedTodoListView from "./lib/CompletedTodoListView.svelte";
 </script>
 
-<div id="todoist-app" class="p-12 min-h-dvh w-full h-full">
-  <main id="list-main-view" class="w-[80%] flex flex-col items-start gap-6">
+<div class="todo-mastery-app">
+  <main class="list-main-view">
     <TodoListView />
     {#if $quickFormState.isOpen && !$quickFormState.editMode}
       <QuickForm />
@@ -17,3 +17,7 @@
     <CompletedTodoListView />
   </main>
 </div>
+
+<style lang="scss">
+  @forward "./style/todo-mastery.scss";
+</style>
