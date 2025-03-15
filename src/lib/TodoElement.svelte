@@ -4,6 +4,7 @@
   import DeleteTodoButton from "./DeleteTodoButton.svelte";
   import EditTodoButton from "./EditTodoButton.svelte";
   import QuickForm from "./QuickForm.svelte";
+  import RevertTodoButton from "./RevertTodoButton.svelte";
 
   let { todo }: TodoProps = $props();
 
@@ -23,6 +24,15 @@
       return everyTodo;
     });
   }
+
+  function revertTodo() {
+    $todoList = $todoList.map((everyTodo) => {
+      if (everyTodo.id == todo.id) {
+        return { ...everyTodo, isComplete: false };
+      }
+      return everyTodo;
+    });
+  }
 </script>
 
 {#if $quickFormState.isOpen && $quickFormState.todoID == todo.id}
@@ -31,7 +41,11 @@
   <div class={`todo ${todo.isComplete ? "complete" : ""}`}>
     <div class="title font-light">{todo.title}</div>
     <div class="actions">
-      <CompleteTodoButton onclick={completeTodo} />
+      {#if todo.isComplete}
+        <RevertTodoButton onclick={revertTodo} />
+      {:else}
+        <CompleteTodoButton onclick={completeTodo} />
+      {/if}
       <DeleteTodoButton onclick={deleteTodo} />
       <EditTodoButton onclick={editTodo} />
     </div>
