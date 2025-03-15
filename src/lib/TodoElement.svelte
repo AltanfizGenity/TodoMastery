@@ -73,6 +73,42 @@
   </div>
 {/if}
 
-<style lang="scss">
-  @forward "../style/todo-element.scss";
+<style>
+  .todo {
+    width: var(--full);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: var(--padding-4);
+    cursor: pointer;
+  }
+
+  .actions {
+    display: none;
+    gap: var(--spacing-4);
+    align-items: center;
+  }
+
+  .todo:hover .actions {
+    display: flex;
+  }
+
+  .actions button {
+    width: var(--text-xl);
+    height: var(--text-xl);
+    padding: 0;
+    color: var(--color-muted);
+  }
+
+  button:hover {
+    color: var(--color-primary);
+  }
+
+  .title {
+    font-size: var(--text-base);
+  }
+
+  .todo:hover .title {
+    color: var(--color-secondary);
+  }
 </style>

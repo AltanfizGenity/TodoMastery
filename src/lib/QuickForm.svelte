@@ -72,6 +72,39 @@
   </div>
 </form>
 
-<style lang="scss">
-  @forward "../style/quick-form.scss";
+<style>
+  .quick-add-form {
+    width: var(--full);
+    padding: var(--padding-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    border-radius: var(--radius-lg);
+    border: 0.0625rem solid var(--color-muted);
+  }
+
+  .form-controls {
+    width: var(--full);
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: var(--spacing-4);
+  }
+
+  .cancel-button,
+  .submit-button {
+    padding-inline: var(--padding-2);
+    padding-block: var(--padding-2);
+    border-radius: var(--radius-lg);
+  }
+
+  .cancel-button {
+    background-color: var(--color-background);
+    color: var(--color-text);
+  }
+
+  .submit-button {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+  }
 </style>

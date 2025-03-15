@@ -11,6 +11,10 @@
   {/each}
 </div>
 
-<style lang="scss">
-  @forward "../style/todo-list-view.scss";
+<style>
+  .todo-list-view {
+    width: var(--full);
+    display: flex;
+    flex-direction: column;
+  }
 </style>

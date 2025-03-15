@@ -18,6 +18,17 @@
   <div class="text">Add Task</div>
 </button>
 
-<style lang="scss">
-  @forward "../style/quick-add-button.scss";
+<style>
+  .quick-add-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .icon {
+    width: var(--text-xl);
+    height: var(--text-xl);
+    color: var(--color-primary);
+  }
 </style>

@@ -16,6 +16,15 @@
   </div>
 </div>
 
-<style lang="scss">
-  @forward "../style/completed-todo-list-view.scss";
+<style>
+  .completed-list-view {
+    width: var(--full);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .list-view {
+    width: var(--full);
+  }
 </style>

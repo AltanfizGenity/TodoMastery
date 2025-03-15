@@ -86,11 +86,3 @@ progress {
 summary {
   display: list-item;
 }
-button {
-  background-color: transparent;
-  border: none;
-}
-input {
-  outline: none;
-  border: none;
-}
