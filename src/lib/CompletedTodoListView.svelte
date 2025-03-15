@@ -9,7 +9,7 @@
 
 <div class="completed-list-view">
   <button class="show-completed-todo-button">Show completed</button>
-  <div class="list-view w-full">
+  <div class="list-view">
     {#each completeTodos as todo}
       <TodoElement {todo} />
     {/each}

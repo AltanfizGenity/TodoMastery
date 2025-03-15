@@ -4,10 +4,8 @@
 </script>
 
 <div class="todo-list-view">
-  {#each $todoList as todo}
-    {#if !todo.isComplete}
-      <TodoElement {todo} />
-    {/if}
+  {#each $todoList.filter((todo) => !todo.isComplete) as todo}
+    <TodoElement {todo} />
   {/each}
 </div>
 
