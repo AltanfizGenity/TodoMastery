@@ -1,5 +1,6 @@
 <script lang="ts">
   import { todoList } from "../stores/app.store";
+  import ShowCompletedTodo from "./ShowCompletedTodo.svelte";
   import TodoElement from "./TodoElement.svelte";
 
   let completeTodos = $derived<Todo[]>(
@@ -8,7 +9,7 @@
 </script>
 
 <div class="completed-list-view">
-  <button class="show-completed-todo-button">Show completed</button>
+  <ShowCompletedTodo />
   <div class="list-view">
     {#each completeTodos as todo}
       <TodoElement {todo} />

@@ -110,3 +110,16 @@ input {
   outline: none;
   border: none;
 }
+
+.icon-text-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  .icon {
+    width: var(--text-xl);
+    height: var(--text-xl);
+    color: var(--color-primary);
+  }
+}

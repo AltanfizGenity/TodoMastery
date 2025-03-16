@@ -6,7 +6,7 @@
   }
 </script>
 
-<button class="quick-add-button" onclick={handleClick}>
+<button class="quick-add-button icon-text-button" onclick={handleClick}>
   <div class="icon">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -17,18 +17,3 @@
   </div>
   <div class="text">Add Task</div>
 </button>
-
-<style>
-  .quick-add-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .icon {
-    width: var(--text-xl);
-    height: var(--text-xl);
-    color: var(--color-primary);
-  }
-</style>

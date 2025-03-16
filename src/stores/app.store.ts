@@ -5,4 +5,6 @@ export let quickFormState = writable<QuickFormState>({
   editMode: false,
   todoID: "",
 });
+
+export let isShowCompleteTodo = writable<boolean>(false);
 export let todoList = writable<Todo[]>([]);
