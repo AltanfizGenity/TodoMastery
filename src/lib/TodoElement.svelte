@@ -38,7 +38,7 @@
 {#if $quickFormState.isOpen && $quickFormState.todoID == todo.id}
   <QuickForm />
 {:else}
-  <div class={`todo ${todo.isComplete ? "complete" : ""}`}>
+  <div class={`todo ${todo.isComplete ? "completed" : ""}`}>
     <div class="title font-light">{todo.title}</div>
     <div class="actions">
       {#if todo.isComplete}
@@ -60,6 +60,13 @@
     align-items: center;
     padding-block: var(--padding-4);
     cursor: pointer;
+  }
+
+  .todo.completed {
+    .title {
+      color: var(--color-muted);
+      text-decoration: line-through;
+    }
   }
 
   .actions {
