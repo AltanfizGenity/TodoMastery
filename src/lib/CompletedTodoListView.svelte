@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { todoList } from "../stores/app.store";
+  import { isShowCompleteTodo, todoList } from "../stores/app.store";
   import ShowCompletedTodo from "./ShowCompletedTodo.svelte";
   import TodoElement from "./TodoElement.svelte";
 
@@ -10,11 +10,13 @@
 
 <div class="completed-list-view">
   <ShowCompletedTodo />
-  <div class="list-view">
-    {#each completeTodos as todo}
-      <TodoElement {todo} />
-    {/each}
-  </div>
+  {#if $isShowCompleteTodo}
+    <div class="list-view">
+      {#each completeTodos as todo}
+        <TodoElement {todo} />
+      {/each}
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -23,6 +25,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
+    gap: var(--spacing-4);
   }
 
   .list-view {
