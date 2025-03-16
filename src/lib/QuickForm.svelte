@@ -33,7 +33,7 @@
   function addTodo(formData: FormData) {
     let newTodo: Todo = {
       title: formData.get("title") as string,
-      id: Date.now().toString(),
+      id: crypto.randomUUID(),
       isComplete: false,
     };
 
