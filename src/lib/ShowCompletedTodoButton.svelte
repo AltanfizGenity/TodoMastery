@@ -26,6 +26,7 @@
 
 <style>
   .icon {
+    color: var(--color-text);
     transition: var(--transition-fast);
     rotate: 0deg;
   }
