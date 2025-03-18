@@ -27,7 +27,7 @@
 </button>
 
 <style>
-  .icon {
+  .show-completed-todo-button .icon {
     color: var(--color-text);
     transition: var(--transition-fast);
     rotate: 0deg;
