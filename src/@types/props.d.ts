@@ -10,3 +10,7 @@ interface TodoProps {
 }
 
 interface QuickTodoEditProps extends TodoProps {}
+
+interface ShowCompleteTodoButtonProps extends EventProps {
+  todoAmount?: number;
+}

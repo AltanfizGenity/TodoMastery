@@ -1,6 +1,8 @@
 <script lang="ts">
   import { isShowCompleteTodo } from "../stores/app.store";
 
+  let { todoAmount }: ShowCompleteTodoButtonProps = $props();
+
   function toggleShowCompletedTodo() {
     $isShowCompleteTodo = !$isShowCompleteTodo;
   }
@@ -21,7 +23,7 @@
       ></path></svg
     >
   </div>
-  <div class="text">Show completed</div>
+  <div class="text">Show completed {todoAmount ? `(${todoAmount})` : ""}</div>
 </button>
 
 <style>

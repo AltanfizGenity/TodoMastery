@@ -9,7 +9,7 @@
 </script>
 
 <div class="completed-list-view">
-  <ShowCompletedTodoButton />
+  <ShowCompletedTodoButton todoAmount={completeTodos.length} />
   {#if $isShowCompleteTodo}
     <div class="list-view">
       {#each completeTodos as todo}
