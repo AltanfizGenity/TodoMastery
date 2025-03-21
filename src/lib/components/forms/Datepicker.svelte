@@ -1,70 +1,86 @@
 <script lang="ts">
 	import { getDayNames, getCurrentTime } from '$lib/utils/date';
 
+	let { children, isOpen = true, closePicker }: DatepickerProps = $props();
+
 	let time = getCurrentTime();
 </script>
 
-<div class="datepicker">
-	<header>
-		<button class="previous-button">prev</button>
-		<div class="current-date">
-			<p>{time.month} {time.year}</p>
+<div class="datepicker-container">
+	{@render children()}
+	<div class={`datepicker ${isOpen ? '' : 'hidden'}`}>
+		<header>
+			<button class="previous-button">prev</button>
+			<div class="current-date">
+				<p>{time.month} {time.year}</p>
+			</div>
+			<button class="next-button">next</button>
+		</header>
+		<div class="main-picker">
+			<div class="days">
+				{#each getDayNames('en-US', 'short') as day}
+					<div class="day">{day}</div>
+				{/each}
+			</div>
+			<div class="dates">
+				<!-- <button class="date" disabled>1</button>
+				<button class="date" disabled>2</button>
+				<button class="date" disabled>3</button>
+				<button class="date" disabled>4</button>
+				<button class="date" disabled>5</button>
+				<button class="date" disabled>6</button>
+				<button class="date" disabled>7</button>
+				<button class="date" disabled>8</button>
+				<button class="date" disabled>9</button>
+				<button class="date" disabled>10</button>
+				<button class="date" disabled>11</button>
+				<button class="date" disabled>12</button>
+				<button class="date" disabled>13</button>
+				<button class="date" disabled>14</button>
+				<button class="date" disabled>15</button>
+				<button class="date" disabled>16</button>
+				<button class="date" disabled>17</button>
+				<button class="date" disabled>18</button>
+				<button class="date" disabled>19</button>
+				<button class="date" disabled>20</button>
+				<button class="date today">21</button>
+				<button class="date">22</button>
+				<button class="date selected">23</button>
+				<button class="date">24</button>
+				<button class="date">25</button>
+				<button class="date">26</button>
+				<button class="date">27</button>
+				<button class="date">28</button>
+				<button class="date">29</button>
+				<button class="date">30</button> -->
+			</div>
 		</div>
-		<button class="next-button">next</button>
-	</header>
-	<div class="main-picker">
-		<div class="days">
-			{#each getDayNames('en-US', 'short') as day}
-				<div class="day">{day}</div>
-			{/each}
-		</div>
-		<div class="dates">
-			<button class="date" disabled>1</button>
-			<button class="date" disabled>2</button>
-			<button class="date" disabled>3</button>
-			<button class="date" disabled>4</button>
-			<button class="date" disabled>5</button>
-			<button class="date" disabled>6</button>
-			<button class="date" disabled>7</button>
-			<button class="date" disabled>8</button>
-			<button class="date" disabled>9</button>
-			<button class="date" disabled>10</button>
-			<button class="date" disabled>11</button>
-			<button class="date" disabled>12</button>
-			<button class="date" disabled>13</button>
-			<button class="date" disabled>14</button>
-			<button class="date" disabled>15</button>
-			<button class="date" disabled>16</button>
-			<button class="date" disabled>17</button>
-			<button class="date" disabled>18</button>
-			<button class="date" disabled>19</button>
-			<button class="date" disabled>20</button>
-			<button class="date today">21</button>
-			<button class="date">22</button>
-			<button class="date selected">23</button>
-			<button class="date">24</button>
-			<button class="date">25</button>
-			<button class="date">26</button>
-			<button class="date">27</button>
-			<button class="date">28</button>
-			<button class="date">29</button>
-			<button class="date">30</button>
-		</div>
+		<footer>
+			<button onclick={closePicker} class="cancel-button">Cancel</button>
+			<button class="select-button">Select</button>
+		</footer>
 	</div>
-	<footer>
-		<button class="cancel-button">Cancel</button>
-		<button class="select-button">Select</button>
-	</footer>
 </div>
 
 <style>
+	.datepicker-container {
+		position: relative;
+	}
+
 	.datepicker {
+		position: absolute;
+		top: 110%;
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-4);
 		background-color: #fff;
 		padding: var(--padding-2);
 		border: 1px solid #aaa;
+		border-radius: var(--radius-lg);
+
+		&.hidden {
+			display: none;
+		}
 	}
 
 	header {

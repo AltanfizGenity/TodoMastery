@@ -9,6 +9,7 @@
 
 <div class="todo-mastery">
 	<main class="list-main-view">
+		<QuickForm />
 		<!-- <TodoListView />
 		{#if $quickFormState.isOpen && !$quickFormState.editMode}
 			<QuickForm />
@@ -16,7 +17,6 @@
 			<QuickAddButton />
 		{/if}
 		<CompletedTodoListView /> -->
-		<Datepicker />
 	</main>
 </div>
 
