@@ -1,8 +1,17 @@
 <script lang="ts">
-	import { getDayNames } from '$lib/utils/date';
+	import { getDayNames, getCurrentTime } from '$lib/utils/date';
+
+	let time = getCurrentTime();
 </script>
 
 <div class="datepicker">
+	<div class="header">
+		<button class="previous-button">prev</button>
+		<div class="current-date">
+			<p>{time.month} {time.year}</p>
+		</div>
+		<button class="next-button">next</button>
+	</div>
 	<div class="days">
 		{#each getDayNames('en-US', 'short') as day}
 			<div class="day">{day}</div>
@@ -47,6 +56,19 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-4);
+	}
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-block: var(--padding-4);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+		button {
+			text-transform: uppercase;
+			color: var(--color-text);
+		}
 	}
 
 	.days,
