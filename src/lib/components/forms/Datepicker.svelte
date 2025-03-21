@@ -4,51 +4,57 @@
 
 	let { children, isOpen = true, closePicker }: DatepickerProps = $props();
 	let selectedTime = $state<Date>(new Date());
-	let now = new Date();
 	let currentDatespace = $derived.by(() => renderDate());
-
-	function selectTime() {}
-
-	function isToday(date: number): boolean {
-		return (
-			now.getDate() == date &&
-			now.getMonth() == selectedTime.getMonth() &&
-			now.getFullYear() == selectedTime.getFullYear()
-		);
-	}
 
 	function renderDate() {
 		let dateRenders: DateRender[] = [];
 
 		let month = selectedTime.getMonth();
 		let year = selectedTime.getFullYear();
+
 		let lastPreviousMonth = new Date(year, month, 0);
 		let lastMonth = new Date(year, month + 1, 0);
 		let firstNextMonth = new Date(year, month + 1, 1);
 
+		let today = new Date();
+		let isToday = (fullDate: Date) =>
+			fullDate.getDate() == today.getDate() &&
+			fullDate.getMonth() == today.getMonth() &&
+			fullDate.getFullYear() == today.getFullYear();
+
 		for (let x = 0; x <= lastPreviousMonth.getDay(); x++) {
-			let date = lastPreviousMonth.getDate() - lastPreviousMonth.getDay() + x;
-			let currentRenderDate = new Date(year, month - 1, date);
+			let fullDate = new Date(
+				year,
+				month - 1,
+				lastPreviousMonth.getDate() - lastPreviousMonth.getDay() + x
+			);
+
 			dateRenders.push({
-				date: currentRenderDate.getDate(),
-				isToday: isToday(date),
+				fullDate,
+				isToday: isToday(fullDate),
 				isDisabled: true
 			});
 		}
 
 		for (let x = 1; x <= lastMonth.getDate(); x++) {
+			let fullDate = new Date(year, month, x);
+
 			dateRenders.push({
-				date: x,
-				isToday: isToday(x),
+				fullDate,
+				isToday: isToday(fullDate),
 				isDisabled: false
 			});
 		}
 
 		for (let x = firstNextMonth.getDay(); x < 7; x++) {
-			let date = firstNextMonth.getDate() - firstNextMonth.getDay() + x;
+			let fullDate = new Date(
+				year,
+				month + 1,
+				firstNextMonth.getDate() - firstNextMonth.getDay() + x
+			);
 			dateRenders.push({
-				date,
-				isToday: isToday(date),
+				fullDate,
+				isToday: isToday(fullDate),
 				isDisabled: true
 			});
 		}
@@ -80,8 +86,10 @@
 				{/each}
 			</div>
 			<div class="dates">
-				{#each currentDatespace as { date, isDisabled, isToday }}
-					<button disabled={isDisabled} class={`date ${isToday ? 'today' : ''}`}>{date}</button>
+				{#each currentDatespace as { fullDate, isDisabled, isToday }}
+					<button disabled={isDisabled} class={`date ${isToday ? 'today' : ''}`}
+						>{fullDate.getDate()}</button
+					>
 				{/each}
 			</div>
 		</div>

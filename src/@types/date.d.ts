@@ -1,7 +1,7 @@
 type DateStringFormat = 'long' | 'short' | 'narrow';
 
 type DateRender = {
-	date: number;
+	fullDate: Date;
 	isToday: boolean;
 	isDisabled: boolean;
 };
