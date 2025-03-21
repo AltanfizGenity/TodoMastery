@@ -68,7 +68,7 @@
 		/>
 	</div>
 	<div class="action-input-group">
-		<Datepicker isOpen={isTimelineInputOpen} closePicker={() => (isTimelineInputOpen = false)}>
+		<Datepicker isOpen={isTimelineInputOpen} onClose={() => (isTimelineInputOpen = false)}>
 			<button
 				class="input-action timeline-input"
 				type="button"

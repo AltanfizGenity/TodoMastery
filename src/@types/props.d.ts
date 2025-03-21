@@ -12,8 +12,8 @@ interface TodoProps {
 }
 
 interface DatepickerProps extends Props {
+	onClose: Function;
 	isOpen: boolean;
-	closePicker?: ClickEvent;
 }
 
 interface QuickTodoEditProps extends TodoProps {}

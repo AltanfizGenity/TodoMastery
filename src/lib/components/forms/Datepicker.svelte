@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createFulldateID, getDayNames, getMonthNames } from '$lib/utils/date';
 
-	let { children, isOpen = true, closePicker }: DatepickerProps = $props();
+	let { children, isOpen = true, onClose }: DatepickerProps = $props();
 	let selectedDate = $state<Date>(new Date());
 	let currentDatespace = $derived.by(() => renderDate());
 	let selectedID = $state<string>('');
@@ -61,6 +61,11 @@
 
 		return dateRenders;
 	}
+
+	function closeDatepicker() {
+		onClose();
+		selectedID = '';
+	}
 </script>
 
 <div class="datepicker-container">
@@ -99,7 +104,7 @@
 			</div>
 		</div>
 		<footer>
-			<button onclick={closePicker} class="cancel-button">Cancel</button>
+			<button onclick={closeDatepicker} class="cancel-button">Cancel</button>
 			<button class="select-button">Select</button>
 		</footer>
 	</div>
