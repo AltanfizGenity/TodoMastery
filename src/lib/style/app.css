@@ -1,0 +1,122 @@
+:root {
+	--color-primary: #d84141;
+	--color-secondary: hsl(0, 51%, 71%);
+	--color-accent: hsl(0, 53%, 60%);
+	--color-text: hsl(0, 41%, 8%);
+	--color-background: hsl(0, 47%, 97%);
+	--color-muted: hsl(0, 20%, 80%);
+
+	--full: 100%;
+
+	--text-xs: 0.75rem; /* 12px */
+	--text-sm: 0.875rem; /* 14px */
+	--text-base: 1rem; /* 16px */
+	--text-lg: 1.125rem; /* 18px */
+	--text-xl: 1.25rem; /* 20px */
+	--text-2xl: 1.5rem; /* 24px */
+	--text-3xl: 1.875rem; /* 30px */
+	--text-4xl: 2.25rem; /* 36px */
+	--text-5xl: 3rem; /* 48px */
+	--text-6xl: 3.75rem; /* 60px */
+	--text-7xl: 4.5rem; /* 72px */
+
+	/* Spacing */
+	--spacing-0: 0px;
+	--spacing-1: 0.25rem; /* 4px */
+	--spacing-2: 0.5rem; /* 8px */
+	--spacing-3: 0.75rem; /* 12px */
+	--spacing-4: 1rem; /* 16px */
+	--spacing-5: 1.25rem; /* 20px */
+	--spacing-6: 1.5rem; /* 24px */
+	--spacing-7: 1.75rem; /* 28px */
+	--spacing-8: 2rem; /* 32px */
+	--spacing-10: 2.5rem; /* 40px */
+	--spacing-12: 3rem; /* 48px */
+	--spacing-16: 4rem; /* 64px */
+	--spacing-20: 5rem; /* 80px */
+	--spacing-24: 6rem; /* 96px */
+
+	/* Padding */
+	--padding-0: 0px;
+	--padding-1: 0.25rem; /* 4px */
+	--padding-2: 0.5rem; /* 8px */
+	--padding-3: 0.75rem; /* 12px */
+	--padding-4: 1rem; /* 16px */
+	--padding-5: 1.25rem; /* 20px */
+	--padding-6: 1.5rem; /* 24px */
+	--padding-7: 1.75rem; /* 28px */
+	--padding-8: 2rem; /* 32px */
+	--padding-10: 2.5rem; /* 40px */
+	--padding-12: 3rem; /* 48px */
+	--padding-16: 4rem; /* 64px */
+	--padding-20: 5rem; /* 80px */
+	--padding-24: 6rem; /* 96px */
+	--padding-32: 8rem; /* 128px */
+	--padding-40: 10rem; /* 160px */
+	--padding-48: 12rem; /* 192px */
+	--padding-56: 14rem; /* 224px */
+	--padding-64: 16rem; /* 256px */
+
+	/* Margin */
+	--margin-0: 0px;
+	--margin-1: 0.25rem; /* 4px */
+	--margin-2: 0.5rem; /* 8px */
+	--margin-3: 0.75rem; /* 12px */
+	--margin-4: 1rem; /* 16px */
+	--margin-5: 1.25rem; /* 20px */
+	--margin-6: 1.5rem; /* 24px */
+	--margin-7: 1.75rem; /* 28px */
+	--margin-8: 2rem; /* 32px */
+	--margin-10: 2.5rem; /* 40px */
+	--margin-12: 3rem; /* 48px */
+	--margin-16: 4rem; /* 64px */
+	--margin-20: 5rem; /* 80px */
+	--margin-24: 6rem; /* 96px */
+	--margin-32: 8rem; /* 128px */
+	--margin-40: 10rem; /* 160px */
+	--margin-48: 12rem; /* 192px */
+	--margin-56: 14rem; /* 224px */
+	--margin-64: 16rem; /* 256px */
+
+	/* Border Radius */
+	--radius-sm: 0.125rem; /* 2px */
+	--radius-md: 0.25rem; /* 4px */
+	--radius-lg: 0.5rem; /* 8px */
+	--radius-xl: 1rem; /* 16px */
+	--radius-full: 9999px;
+
+	/* Box Shadows */
+	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+	/* Transitions */
+	--transition-fast: 150ms ease-in-out;
+	--transition-medium: 300ms ease-in-out;
+	--transition-slow: 500ms ease-in-out;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+input {
+	outline: none;
+	border: none;
+}
+
+.icon-text-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+
+	.icon {
+		width: var(--text-xl);
+		height: var(--text-xl);
+		color: var(--color-primary);
+	}
+}
