@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { getDayNames, getMonthNames } from '$lib/utils/date';
-	import { onMount } from 'svelte';
+	import { createFulldateID, getDayNames, getMonthNames } from '$lib/utils/date';
 
 	let { children, isOpen = true, closePicker }: DatepickerProps = $props();
-	let selectedTime = $state<Date>(new Date());
+	let selectedDate = $state<Date>(new Date());
 	let currentDatespace = $derived.by(() => renderDate());
+	let selectedID = $state<string>('');
 
 	function renderDate() {
 		let dateRenders: DateRender[] = [];
 
-		let month = selectedTime.getMonth();
-		let year = selectedTime.getFullYear();
+		let month = selectedDate.getMonth();
+		let year = selectedDate.getFullYear();
 
 		let lastPreviousMonth = new Date(year, month, 0);
 		let lastMonth = new Date(year, month + 1, 0);
@@ -69,13 +69,13 @@
 		<header>
 			<button class="previous-button">prev</button>
 			<div class="current-date">
-				<p>{getMonthNames()[selectedTime.getMonth()]} {selectedTime.getFullYear()}</p>
+				<p>{getMonthNames()[selectedDate.getMonth()]} {selectedDate.getFullYear()}</p>
 			</div>
 			<button
 				class="next-button"
 				onclick={() => {
-					selectedTime.setMonth(selectedTime.getMonth() + 1);
-					selectedTime = new Date(selectedTime);
+					selectedDate.setMonth(selectedDate.getMonth() + 1);
+					selectedDate = new Date(selectedDate);
 				}}>next</button
 			>
 		</header>
@@ -87,8 +87,13 @@
 			</div>
 			<div class="dates">
 				{#each currentDatespace as { fullDate, isDisabled, isToday }}
-					<button disabled={isDisabled} class={`date ${isToday ? 'today' : ''}`}
-						>{fullDate.getDate()}</button
+					<button
+						disabled={isDisabled}
+						class={`date ${isToday ? 'today' : ''} ${selectedID == createFulldateID(fullDate) ? 'selected' : ''}`}
+						onclick={() => {
+							selectedDate = fullDate;
+							selectedID = createFulldateID(fullDate);
+						}}>{fullDate.getDate()}</button
 					>
 				{/each}
 			</div>

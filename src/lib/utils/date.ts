@@ -37,3 +37,7 @@ export function getCurrentTime(locale: string = 'en-US', format: DateStringForma
 		day: getDayNames(locale, format)[now.getDate()]
 	};
 }
+
+export function createFulldateID(fulldate: Date): string {
+	return `${fulldate.getDate() + 1}-${fulldate.getMonth() + 1}-${fulldate.getFullYear()}`;
+}
