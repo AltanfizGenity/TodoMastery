@@ -1,9 +1,60 @@
 <script lang="ts">
-	import { getDayNames, getCurrentTime } from '$lib/utils/date';
+	import { getDayNames, getMonthNames } from '$lib/utils/date';
+	import { onMount } from 'svelte';
 
 	let { children, isOpen = true, closePicker }: DatepickerProps = $props();
+	let selectedTime = $state<Date>(new Date());
+	let now = new Date();
+	let currentDatespace = $derived.by(() => renderDate());
 
-	let time = getCurrentTime();
+	function selectTime() {}
+
+	function isToday(date: number): boolean {
+		return (
+			now.getDate() == date &&
+			now.getMonth() == selectedTime.getMonth() &&
+			now.getFullYear() == selectedTime.getFullYear()
+		);
+	}
+
+	function renderDate() {
+		let dateRenders: DateRender[] = [];
+
+		let month = selectedTime.getMonth();
+		let year = selectedTime.getFullYear();
+		let lastPreviousMonth = new Date(year, month, 0);
+		let lastMonth = new Date(year, month + 1, 0);
+		let firstNextMonth = new Date(year, month + 1, 1);
+
+		for (let x = 0; x <= lastPreviousMonth.getDay(); x++) {
+			let date = lastPreviousMonth.getDate() - lastPreviousMonth.getDay() + x;
+			let currentRenderDate = new Date(year, month - 1, date);
+			dateRenders.push({
+				date: currentRenderDate.getDate(),
+				isToday: isToday(date),
+				isDisabled: true
+			});
+		}
+
+		for (let x = 1; x <= lastMonth.getDate(); x++) {
+			dateRenders.push({
+				date: x,
+				isToday: isToday(x),
+				isDisabled: false
+			});
+		}
+
+		for (let x = firstNextMonth.getDay(); x < 7; x++) {
+			let date = firstNextMonth.getDate() - firstNextMonth.getDay() + x;
+			dateRenders.push({
+				date,
+				isToday: isToday(date),
+				isDisabled: true
+			});
+		}
+
+		return dateRenders;
+	}
 </script>
 
 <div class="datepicker-container">
@@ -12,9 +63,15 @@
 		<header>
 			<button class="previous-button">prev</button>
 			<div class="current-date">
-				<p>{time.month} {time.year}</p>
+				<p>{getMonthNames()[selectedTime.getMonth()]} {selectedTime.getFullYear()}</p>
 			</div>
-			<button class="next-button">next</button>
+			<button
+				class="next-button"
+				onclick={() => {
+					selectedTime.setMonth(selectedTime.getMonth() + 1);
+					selectedTime = new Date(selectedTime);
+				}}>next</button
+			>
 		</header>
 		<div class="main-picker">
 			<div class="days">
@@ -23,36 +80,9 @@
 				{/each}
 			</div>
 			<div class="dates">
-				<!-- <button class="date" disabled>1</button>
-				<button class="date" disabled>2</button>
-				<button class="date" disabled>3</button>
-				<button class="date" disabled>4</button>
-				<button class="date" disabled>5</button>
-				<button class="date" disabled>6</button>
-				<button class="date" disabled>7</button>
-				<button class="date" disabled>8</button>
-				<button class="date" disabled>9</button>
-				<button class="date" disabled>10</button>
-				<button class="date" disabled>11</button>
-				<button class="date" disabled>12</button>
-				<button class="date" disabled>13</button>
-				<button class="date" disabled>14</button>
-				<button class="date" disabled>15</button>
-				<button class="date" disabled>16</button>
-				<button class="date" disabled>17</button>
-				<button class="date" disabled>18</button>
-				<button class="date" disabled>19</button>
-				<button class="date" disabled>20</button>
-				<button class="date today">21</button>
-				<button class="date">22</button>
-				<button class="date selected">23</button>
-				<button class="date">24</button>
-				<button class="date">25</button>
-				<button class="date">26</button>
-				<button class="date">27</button>
-				<button class="date">28</button>
-				<button class="date">29</button>
-				<button class="date">30</button> -->
+				{#each currentDatespace as { date, isDisabled, isToday }}
+					<button disabled={isDisabled} class={`date ${isToday ? 'today' : ''}`}>{date}</button>
+				{/each}
 			</div>
 		</div>
 		<footer>
