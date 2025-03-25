@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createFulldateID, getDayNames, getMonthNames } from '$lib/utils/date';
 
-	let { children, isOpen = true, onClose, dateValue }: DatepickerProps = $props();
+	let { children, isOpen = true, onClose, dateValue = $bindable() }: DatepickerProps = $props();
 	let currentDate = $state<Date>(new Date());
 	let currentDatespace = $derived.by(() => renderDate());
 	let selectedDate = $state<Date | null>(null);
@@ -100,7 +100,6 @@
 
 	function selectDate(): void {
 		dateValue = selectedDate;
-		alert(dateValue);
 		closeDatepicker();
 	}
 </script>

@@ -38,6 +38,35 @@ export function getCurrentTime(locale: string = 'en-US', format: DateStringForma
 	};
 }
 
+export function formatTime(time: Date): string {
+	const now = new Date();
+
+	// Check if is today
+	if (time.toDateString() == now.toDateString()) {
+		return 'Today';
+	}
+
+	// Check if is tomorrow
+
+	if (time.getMonth() == now.getMonth() && time.getFullYear() == now.getFullYear()) {
+		if (time.getDate() - now.getDate() == 1) {
+			return 'Tomorrow';
+		}
+		``;
+
+		console.log(time.getDay());
+	}
+
+	// The return should day (like: Wednesday, Tuesday) in that week
+	// return short format (Date-Month) if the year is same
+	if (time.getFullYear() == now.getFullYear()) {
+		return `${time.getDate()} ${getMonthNames()[time.getMonth()]}`;
+	}
+
+	// return basic format if year is future (Date-Month-Year)
+	return `${time.getDate()} ${getMonthNames()[time.getMonth()]} ${time.getFullYear()}`;
+}
+
 export function createFulldateID(fulldate: Date): string {
 	return `${fulldate.getDate() + 1}-${fulldate.getMonth() + 1}-${fulldate.getFullYear()}`;
 }

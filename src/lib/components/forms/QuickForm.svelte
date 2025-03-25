@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { quickFormState, todoList } from '$lib/stores/app.store';
+	import { formatTime } from '$lib/utils/date';
 	import Datepicker from './Datepicker.svelte';
 
 	let isTimelineInputOpen = $state<boolean>(false);
@@ -71,8 +72,11 @@
 	<div class="action-input-group">
 		<Datepicker
 			isOpen={isTimelineInputOpen}
-			onClose={() => (isTimelineInputOpen = false)}
-			{dateValue}
+			onClose={() => {
+				isTimelineInputOpen = false;
+				console.log(dateValue);
+			}}
+			bind:dateValue
 		>
 			<button
 				class="input-action timeline-input"
@@ -87,7 +91,7 @@
 						></path></svg
 					>
 				</div>
-				<p class="text">Date</p>
+				<p class="text">{dateValue ? formatTime(dateValue) : 'Date'}</p>
 			</button>
 		</Datepicker>
 	</div>
