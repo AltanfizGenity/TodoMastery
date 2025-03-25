@@ -14,7 +14,7 @@ interface TodoProps {
 interface DatepickerProps extends Props {
 	onClose: Function;
 	isOpen: boolean;
-	dateValue: Date | null;
+	dateValue: LuxonTime | null;
 }
 
 interface QuickTodoEditProps extends TodoProps {}

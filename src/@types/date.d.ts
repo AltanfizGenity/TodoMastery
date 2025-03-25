@@ -1,7 +1,7 @@
 type DateStringFormat = 'long' | 'short' | 'narrow';
 
-type DateRender = {
-	fullDate: Date;
+type DatepickerDayData = {
+	time: LuxonTime;
 	isToday: boolean;
 	isDisabled: boolean;
 };

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { quickFormState, todoList } from '$lib/stores/app.store';
-	import { formatTime } from '$lib/utils/date';
 	import Datepicker from './Datepicker.svelte';
+	import { formatTime } from '$lib/utils/date';
 
 	let isTimelineInputOpen = $state<boolean>(false);
-	let dateValue = $state<Date | null>(null);
+	let dateValue = $state<LuxonTime | null>(null);
 
 	let currentTodo: Todo = $quickFormState.editMode
 		? ($todoList.find((todo) => todo.id == $quickFormState.todoID) as Todo)
@@ -74,7 +74,6 @@
 			isOpen={isTimelineInputOpen}
 			onClose={() => {
 				isTimelineInputOpen = false;
-				console.log(dateValue);
 			}}
 			bind:dateValue
 		>

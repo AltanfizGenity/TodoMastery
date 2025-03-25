@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { createFulldateID, getDayNames, getMonthNames } from '$lib/utils/date';
+	import { isToday, getDayNames, getMonthNames } from '$lib/utils/date';
+	import { DateTime } from 'luxon';
 
 	let { children, isOpen = true, onClose, dateValue = $bindable() }: DatepickerProps = $props();
-	let currentDate = $state<Date>(new Date());
+	let currentDate = $state<LuxonTime>(DateTime.local());
 	let currentDatespace = $derived.by(() => renderDate());
-	let selectedDate = $state<Date | null>(null);
+	let selectedDate = $state<LuxonTime | null>(null);
 
 	$effect(() => {
 		if (isOpen) {
@@ -13,59 +14,53 @@
 	});
 
 	function renderDate() {
-		let dateRenders: DateRender[] = [];
+		let dateRenders: DatepickerDayData[] = [];
 
-		let month = currentDate.getMonth();
-		let year = currentDate.getFullYear();
+		let month = currentDate.month;
+		let year = currentDate.year;
 
-		let lastPreviousMonth = new Date(year, month, 0);
-		let lastMonth = new Date(year, month + 1, 0);
-		let firstNextMonth = new Date(year, month + 1, 1);
+		let lastPreviousMonth = currentDate.set({ day: 0, hour: 0 });
+		let firstNextMonth = currentDate.set({ month: month + 1, day: 1, hour: 0 });
 
-		let today = new Date();
-		let isToday = (fullDate: Date) =>
-			fullDate.getDate() == today.getDate() &&
-			fullDate.getMonth() == today.getMonth() &&
-			fullDate.getFullYear() == today.getFullYear();
+		let totalPreviousDay = lastPreviousMonth.weekday + 1;
 
-		let totalPreviousDay = lastPreviousMonth.getDay() + 1;
 		if (totalPreviousDay < 7) {
 			for (let x = 1; x <= totalPreviousDay; x++) {
-				let fullDate = new Date(
+				let time = currentDate.set({
 					year,
-					month - 1,
-					lastPreviousMonth.getDate() - totalPreviousDay + x
-				);
+					month: lastPreviousMonth.month,
+					day: lastPreviousMonth.day - totalPreviousDay + x
+				});
 
 				dateRenders.push({
-					fullDate,
-					isToday: isToday(fullDate),
+					time,
+					isToday: isToday(time),
 					isDisabled: true
 				});
 			}
 		}
 
-		for (let x = 1; x <= lastMonth.getDate(); x++) {
-			let fullDate = new Date(year, month, x);
-
+		for (let x = 1; x <= currentDate.daysInMonth!; x++) {
+			let time = currentDate.set({ day: x });
 			dateRenders.push({
-				fullDate,
-				isToday: isToday(fullDate),
+				time,
+				isToday: isToday(time),
 				isDisabled: false
 			});
 		}
 
-		let totalMissingNextDays = firstNextMonth.getDay();
-		if (totalMissingNextDays > 0) {
-			for (let x = firstNextMonth.getDay(); x < 7; x++) {
-				let fullDate = new Date(
+		let totalMissingDaysOfNextMonth = firstNextMonth.weekday;
+
+		if (totalMissingDaysOfNextMonth > 0) {
+			for (let x = totalMissingDaysOfNextMonth; x < 7; x++) {
+				let time = currentDate.set({
 					year,
-					month + 1,
-					firstNextMonth.getDate() - firstNextMonth.getDay() + x
-				);
+					month: month + 1,
+					day: firstNextMonth.day - totalMissingDaysOfNextMonth + x
+				});
 				dateRenders.push({
-					fullDate,
-					isToday: isToday(fullDate),
+					time,
+					isToday: isToday(time),
 					isDisabled: true
 				});
 			}
@@ -80,22 +75,11 @@
 	}
 
 	function goNextMonth(): void {
-		// currentDate.setMonth(currentDate.getMonth() + 1);
-		// currentDate = new Date(currentDate);
-
-		currentDate = new Date(
-			currentDate.getFullYear(),
-			currentDate.getMonth() + 1,
-			currentDate.getDate()
-		);
+		currentDate = currentDate.plus({ month: 1 });
 	}
 
 	function goPreviousMonth(): void {
-		currentDate = new Date(
-			currentDate.getFullYear(),
-			currentDate.getMonth() - 1,
-			currentDate.getDate()
-		);
+		currentDate = currentDate.minus({ month: 1 });
 	}
 
 	function selectDate(): void {
@@ -110,24 +94,24 @@
 		<header>
 			<button class="previous-button" onclick={goPreviousMonth}>prev</button>
 			<div class="current-date">
-				<p>{getMonthNames()[currentDate.getMonth()]} {currentDate.getFullYear()}</p>
+				<p>{getMonthNames()[currentDate.month - 1]} {currentDate.year}</p>
 			</div>
 			<button class="next-button" onclick={goNextMonth}>next</button>
 		</header>
 		<div class="main-picker">
 			<div class="days">
-				{#each getDayNames('en-US', 'short') as day}
+				{#each getDayNames('short') as day}
 					<div class="day">{day}</div>
 				{/each}
 			</div>
 			<div class="dates">
-				{#each currentDatespace as { fullDate, isDisabled, isToday }}
+				{#each currentDatespace as { time, isDisabled, isToday }}
 					<button
 						disabled={isDisabled}
-						class={`date ${isToday ? 'today' : ''} ${selectedDate ? (createFulldateID(selectedDate) == createFulldateID(fullDate) ? 'selected' : '') : ''}`}
+						class={`date ${isToday ? 'today' : ''} ${selectedDate ? (selectedDate.toLocaleString() == time.toLocaleString() ? 'selected' : '') : ''}`}
 						onclick={() => {
-							selectedDate = fullDate;
-						}}>{fullDate.getDate()}</button
+							selectedDate = time;
+						}}>{time.day}</button
 					>
 				{/each}
 			</div>
