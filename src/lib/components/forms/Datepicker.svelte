@@ -22,18 +22,21 @@
 			fullDate.getMonth() == today.getMonth() &&
 			fullDate.getFullYear() == today.getFullYear();
 
-		for (let x = 0; x <= lastPreviousMonth.getDay(); x++) {
-			let fullDate = new Date(
-				year,
-				month - 1,
-				lastPreviousMonth.getDate() - lastPreviousMonth.getDay() + x
-			);
+		let totalPreviousDay = lastPreviousMonth.getDay() + 1;
+		if (totalPreviousDay < 7) {
+			for (let x = 1; x <= totalPreviousDay; x++) {
+				let fullDate = new Date(
+					year,
+					month - 1,
+					lastPreviousMonth.getDate() - totalPreviousDay + x
+				);
 
-			dateRenders.push({
-				fullDate,
-				isToday: isToday(fullDate),
-				isDisabled: true
-			});
+				dateRenders.push({
+					fullDate,
+					isToday: isToday(fullDate),
+					isDisabled: true
+				});
+			}
 		}
 
 		for (let x = 1; x <= lastMonth.getDate(); x++) {
@@ -46,17 +49,20 @@
 			});
 		}
 
-		for (let x = firstNextMonth.getDay(); x < 7; x++) {
-			let fullDate = new Date(
-				year,
-				month + 1,
-				firstNextMonth.getDate() - firstNextMonth.getDay() + x
-			);
-			dateRenders.push({
-				fullDate,
-				isToday: isToday(fullDate),
-				isDisabled: true
-			});
+		let totalMissingNextDays = firstNextMonth.getDay();
+		if (totalMissingNextDays > 0) {
+			for (let x = firstNextMonth.getDay(); x < 7; x++) {
+				let fullDate = new Date(
+					year,
+					month + 1,
+					firstNextMonth.getDate() - firstNextMonth.getDay() + x
+				);
+				dateRenders.push({
+					fullDate,
+					isToday: isToday(fullDate),
+					isDisabled: true
+				});
+			}
 		}
 
 		return dateRenders;
