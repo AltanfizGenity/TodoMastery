@@ -66,23 +66,36 @@
 		onClose();
 		selectedID = '';
 	}
+
+	function goNextMonth(): void {
+		// selectedDate.setMonth(selectedDate.getMonth() + 1);
+		// selectedDate = new Date(selectedDate);
+
+		selectedDate = new Date(
+			selectedDate.getFullYear(),
+			selectedDate.getMonth() + 1,
+			selectedDate.getDate()
+		);
+	}
+
+	function goPreviousMonth(): void {
+		selectedDate = new Date(
+			selectedDate.getFullYear(),
+			selectedDate.getMonth() - 1,
+			selectedDate.getDate()
+		);
+	}
 </script>
 
 <div class="datepicker-container">
 	{@render children()}
 	<div class={`datepicker ${isOpen ? '' : 'hidden'}`}>
 		<header>
-			<button class="previous-button">prev</button>
+			<button class="previous-button" onclick={goPreviousMonth}>prev</button>
 			<div class="current-date">
 				<p>{getMonthNames()[selectedDate.getMonth()]} {selectedDate.getFullYear()}</p>
 			</div>
-			<button
-				class="next-button"
-				onclick={() => {
-					selectedDate.setMonth(selectedDate.getMonth() + 1);
-					selectedDate = new Date(selectedDate);
-				}}>next</button
-			>
+			<button class="next-button" onclick={goNextMonth}>next</button>
 		</header>
 		<div class="main-picker">
 			<div class="days">
