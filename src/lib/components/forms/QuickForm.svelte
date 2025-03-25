@@ -3,6 +3,7 @@
 	import Datepicker from './Datepicker.svelte';
 
 	let isTimelineInputOpen = $state<boolean>(false);
+	let dateValue = $state<Date | null>(null);
 
 	let currentTodo: Todo = $quickFormState.editMode
 		? ($todoList.find((todo) => todo.id == $quickFormState.todoID) as Todo)
@@ -68,7 +69,11 @@
 		/>
 	</div>
 	<div class="action-input-group">
-		<Datepicker isOpen={isTimelineInputOpen} onClose={() => (isTimelineInputOpen = false)}>
+		<Datepicker
+			isOpen={isTimelineInputOpen}
+			onClose={() => (isTimelineInputOpen = false)}
+			{dateValue}
+		>
 			<button
 				class="input-action timeline-input"
 				type="button"

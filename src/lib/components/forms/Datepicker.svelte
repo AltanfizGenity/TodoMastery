@@ -1,16 +1,22 @@
 <script lang="ts">
 	import { createFulldateID, getDayNames, getMonthNames } from '$lib/utils/date';
 
-	let { children, isOpen = true, onClose }: DatepickerProps = $props();
-	let selectedDate = $state<Date>(new Date());
+	let { children, isOpen = true, onClose, dateValue }: DatepickerProps = $props();
+	let currentDate = $state<Date>(new Date());
 	let currentDatespace = $derived.by(() => renderDate());
-	let selectedID = $state<string>('');
+	let selectedDate = $state<Date | null>(null);
+
+	$effect(() => {
+		if (isOpen) {
+			selectedDate = dateValue ? dateValue : null;
+		}
+	});
 
 	function renderDate() {
 		let dateRenders: DateRender[] = [];
 
-		let month = selectedDate.getMonth();
-		let year = selectedDate.getFullYear();
+		let month = currentDate.getMonth();
+		let year = currentDate.getFullYear();
 
 		let lastPreviousMonth = new Date(year, month, 0);
 		let lastMonth = new Date(year, month + 1, 0);
@@ -70,26 +76,32 @@
 
 	function closeDatepicker() {
 		onClose();
-		selectedID = '';
+		selectedDate = null;
 	}
 
 	function goNextMonth(): void {
-		// selectedDate.setMonth(selectedDate.getMonth() + 1);
-		// selectedDate = new Date(selectedDate);
+		// currentDate.setMonth(currentDate.getMonth() + 1);
+		// currentDate = new Date(currentDate);
 
-		selectedDate = new Date(
-			selectedDate.getFullYear(),
-			selectedDate.getMonth() + 1,
-			selectedDate.getDate()
+		currentDate = new Date(
+			currentDate.getFullYear(),
+			currentDate.getMonth() + 1,
+			currentDate.getDate()
 		);
 	}
 
 	function goPreviousMonth(): void {
-		selectedDate = new Date(
-			selectedDate.getFullYear(),
-			selectedDate.getMonth() - 1,
-			selectedDate.getDate()
+		currentDate = new Date(
+			currentDate.getFullYear(),
+			currentDate.getMonth() - 1,
+			currentDate.getDate()
 		);
+	}
+
+	function selectDate(): void {
+		dateValue = selectedDate;
+		alert(dateValue);
+		closeDatepicker();
 	}
 </script>
 
@@ -99,7 +111,7 @@
 		<header>
 			<button class="previous-button" onclick={goPreviousMonth}>prev</button>
 			<div class="current-date">
-				<p>{getMonthNames()[selectedDate.getMonth()]} {selectedDate.getFullYear()}</p>
+				<p>{getMonthNames()[currentDate.getMonth()]} {currentDate.getFullYear()}</p>
 			</div>
 			<button class="next-button" onclick={goNextMonth}>next</button>
 		</header>
@@ -113,10 +125,9 @@
 				{#each currentDatespace as { fullDate, isDisabled, isToday }}
 					<button
 						disabled={isDisabled}
-						class={`date ${isToday ? 'today' : ''} ${selectedID == createFulldateID(fullDate) ? 'selected' : ''}`}
+						class={`date ${isToday ? 'today' : ''} ${selectedDate ? (createFulldateID(selectedDate) == createFulldateID(fullDate) ? 'selected' : '') : ''}`}
 						onclick={() => {
 							selectedDate = fullDate;
-							selectedID = createFulldateID(fullDate);
 						}}>{fullDate.getDate()}</button
 					>
 				{/each}
@@ -124,7 +135,9 @@
 		</div>
 		<footer>
 			<button onclick={closeDatepicker} class="cancel-button">Cancel</button>
-			<button class="select-button">Select</button>
+			<button class="select-button" onclick={selectDate} disabled={selectedDate == null}
+				>Select</button
+			>
 		</footer>
 	</div>
 </div>
@@ -187,6 +200,7 @@
 		border-radius: var(--radius-lg);
 		aspect-ratio: 1;
 		background-color: transparent;
+		border: none;
 
 		&:disabled {
 			pointer-events: none;
