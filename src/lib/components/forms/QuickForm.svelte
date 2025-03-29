@@ -113,6 +113,10 @@
 		border: 0.0625rem solid var(--color-muted);
 	}
 
+	.input-group input {
+		width: 100%;
+	}
+
 	.action-input-group {
 		display: flex;
 		gap: var(--spacing-4);

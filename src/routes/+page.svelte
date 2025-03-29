@@ -4,19 +4,17 @@
 	import QuickForm from '$lib/components/forms/QuickForm.svelte';
 	import CompletedTodoListView from '$lib/components/todo/CompletedTodoListView.svelte';
 	import { quickFormState } from '$lib/stores/app.store';
-	import Datepicker from '$lib/components/forms/Datepicker.svelte';
 </script>
 
 <div class="todo-mastery">
 	<main class="list-main-view">
-		<QuickForm />
-		<!-- <TodoListView />
+		<TodoListView />
 		{#if $quickFormState.isOpen && !$quickFormState.editMode}
 			<QuickForm />
 		{:else}
 			<QuickAddButton />
 		{/if}
-		<CompletedTodoListView /> -->
+		<CompletedTodoListView />
 	</main>
 </div>
 
