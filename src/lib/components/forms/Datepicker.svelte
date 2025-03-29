@@ -92,11 +92,11 @@
 	{@render children()}
 	<div class={`datepicker ${isOpen ? '' : 'hidden'}`}>
 		<header>
-			<button class="previous-button" onclick={goPreviousMonth}>prev</button>
+			<button type="button" class="previous-button" onclick={goPreviousMonth}>prev</button>
 			<div class="current-date">
 				<p>{getMonthNames()[currentDate.month - 1]} {currentDate.year}</p>
 			</div>
-			<button class="next-button" onclick={goNextMonth}>next</button>
+			<button type="button" class="next-button" onclick={goNextMonth}>next</button>
 		</header>
 		<div class="main-picker">
 			<div class="days">
@@ -107,6 +107,7 @@
 			<div class="dates">
 				{#each currentDatespace as { time, isDisabled, isToday }}
 					<button
+						type="button"
 						disabled={isDisabled}
 						class={`date ${isToday ? 'today' : ''} ${selectedDate ? (selectedDate.toLocaleString() == time.toLocaleString() ? 'selected' : '') : ''}`}
 						onclick={() => {
@@ -117,9 +118,12 @@
 			</div>
 		</div>
 		<footer>
-			<button onclick={closeDatepicker} class="cancel-button">Cancel</button>
-			<button class="select-button" onclick={selectDate} disabled={selectedDate == null}
-				>Select</button
+			<button onclick={closeDatepicker} class="cancel-button" type="button">Cancel</button>
+			<button
+				class="select-button"
+				onclick={selectDate}
+				disabled={selectedDate == null}
+				type="button">Select</button
 			>
 		</footer>
 	</div>
