@@ -11,11 +11,15 @@
 <div class="completed-list-view">
 	<ShowCompletedTodoButton todoAmount={completeTodos.length} />
 	{#if $isShowCompleteTodo}
-		<div class="list-view">
-			{#each completeTodos as todo}
-				<TodoElement {todo} />
-			{/each}
-		</div>
+		{#if completeTodos.length > 0}
+			<div class="list-view">
+				{#each completeTodos as todo}
+					<TodoElement {todo} />
+				{/each}
+			</div>
+		{:else}
+			<p class="text complete-empty-text">No task completed yet!</p>
+		{/if}
 	{/if}
 </div>
 
@@ -30,5 +34,10 @@
 
 	.list-view {
 		width: var(--full);
+	}
+
+	.complete-empty-text {
+		color: #aaa;
+		padding-inline: 0.5rem;
 	}
 </style>
