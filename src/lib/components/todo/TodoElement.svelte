@@ -39,13 +39,15 @@
 	<QuickForm />
 {:else}
 	<div class={`todo ${todo.isComplete ? 'completed' : ''}`}>
-		<div class="title font-light">{todo.title}</div>
-		<div class="actions">
+		<div class="todo-info-container">
 			{#if todo.isComplete}
 				<RevertTodoButton onclick={revertTodo} />
 			{:else}
 				<CompleteTodoButton onclick={completeTodo} />
 			{/if}
+			<div class="title font-light">{todo.title}</div>
+		</div>
+		<div class="actions">
 			<DeleteTodoButton onclick={deleteTodo} />
 			<EditTodoButton onclick={editTodo} />
 		</div>
@@ -67,6 +69,12 @@
 			color: var(--color-muted);
 			text-decoration: line-through;
 		}
+	}
+
+	.todo-info-container {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-2);
 	}
 
 	.actions {
