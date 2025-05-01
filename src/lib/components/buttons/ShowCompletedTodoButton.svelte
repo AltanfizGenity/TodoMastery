@@ -24,6 +24,10 @@
 </button>
 
 <style>
+	.show-completed-todo-button:hover .icon {
+		color: var(--color-primary);
+	}
+
 	.show-completed-todo-button .icon {
 		color: var(--color-text);
 		transition: var(--transition-fast);

@@ -14,3 +14,9 @@
 	</div>
 	<div class="text">Add Task</div>
 </button>
+
+<style>
+	.quick-add-button:hover {
+		color: var(--color-primary);
+	}
+</style>
