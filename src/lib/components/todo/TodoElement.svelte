@@ -13,7 +13,7 @@
 	}
 
 	function editTodo() {
-		quickFormState.set({ editMode: true, isOpen: true, todoID: todo.id });
+		quickFormState.set({ editMode: true, isOpen: true, todoID: todo.id, date: todo.date });
 	}
 
 	function completeTodo() {

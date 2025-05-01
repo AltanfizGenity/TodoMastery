@@ -6,9 +6,13 @@
 	let isTimelineInputOpen = $state<boolean>(false);
 	let dateValue = $state<LuxonTime | null>(null);
 
+	$effect(() => {
+		dateValue = $quickFormState.date;
+	});
+
 	let currentTodo: Todo = $quickFormState.editMode
 		? ($todoList.find((todo) => todo.id == $quickFormState.todoID) as Todo)
-		: { id: '', title: '', isComplete: false };
+		: { id: '', title: '', isComplete: false, date: null };
 
 	function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
@@ -25,7 +29,8 @@
 	function editTodo(formData: FormData) {
 		let editTodo: Todo = {
 			...currentTodo,
-			title: formData.get('title') as string
+			title: formData.get('title') as string,
+			date: dateValue
 		};
 
 		$todoList = $todoList.map((everyTodo) =>
@@ -39,7 +44,8 @@
 		let newTodo: Todo = {
 			title: formData.get('title') as string,
 			id: crypto.randomUUID(),
-			isComplete: false
+			isComplete: false,
+			date: dateValue
 		};
 
 		$todoList = [...$todoList, newTodo];

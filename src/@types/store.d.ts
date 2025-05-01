@@ -1,5 +1,6 @@
 type QuickFormState = {
-  isOpen: boolean;
-  editMode: boolean;
-  todoID: string;
+	isOpen: boolean;
+	editMode: boolean;
+	todoID: string;
+	date: LuxonTime | null;
 };
