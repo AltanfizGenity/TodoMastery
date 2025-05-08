@@ -4,9 +4,23 @@ interface Props {
 	[key: string]: any;
 }
 
-interface EventProps extends Props {
+interface EventProps {
 	onclick?: (event: MouseEvent) => void;
 }
+
+interface ElementProps extends EventProps {
+	class?: string;
+}
+
+interface ButtonProps extends ElementProps {
+	text?: string;
+	disabled?: boolean;
+}
+
+interface IconButtonProps extends ButtonProps {
+	Icon: SvelteComponent;
+}
+
 interface TodoProps {
 	todo: Todo;
 }
