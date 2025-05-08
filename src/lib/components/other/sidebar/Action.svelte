@@ -33,7 +33,11 @@
 	}
 
 	.icon {
-		width: 1.2rem;
-		height: 1.2rem;
+		width: var(--text-sm);
+		height: var(--text-sm);
+	}
+
+	.text {
+		font-size: var(--text-sm);
 	}
 </style>

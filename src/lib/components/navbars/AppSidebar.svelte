@@ -1,6 +1,5 @@
 <script>
-	import AddButton from '../buttons/AddButton.svelte';
-	import { InboxIcon } from '../icons';
+	import { AddCircleIcon, CompletedIcon, InboxIcon, SearchIcon, TodayIcon } from '../icons';
 	import Action from '../other/sidebar/Action.svelte';
 
 	function openAddFormModal() {
@@ -10,11 +9,11 @@
 
 <aside class="side-navigation">
 	<ul class="action-list">
-		<Action Icon={InboxIcon} text="Create task" isActive={false} />
-		<Action Icon={InboxIcon} text="Search" isActive={false} />
+		<Action Icon={AddCircleIcon} text="Create task" isActive={false} />
+		<Action Icon={SearchIcon} text="Search" isActive={false} />
 		<Action Icon={InboxIcon} text="Inbox" isActive={true} />
-		<Action Icon={InboxIcon} text="Today" isActive={false} />
-		<Action Icon={InboxIcon} text="Completed" isActive={false} />
+		<Action Icon={TodayIcon} text="Today" isActive={false} />
+		<Action Icon={CompletedIcon} text="Completed" isActive={false} />
 	</ul>
 </aside>
 
