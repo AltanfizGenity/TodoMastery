@@ -7,5 +7,8 @@ export let quickFormState = writable<QuickFormState>({
 	date: null
 });
 
+export let currentAppPage = writable<AppPage>('inbox');
+export let isSearchboxOpen = writable<boolean>(false);
+export let isTodoFormOpen = writable<boolean>(false);
 export let isShowCompleteTodo = writable<boolean>(false);
 export let todoList = writable<Todo[]>([]);
