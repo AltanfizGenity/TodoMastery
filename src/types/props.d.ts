@@ -9,7 +9,7 @@ interface EventProps {
 }
 
 interface ElementProps extends EventProps {
-	class?: string;
+	classname?: string;
 }
 
 interface ButtonProps extends ElementProps {

@@ -64,9 +64,11 @@
 
 		$quickFormState.isOpen = false;
 	}
+
+	let { classname, ...props }: ElementProps = $props();
 </script>
 
-<form onsubmit={handleSubmit} class="quick-add-form">
+<form onsubmit={handleSubmit} class={`quick-add-form ${classname}`}>
 	<div class="input-group">
 		<input
 			type="text"

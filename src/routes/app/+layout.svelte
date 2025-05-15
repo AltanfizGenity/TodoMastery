@@ -1,4 +1,5 @@
 <script lang="ts">
+	import TodoForm from '$lib/components/forms/TodoForm.svelte';
 	import AppSidebar from '$lib/components/navbars/AppSidebar.svelte';
 	import { isSearchboxOpen, isTodoFormOpen } from '$lib/stores/app.store';
 
@@ -11,7 +12,7 @@
 		{@render children()}
 	</div>
 	{#if $isTodoFormOpen}
-		<p>Todo form</p>
+		<TodoForm />
 	{/if}
 	{#if $isSearchboxOpen}
 		<p>Searchbox</p>
