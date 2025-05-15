@@ -1,16 +1,21 @@
 <script lang="ts">
-	import TodoListView from '$lib/components/todo/TodoListView.svelte';
+	import TodoListView from '$lib/components/todo/TodolistView.svelte';
 	import QuickAddButton from '$lib/components/buttons/AddButton.svelte';
 	import QuickForm from '$lib/components/forms/QuickForm.svelte';
 	import CompletedTodoListView from '$lib/components/todo/CompletedTodoListView.svelte';
-	import { quickFormState } from '$lib/stores/app.store';
+	import { quickFormState, uncompletedTodos } from '$lib/stores/app.store';
 	import { openDefaultQuickForm } from '$lib/utils/app.utils';
+	import { isToday } from '$lib/utils/date';
+
+	let todayTodos = $derived.by(() => {
+		return $uncompletedTodos.filter((todos) => todos.date && isToday(todos.date));
+	});
 </script>
 
 <div class="todo-mastery">
 	<main class="list-main-view">
 		<h1>Today</h1>
-		<TodoListView />
+		<TodoListView todos={todayTodos} />
 		{#if $quickFormState.isOpen && !$quickFormState.editMode}
 			<QuickForm />
 		{:else}

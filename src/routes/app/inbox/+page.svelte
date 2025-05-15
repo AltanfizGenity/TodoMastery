@@ -1,16 +1,16 @@
 <script lang="ts">
-	import TodoListView from '$lib/components/todo/TodoListView.svelte';
+	import TodoListView from '$lib/components/todo/TodolistView.svelte';
 	import QuickAddButton from '$lib/components/buttons/AddButton.svelte';
 	import QuickForm from '$lib/components/forms/QuickForm.svelte';
 	import CompletedTodoListView from '$lib/components/todo/CompletedTodoListView.svelte';
-	import { quickFormState } from '$lib/stores/app.store';
+	import { quickFormState, uncompletedTodos } from '$lib/stores/app.store';
 	import { openDefaultQuickForm } from '$lib/utils/app.utils';
 </script>
 
 <div class="todo-mastery">
 	<main class="list-main-view">
 		<h1>Inbox</h1>
-		<TodoListView />
+		<TodoListView todos={$uncompletedTodos} />
 		{#if $quickFormState.isOpen && !$quickFormState.editMode}
 			<QuickForm />
 		{:else}

@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 
 export let quickFormState = writable<QuickFormState>({
 	isOpen: false,
@@ -12,3 +12,6 @@ export let isSearchboxOpen = writable<boolean>(false);
 export let isTodoFormOpen = writable<boolean>(false);
 export let isShowCompleteTodo = writable<boolean>(false);
 export let todoList = writable<Todo[]>([]);
+export let uncompletedTodos = derived(todoList, (todos) =>
+	todos.filter((todo) => !todo.isComplete)
+);

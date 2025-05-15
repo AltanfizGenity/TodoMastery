@@ -1,6 +1,4 @@
 <script lang="ts">
-	import QuickAddButton from '$lib/components/buttons/AddButton.svelte';
-	import { InboxIcon } from '$lib/components/icons';
 	import AppSidebar from '$lib/components/navbars/AppSidebar.svelte';
 	import { isSearchboxOpen, isTodoFormOpen } from '$lib/stores/app.store';
 
