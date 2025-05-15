@@ -1,8 +1,7 @@
 <script>
 	import { AddCircleIcon, CompletedIcon, InboxIcon, SearchIcon, TodayIcon } from '../icons';
 	import Action from '../other/sidebar/Action.svelte';
-	import { goto } from '$app/navigation';
-	import { isSearchboxOpen, isTodoFormOpen, currentAppPage } from '$lib/stores/app.store';
+	import { currentAppPage } from '$lib/stores/app.store';
 	import { sidebarActions } from '$lib/data/app/sidebar';
 </script>
 
