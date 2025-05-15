@@ -14,7 +14,11 @@
 		{#if $quickFormState.isOpen && !$quickFormState.editMode}
 			<QuickForm />
 		{:else}
-			<QuickAddButton onclick={openDefaultQuickForm} />
+			<QuickAddButton
+				onclick={() => {
+					openDefaultQuickForm();
+				}}
+			/>
 		{/if}
 		<CompletedTodoListView />
 	</main>

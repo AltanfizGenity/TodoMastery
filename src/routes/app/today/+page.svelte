@@ -6,6 +6,7 @@
 	import { quickFormState, uncompletedTodos } from '$lib/stores/app.store';
 	import { openDefaultQuickForm } from '$lib/utils/app.utils';
 	import { isToday } from '$lib/utils/date';
+	import { DateTime } from 'luxon';
 
 	let todayTodos = $derived.by(() => {
 		return $uncompletedTodos.filter((todos) => todos.date && isToday(todos.date));
@@ -19,7 +20,7 @@
 		{#if $quickFormState.isOpen && !$quickFormState.editMode}
 			<QuickForm />
 		{:else}
-			<QuickAddButton onclick={openDefaultQuickForm} />
+			<QuickAddButton onclick={() => openDefaultQuickForm(DateTime.now())} />
 		{/if}
 		<CompletedTodoListView />
 	</main>
