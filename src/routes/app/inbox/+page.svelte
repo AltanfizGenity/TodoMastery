@@ -3,8 +3,13 @@
 	import QuickAddButton from '$lib/components/buttons/AddButton.svelte';
 	import QuickForm from '$lib/components/forms/QuickForm.svelte';
 	import CompletedTodoListView from '$lib/components/todo/CompletedTodoListView.svelte';
-	import { quickFormState, uncompletedTodos } from '$lib/stores/app.store';
+	import { currentAppPage, quickFormState, uncompletedTodos } from '$lib/stores/app.store';
 	import { openDefaultQuickForm } from '$lib/utils/app.utils';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		currentAppPage.set('inbox');
+	});
 </script>
 
 <div class="todo-mastery">

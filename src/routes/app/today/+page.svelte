@@ -3,13 +3,18 @@
 	import QuickAddButton from '$lib/components/buttons/AddButton.svelte';
 	import QuickForm from '$lib/components/forms/QuickForm.svelte';
 	import CompletedTodoListView from '$lib/components/todo/CompletedTodoListView.svelte';
-	import { quickFormState, uncompletedTodos } from '$lib/stores/app.store';
+	import { currentAppPage, quickFormState, uncompletedTodos } from '$lib/stores/app.store';
 	import { openDefaultQuickForm } from '$lib/utils/app.utils';
 	import { isToday } from '$lib/utils/date';
 	import { DateTime } from 'luxon';
+	import { onMount } from 'svelte';
 
 	let todayTodos = $derived.by(() => {
 		return $uncompletedTodos.filter((todos) => todos.date && isToday(todos.date));
+	});
+
+	onMount(() => {
+		currentAppPage.set('today');
 	});
 </script>
 

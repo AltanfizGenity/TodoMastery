@@ -6,7 +6,7 @@ import type { Component } from 'svelte';
 declare global {
 	type LuxonTime = DateTime;
 	type SvelteComponent = Component;
-	type AppPage = 'inbox' | 'today' | 'completed';
+	type AppPage = 'inbox' | 'today' | 'completed' | 'none';
 }
 
 export {};

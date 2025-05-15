@@ -35,7 +35,6 @@ export const sidebarActions: SidebarActionData[] = [
 		Icon: InboxIcon,
 		clickHandler: () => {
 			goto('/app/inbox');
-			currentAppPage.set('inbox');
 		}
 	},
 	{
@@ -44,7 +43,6 @@ export const sidebarActions: SidebarActionData[] = [
 		Icon: TodayIcon,
 		clickHandler: () => {
 			goto('/app/today');
-			currentAppPage.set('today');
 		}
 	},
 	{
@@ -53,7 +51,6 @@ export const sidebarActions: SidebarActionData[] = [
 		Icon: CompletedIcon,
 		clickHandler: () => {
 			goto('/app/completed');
-			currentAppPage.set('completed');
 		}
 	}
 ];
