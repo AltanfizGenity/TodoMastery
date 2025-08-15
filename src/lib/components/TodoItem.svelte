@@ -7,12 +7,26 @@
 
 	let { todo }: TodoItemProps = $props();
 
-	function completeTodo(todoId: string) {
+	function completeTodo() {
 		let updatedTodos = $todos.map((todo) => {
-			if (todo.id === todoId) {
+			if (todo.id === todo.id) {
 				return {
 					...todo,
 					completed: true
+				};
+			}
+
+			return todo;
+		});
+		todos.set(updatedTodos);
+	}
+
+	function incompleteTodo() {
+		let updatedTodos = $todos.map((todo) => {
+			if (todo.id === todo.id) {
+				return {
+					...todo,
+					completed: false
 				};
 			}
 
@@ -24,5 +38,9 @@
 
 <div class="todo">
 	<h3 class={`${todo.completed ? 'line-through' : ''}`}>{todo.title}</h3>
-	<button class="cursor-pointer" onclick={() => completeTodo(todo.id)}>✅ Mark as complete</button>
+	{#if todo.completed}
+		<button class="cursor-pointer" onclick={incompleteTodo}>❌ Mark as incomplete</button>
+	{:else}
+		<button class="cursor-pointer" onclick={completeTodo}>✅ Mark as complete</button>
+	{/if}
 </div>
