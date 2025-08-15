@@ -1,7 +1,5 @@
 <script lang="ts">
-	import '$lib/style/normalize.css';
-	import '$lib/style/app.css';
-
+	import './app.css';
 	let { children } = $props();
 </script>
 

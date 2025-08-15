@@ -32,6 +32,8 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
-		"luxon": "^3.5.0"
+		"@tailwindcss/vite": "^4.1.12",
+		"luxon": "^3.5.0",
+		"tailwindcss": "^4.1.12"
 	}
 }
