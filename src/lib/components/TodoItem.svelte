@@ -34,6 +34,11 @@
 		});
 		todos.set(updatedTodos);
 	}
+
+	function deleteTodo() {
+		let updatedTodos = $todos.filter((todo) => todo.id !== currentTodo.id);
+		todos.set(updatedTodos);
+	}
 </script>
 
 <div class="todo">
@@ -46,4 +51,8 @@
 		<span aria-hidden="true">{currentTodo.completed ? '❌' : '✅'}</span>
 		{currentTodo.completed ? 'Mark as incomplete' : 'Mark as complete'}</button
 	>
+	<button class="cursor-pointer" onclick={deleteTodo}>
+		<span aria-hidden="true">🗑️</span>
+		Delete
+	</button>
 </div>
