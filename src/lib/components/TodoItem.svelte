@@ -38,9 +38,10 @@
 
 <div class="todo">
 	<h3 class={`${todo.completed ? 'line-through' : ''}`}>{todo.title}</h3>
-	{#if todo.completed}
-		<button class="cursor-pointer" onclick={incompleteTodo}>❌ Mark as incomplete</button>
-	{:else}
-		<button class="cursor-pointer" onclick={completeTodo}>✅ Mark as complete</button>
-	{/if}
+
+	<button
+		class="cursor-pointer"
+		onclick={() => (todo.completed ? incompleteTodo() : completeTodo())}
+		>{todo.completed ? '❌ Mark as incomplete' : '✅ Mark as complete'}</button
+	>
 </div>
