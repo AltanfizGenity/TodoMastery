@@ -1,18 +1,7 @@
 <script lang="ts">
+	import TodoForm from '$lib/components/TodoForm.svelte';
 	import TodoItem from '$lib/components/TodoItem.svelte';
 	import { todos } from '$lib/store/todo';
-
-	let todoTitle = $state('');
-
-	function handleSubmit() {
-		let newTodo: Todo = {
-			id: crypto.randomUUID(),
-			title: todoTitle,
-			completed: false
-		};
-
-		todos.update((todos) => [...todos, newTodo]);
-	}
 </script>
 
 <div class="todo-container">
@@ -22,8 +11,5 @@
 			<TodoItem currentTodo={todo} />
 		{/each}
 	</div>
-	<form class="todo-form" onsubmit={handleSubmit}>
-		<input type="text" placeholder="Add a todo" bind:value={todoTitle} />
-		<button type="submit">create new todo</button>
-	</form>
+	<TodoForm />
 </div>
