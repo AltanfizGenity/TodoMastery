@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/svelte';
-import Page from './app/inbox/+page.svelte';
+import Page from './app/todos/+page.svelte';
 
 describe('/+page.svelte', () => {
 	test('should render h1', () => {
