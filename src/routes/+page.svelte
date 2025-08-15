@@ -3,8 +3,8 @@
 	import TodoList from '$lib/components/TodoList.svelte';
 </script>
 
-<div class="todo-container">
-	<h1>Todos</h1>
+<div class="todo-container p-8 flex flex-col gap-8">
+	<h1 class="text-2xl font-bold">Todos</h1>
 	<TodoList />
 	<TodoForm />
 </div>

@@ -41,7 +41,7 @@
 	}
 </script>
 
-<div class="todo">
+<div class="todo flex items-center gap-6 hover:bg-gray-100">
 	<h3 class={`${currentTodo.completed ? 'line-through' : ''}`}>{currentTodo.title}</h3>
 
 	<button
