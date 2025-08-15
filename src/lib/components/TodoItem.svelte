@@ -42,6 +42,8 @@
 	<button
 		class="cursor-pointer"
 		onclick={() => (todo.completed ? incompleteTodo() : completeTodo())}
-		>{todo.completed ? '❌ Mark as incomplete' : '✅ Mark as complete'}</button
+	>
+		<span aria-hidden="true">{todo.completed ? '❌' : '✅'}</span>
+		{todo.completed ? 'Mark as incomplete' : 'Mark as complete'}</button
 	>
 </div>
