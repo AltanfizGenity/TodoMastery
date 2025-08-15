@@ -2,14 +2,14 @@
 	import { todos } from '$lib/store/todo';
 
 	interface TodoItemProps {
-		todo: Todo;
+		currentTodo: Todo;
 	}
 
-	let { todo }: TodoItemProps = $props();
+	let { currentTodo }: TodoItemProps = $props();
 
 	function completeTodo() {
 		let updatedTodos = $todos.map((todo) => {
-			if (todo.id === todo.id) {
+			if (todo.id === currentTodo.id) {
 				return {
 					...todo,
 					completed: true
@@ -23,7 +23,7 @@
 
 	function incompleteTodo() {
 		let updatedTodos = $todos.map((todo) => {
-			if (todo.id === todo.id) {
+			if (todo.id === currentTodo.id) {
 				return {
 					...todo,
 					completed: false
@@ -37,13 +37,13 @@
 </script>
 
 <div class="todo">
-	<h3 class={`${todo.completed ? 'line-through' : ''}`}>{todo.title}</h3>
+	<h3 class={`${currentTodo.completed ? 'line-through' : ''}`}>{currentTodo.title}</h3>
 
 	<button
 		class="cursor-pointer"
-		onclick={() => (todo.completed ? incompleteTodo() : completeTodo())}
+		onclick={() => (currentTodo.completed ? incompleteTodo() : completeTodo())}
 	>
-		<span aria-hidden="true">{todo.completed ? '❌' : '✅'}</span>
-		{todo.completed ? 'Mark as incomplete' : 'Mark as complete'}</button
+		<span aria-hidden="true">{currentTodo.completed ? '❌' : '✅'}</span>
+		{currentTodo.completed ? 'Mark as incomplete' : 'Mark as complete'}</button
 	>
 </div>

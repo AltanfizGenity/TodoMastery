@@ -19,7 +19,7 @@
 	<h1>Todos</h1>
 	<div class="todo-list">
 		{#each $todos as todo}
-			<TodoItem {todo} />
+			<TodoItem currentTodo={todo} />
 		{/each}
 	</div>
 	<form class="todo-form" onsubmit={handleSubmit}>
