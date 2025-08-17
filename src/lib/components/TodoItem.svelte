@@ -1,11 +1,16 @@
 <script lang="ts">
 	import { todos } from '$lib/store/todo';
+	import { DateTime } from 'luxon';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
 	}
 
 	let { currentTodo }: TodoItemProps = $props();
+
+	let dueDateTime = $derived(currentTodo.dueDate ? DateTime.fromISO(currentTodo.dueDate) : null);
+	let dueDateText = $derived(dueDateTime ? dueDateTime.toFormat('dd LLLL') : null);
+	let isOverdue = $derived(dueDateTime ? dueDateTime < DateTime.now() : false);
 
 	function completeTodo() {
 		let updatedTodos = $todos.map((todo) => {
@@ -43,6 +48,9 @@
 
 <div class="todo flex items-center gap-6 hover:bg-gray-100">
 	<h3 class={`${currentTodo.completed ? 'line-through' : ''}`}>{currentTodo.title}</h3>
+	{#if currentTodo?.dueDate}
+		<p class={`${isOverdue ? 'text-red-500' : ''}`}>{dueDateText}</p>
+	{/if}
 
 	<button
 		class="cursor-pointer"
