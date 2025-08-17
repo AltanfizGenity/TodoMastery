@@ -52,6 +52,10 @@
 		<p class={`${isOverdue ? 'text-red-500' : ''}`}>{dueDateText}</p>
 	{/if}
 
+	{#if currentTodo?.label}
+		<p class="text-gray-400">{currentTodo.label}</p>
+	{/if}
+
 	<button
 		class="cursor-pointer"
 		onclick={() => (currentTodo.completed ? incompleteTodo() : completeTodo())}
