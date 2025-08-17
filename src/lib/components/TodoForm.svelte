@@ -9,7 +9,6 @@
 			title: todoTitle,
 			completed: false
 		};
-
 		todos.update((todos) => [...todos, newTodo]);
 	}
 </script>
