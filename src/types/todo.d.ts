@@ -3,5 +3,5 @@ interface Todo {
 	title: string;
 	completed: boolean;
 	dueDate: string | null;
-	label: string | null;
+	tag: string | null;
 }
