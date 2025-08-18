@@ -6,10 +6,9 @@
 	let title = $state('');
 	let dueDate = $state('');
 	let tag = $state<string | null>(null);
-
 	let tagInput = $state('');
 
-	let creatingNewTags = $state(false);
+	let isCreatingTag = $state(false);
 
 	function handleSubmit() {
 		let newTodo: Todo = {
@@ -26,20 +25,24 @@
 	function handleTagInputChange(event: Event) {
 		const target = event.target as HTMLSelectElement;
 		if (target.value === 'create-new-tags') {
-			creatingNewTags = true;
+			isCreatingTag = true;
 			tag = null;
 		}
 	}
 
 	function createTag(event: SubmitEvent) {
 		event.preventDefault();
-		tags.update((tags) => [...tags, tagInput]);
+		tags.update((currentTags) => {
+			let newTags = currentTags.includes(tagInput) ? currentTags : [...currentTags, tagInput];
+			tag = tagInput;
+			return newTags;
+		});
 		tagInput = '';
-		creatingNewTags = false;
+		isCreatingTag = false;
 	}
 </script>
 
-{#if creatingNewTags}
+{#if isCreatingTag}
 	<form onsubmit={createTag}>
 		<input type="text" placeholder="new tags" bind:value={tagInput} required />
 		<button type="submit">create tag</button>
