@@ -7,7 +7,6 @@
 	let dueDate = $state('');
 	let tag = $state<string | null>(null);
 	let tagInput = $state('');
-
 	let isCreatingTag = $state(false);
 
 	function handleSubmit() {
@@ -32,6 +31,8 @@
 
 	function createTag(event: SubmitEvent) {
 		event.preventDefault();
+		tagInput = tagInput.trim();
+		if (!tagInput) return;
 		tags.update((currentTags) => {
 			let newTags = currentTags.includes(tagInput) ? currentTags : [...currentTags, tagInput];
 			tag = tagInput;
