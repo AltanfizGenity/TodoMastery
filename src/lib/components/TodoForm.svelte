@@ -3,6 +3,7 @@
 	import { tags } from '$lib/store/userdata';
 	import { DateTime } from 'luxon';
 	import Overlay from './Overlay.svelte';
+	import { isTodoFormOpen } from '$lib/store/appstate';
 
 	let title = $state('');
 	let dueDate = $state('');
@@ -22,6 +23,7 @@
 		};
 
 		todos.update((todos) => [...todos, newTodo]);
+		closeForm();
 	}
 
 	function handleTagInputChange(event: Event) {
@@ -44,6 +46,10 @@
 		tagInput = '';
 		isCreatingTag = false;
 	}
+
+	function closeForm() {
+		isTodoFormOpen.set(false);
+	}
 </script>
 
 {#if isCreatingTag}
@@ -53,7 +59,7 @@
 	</form>
 {/if}
 
-<Overlay isActive={true} onClosed={() => {}}>
+<Overlay isOpen={$isTodoFormOpen} onClosed={() => {}}>
 	<form
 		class="todo-form gap-4 p-4 bg-gray-50 flex flex-col w-1/2 rounded-xl"
 		onsubmit={handleSubmit}
@@ -78,8 +84,10 @@
 			</select>
 		</div>
 		<div class="action flex justify-end gap-4">
-			<button class="bg-gray-100 text-black capitalize py-1 px-4 cursor-pointer" type="submit"
-				>cancel</button
+			<button
+				class="bg-gray-100 text-black capitalize py-1 px-4 cursor-pointer"
+				type="submit"
+				onclick={closeForm}>cancel</button
 			>
 			<button class="bg-amber-400 text-black capitalize py-1 px-4 cursor-pointer" type="submit"
 				>add todo</button

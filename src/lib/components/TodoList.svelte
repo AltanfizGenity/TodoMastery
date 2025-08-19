@@ -8,7 +8,7 @@
 {#if isTodosEmpty}
 	<h2 class="text-gray-400">No todos yet</h2>
 {:else}
-	<div class="todo-list flex flex-col gap-4">
+	<div class="todo-list flex flex-col">
 		{#each $todos as todo}
 			<TodoItem currentTodo={todo} />
 		{/each}
