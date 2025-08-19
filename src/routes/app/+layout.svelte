@@ -6,7 +6,7 @@
 
 <div class="app-container flex min-h-screen h-screen">
 	<AsideNavigation />
-	<main>
+	<main class="px-16 py-8">
 		{@render children()}
 	</main>
 </div>
