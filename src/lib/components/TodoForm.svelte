@@ -2,6 +2,7 @@
 	import { todos } from '$lib/store/todo';
 	import { tags } from '$lib/store/userdata';
 	import { DateTime } from 'luxon';
+	import Overlay from './Overlay.svelte';
 
 	let title = $state('');
 	let dueDate = $state('');
@@ -52,15 +53,37 @@
 	</form>
 {/if}
 
-<form class="todo-form flex gap-4" onsubmit={handleSubmit}>
-	<input type="text" placeholder="Add a todo" bind:value={title} required />
-	<input type="date" bind:value={dueDate} min={DateTime.now().toISODate()} />
-	<select name="tag" id="tag" bind:value={tag} onchange={handleTagInputChange}>
-		<option value={null}>no tag</option>
-		{#each $tags as tag}
-			<option value={tag}>{tag}</option>
-		{/each}
-		<option value="create-new-tags">+ new tag</option>
-	</select>
-	<button class="bg-amber-400 w-32 text-black" type="submit">create new todo</button>
-</form>
+<Overlay isActive={true} onClosed={() => {}}>
+	<form
+		class="todo-form gap-4 p-4 bg-gray-50 flex flex-col w-1/2 rounded-xl"
+		onsubmit={handleSubmit}
+	>
+		<div class="input-group">
+			<input
+				type="text"
+				placeholder="your todo title"
+				bind:value={title}
+				required
+				class="outline-0"
+			/>
+		</div>
+		<div class="input-group">
+			<input type="date" bind:value={dueDate} min={DateTime.now().toISODate()} />
+			<select name="tag" id="tag" bind:value={tag} onchange={handleTagInputChange}>
+				<option value={null}>no tag</option>
+				{#each $tags as tag}
+					<option value={tag}>{tag}</option>
+				{/each}
+				<option value="create-new-tags">+ new tag</option>
+			</select>
+		</div>
+		<div class="action flex justify-end gap-4">
+			<button class="bg-gray-100 text-black capitalize py-1 px-4 cursor-pointer" type="submit"
+				>cancel</button
+			>
+			<button class="bg-amber-400 text-black capitalize py-1 px-4 cursor-pointer" type="submit"
+				>add todo</button
+			>
+		</div>
+	</form>
+</Overlay>
