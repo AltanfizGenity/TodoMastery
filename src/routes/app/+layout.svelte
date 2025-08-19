@@ -1,15 +1,11 @@
 <script lang="ts">
+	import AsideNavigation from '$lib/components/AsideNavigation.svelte';
+
 	let { children } = $props();
 </script>
 
-<div class="app-container flex">
-	<aside class="sidebar w-56 border-r border-1 border-amber-100">
-		<ul class="sidebar-navigation-list">
-			<li>
-				<a href="/tasks">tasks</a>
-			</li>
-		</ul>
-	</aside>
+<div class="app-container flex min-h-screen h-screen">
+	<AsideNavigation />
 	<main>
 		{@render children()}
 	</main>
