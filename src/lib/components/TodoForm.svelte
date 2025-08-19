@@ -9,7 +9,9 @@
 	let tagInput = $state('');
 	let isCreatingTag = $state(false);
 
-	function handleSubmit() {
+	function handleSubmit(event: SubmitEvent) {
+		event.preventDefault();
+
 		let newTodo: Todo = {
 			id: crypto.randomUUID(),
 			title: title,
