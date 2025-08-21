@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { completeTodo, deleteTodo } from '$lib/store/todo';
+	import { completeTodo, deleteTodo, incompleteTodo } from '$lib/store/todo';
 	import { DateTime } from 'luxon';
-	import { CircleLine, CircleCheckLine, TrashLine } from './icons/line';
+	import { CircleLine, CircleCheckLine, TrashLine, CloseCircleLine } from './icons/line';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
@@ -23,16 +23,29 @@
 {/snippet}
 
 {#snippet completeAction()}
-	{@render action(
-		() => completeTodo(currentTodo.id),
-		CircleLine,
-		'group-hover/complete-action:hidden'
-	)}
-	{@render action(
-		() => completeTodo(currentTodo.id),
-		CircleCheckLine,
-		'hidden group-hover/complete-action:flex'
-	)}
+	{#if currentTodo.completed}
+		{@render action(
+			() => incompleteTodo(currentTodo.id),
+			CircleCheckLine,
+			'group-hover/complete-action:hidden'
+		)}
+		{@render action(
+			() => incompleteTodo(currentTodo.id),
+			CloseCircleLine,
+			'hidden group-hover/complete-action:flex'
+		)}
+	{:else}
+		{@render action(
+			() => completeTodo(currentTodo.id),
+			CircleLine,
+			'group-hover/complete-action:hidden'
+		)}
+		{@render action(
+			() => completeTodo(currentTodo.id),
+			CircleCheckLine,
+			'hidden group-hover/complete-action:flex'
+		)}
+	{/if}
 {/snippet}
 
 <div class="todo flex justify-between hover:bg-gray-50 p-2 cursor-pointer group">
