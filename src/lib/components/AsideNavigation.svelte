@@ -17,5 +17,8 @@
 		<li class="flex">
 			<a href="/app/todos" class="w-full hover:bg-gray-100 p-1 text-sm capitalize">todos</a>
 		</li>
+		<li class="flex">
+			<a href="/app/completed" class="w-full hover:bg-gray-100 p-1 text-sm capitalize">completed</a>
+		</li>
 	</ul>
 </aside>
