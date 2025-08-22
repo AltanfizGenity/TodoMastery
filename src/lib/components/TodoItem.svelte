@@ -24,16 +24,7 @@
 
 {#snippet completeAction()}
 	{#if currentTodo.completed}
-		{@render action(
-			() => incompleteTodo(currentTodo.id),
-			CircleCheckLine,
-			'group-hover/complete-action:hidden'
-		)}
-		{@render action(
-			() => incompleteTodo(currentTodo.id),
-			CloseCircleLine,
-			'hidden group-hover/complete-action:flex'
-		)}
+		{@render action(() => incompleteTodo(currentTodo.id), CloseCircleLine)}
 	{:else}
 		{@render action(
 			() => completeTodo(currentTodo.id),
