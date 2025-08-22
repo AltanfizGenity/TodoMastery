@@ -61,7 +61,7 @@
 
 <Overlay isOpen={$isTodoFormOpen} onClosed={() => {}}>
 	<form
-		class="todo-form gap-4 p-4 bg-gray-50 flex flex-col w-1/2 rounded-xl"
+		class="todo-form gap-4 p-4 bg-gray-50 flex flex-col w-1/2 rounded-xl absolute top-1/4"
 		onsubmit={handleSubmit}
 	>
 		<div class="input-group">
@@ -86,7 +86,7 @@
 		<div class="action flex justify-end gap-4">
 			<button
 				class="bg-gray-100 text-black capitalize py-1 px-4 cursor-pointer"
-				type="submit"
+				type="button"
 				onclick={closeForm}>cancel</button
 			>
 			<button class="bg-amber-400 text-black capitalize py-1 px-4 cursor-pointer" type="submit"
