@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store';
 
-export const tags = writable<string[]>([]);
+export const categories = writable<string[]>([]);

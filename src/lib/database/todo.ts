@@ -8,10 +8,10 @@ export function fetchTodos() {
 	return JSON.parse(getLocalStorageData('todos') ?? '[]');
 }
 
-export function saveTags(tags: string[]) {
-	saveToLocalStorage('tags', JSON.stringify(tags));
+export function saveCateogies(categories: string[]) {
+	saveToLocalStorage('todo-categories', JSON.stringify(categories));
 }
 
-export function fetchTags() {
-	return JSON.parse(getLocalStorageData('tags') ?? '[]');
+export function fetchCategories() {
+	return JSON.parse(getLocalStorageData('todo-categories') ?? '[]');
 }

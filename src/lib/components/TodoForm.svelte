@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { todos } from '$lib/store/todo';
-	import { tags } from '$lib/store/userdata';
+	import { categories } from '$lib/store/userdata';
 	import { DateTime } from 'luxon';
 	import Overlay from './Overlay.svelte';
 	import { isTodoFormOpen } from '$lib/store/appstate';
 
 	let title = $state('');
 	let dueDate = $state('');
-	let tag = $state<string | null>(null);
-	let tagInput = $state('');
-	let isCreatingTag = $state(false);
+	let category = $state<string | null>(null);
+	let categoryInput = $state('');
+	let isCreatingCategory = $state(false);
 
 	function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
@@ -19,32 +19,34 @@
 			title: title,
 			completed: false,
 			dueDate: dueDate || null,
-			tag
+			category
 		};
 
 		todos.update((todos) => [...todos, newTodo]);
 		closeForm();
 	}
 
-	function handleTagInputChange(event: Event) {
+	function handleCategoryInputChange(event: Event) {
 		const target = event.target as HTMLSelectElement;
-		if (target.value === 'create-new-tags') {
-			isCreatingTag = true;
-			tag = null;
+		if (target.value === 'create-new-categories') {
+			isCreatingCategory = true;
+			category = null;
 		}
 	}
 
-	function createTag(event: SubmitEvent) {
+	function createCategory(event: SubmitEvent) {
 		event.preventDefault();
-		tagInput = tagInput.trim();
-		if (!tagInput) return;
-		tags.update((currentTags) => {
-			let newTags = currentTags.includes(tagInput) ? currentTags : [...currentTags, tagInput];
-			tag = tagInput;
-			return newTags;
+		categoryInput = categoryInput.trim();
+		if (!categoryInput) return;
+		categories.update((currentcategories) => {
+			let newcategories = currentcategories.includes(categoryInput)
+				? currentcategories
+				: [...currentcategories, categoryInput];
+			category = categoryInput;
+			return newcategories;
 		});
-		tagInput = '';
-		isCreatingTag = false;
+		categoryInput = '';
+		isCreatingCategory = false;
 	}
 
 	function closeForm() {
@@ -52,10 +54,10 @@
 	}
 </script>
 
-{#if isCreatingTag}
-	<form onsubmit={createTag}>
-		<input type="text" placeholder="new tags" bind:value={tagInput} required />
-		<button type="submit">create tag</button>
+{#if isCreatingCategory}
+	<form onsubmit={createCategory}>
+		<input type="text" placeholder="new categories" bind:value={categoryInput} required />
+		<button type="submit">create category</button>
 	</form>
 {/if}
 
@@ -75,12 +77,17 @@
 		</div>
 		<div class="input-group">
 			<input type="date" bind:value={dueDate} min={DateTime.now().toISODate()} />
-			<select name="tag" id="tag" bind:value={tag} onchange={handleTagInputChange}>
-				<option value={null}>no tag</option>
-				{#each $tags as tag}
-					<option value={tag}>{tag}</option>
+			<select
+				name="category"
+				id="category"
+				bind:value={category}
+				onchange={handleCategoryInputChange}
+			>
+				<option value={null}>no category</option>
+				{#each $categories as category}
+					<option value={category}>{category}</option>
 				{/each}
-				<option value="create-new-tags">+ new tag</option>
+				<option value="create-new-categories">+ new category</option>
 			</select>
 		</div>
 		<div class="action flex justify-end gap-4">
