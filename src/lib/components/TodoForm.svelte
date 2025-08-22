@@ -4,11 +4,11 @@
 	import { DateTime } from 'luxon';
 	import Overlay from './Overlay.svelte';
 	import { isTodoFormOpen } from '$lib/store/appstate';
+	import CategoryForm from './CategoryForm.svelte';
 
 	let title = $state('');
 	let dueDate = $state('');
 	let category = $state<string | null>(null);
-	let categoryInput = $state('');
 	let isCreatingCategory = $state(false);
 
 	function handleSubmit(event: SubmitEvent) {
@@ -33,33 +33,18 @@
 			category = null;
 		}
 	}
-
-	function createCategory(event: SubmitEvent) {
-		event.preventDefault();
-		categoryInput = categoryInput.trim();
-		if (!categoryInput) return;
-		categories.update((currentcategories) => {
-			let newcategories = currentcategories.includes(categoryInput)
-				? currentcategories
-				: [...currentcategories, categoryInput];
-			category = categoryInput;
-			return newcategories;
-		});
-		categoryInput = '';
-		isCreatingCategory = false;
-	}
-
 	function closeForm() {
 		isTodoFormOpen.set(false);
 	}
 </script>
 
-{#if isCreatingCategory}
-	<form onsubmit={createCategory}>
-		<input type="text" placeholder="new categories" bind:value={categoryInput} required />
-		<button type="submit">create category</button>
-	</form>
-{/if}
+<CategoryForm
+	isOpen={isCreatingCategory}
+	onClose={() => (isCreatingCategory = false)}
+	onCreate={(newCategory) => {
+		category = newCategory;
+	}}
+/>
 
 <Overlay isOpen={$isTodoFormOpen} onClosed={() => {}}>
 	<form
