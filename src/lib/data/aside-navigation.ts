@@ -9,12 +9,12 @@ export type AsideNavigation = {
 
 export let asideNavigationData: AsideNavigation[] = [
 	{
-		title: 'Todos',
+		title: 'todos',
 		href: '/app/todos',
 		Icon: TodoLine
 	},
 	{
-		title: 'Completed',
+		title: 'completed',
 		href: '/app/completed',
 		Icon: CompleteLine
 	}
