@@ -5,6 +5,7 @@
 	import Overlay from './Overlay.svelte';
 	import { isTodoFormOpen } from '$lib/store/appstate';
 	import CategoryForm from './CategoryForm.svelte';
+	import BaseButton from './buttons/BaseButton.svelte';
 
 	let title = $state('');
 	let dueDate = $state('');
@@ -76,14 +77,8 @@
 			</select>
 		</div>
 		<div class="action flex justify-end gap-4">
-			<button
-				class="bg-gray-100 text-black capitalize py-1 px-4 cursor-pointer"
-				type="button"
-				onclick={closeForm}>cancel</button
-			>
-			<button class="bg-amber-400 text-black capitalize py-1 px-4 cursor-pointer" type="submit"
-				>add todo</button
-			>
+			<BaseButton text="cancel" type="button" variant="secondary" onClick={closeForm} />
+			<BaseButton text="add todos" type="submit" variant="primary" />
 		</div>
 	</form>
 </Overlay>
