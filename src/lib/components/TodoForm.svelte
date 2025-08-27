@@ -57,7 +57,7 @@
 				placeholder="your todo title"
 				bind:value={title}
 				required
-				class="outline-0"
+				class="outline-0 w-full"
 			/>
 		</div>
 		<div class="input-group">
