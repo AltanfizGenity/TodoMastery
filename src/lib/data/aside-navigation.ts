@@ -1,5 +1,5 @@
 import { CompleteLine, TodoLine } from '$lib/components/icons/line';
-import { AddCircleSolid } from '$lib/components/icons/solid';
+import TodayLine from '$lib/components/icons/line/TodayLine.svelte';
 
 export type AsideNavigation = {
 	title: string;
@@ -12,6 +12,11 @@ export let asideNavigationData: AsideNavigation[] = [
 		title: 'todos',
 		href: '/app/todos',
 		Icon: TodoLine
+	},
+	{
+		title: 'today',
+		href: '/app/today',
+		Icon: TodayLine
 	},
 	{
 		title: 'completed',
