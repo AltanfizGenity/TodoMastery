@@ -1,16 +1,18 @@
 <script lang="ts">
 	import { completeTodo, deleteTodo, incompleteTodo } from '$lib/store/todo';
-	import { DateTime } from 'luxon';
 	import { CircleLine, CircleCheckLine, TrashLine, CloseCircleLine } from './icons/line';
+	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
 	}
 
 	let { currentTodo }: TodoItemProps = $props();
-	let dueDateTime = $derived(currentTodo.dueDate ? DateTime.fromISO(currentTodo.dueDate) : null);
-	let dueDateText = $derived(dueDateTime ? dueDateTime.toFormat('dd LLLL') : null);
-	let isOverdue = $derived(dueDateTime ? dueDateTime < DateTime.now() : false);
+
+	function editTodo() {
+		todoPropertyId.set(currentTodo.id);
+		isTodoPropertyOpen.set(true);
+	}
 </script>
 
 {#snippet action(callback: () => void, Icon: SvelteComponent, className?: string)}
@@ -39,7 +41,10 @@
 	{/if}
 {/snippet}
 
-<div class="todo flex justify-between hover:bg-gray-50 p-2 cursor-pointer group">
+<button
+	class="todo flex justify-between hover:bg-gray-50 p-2 cursor-pointer group"
+	onclick={editTodo}
+>
 	<div class="todo-information flex gap-2 items-center">
 		<div class="complete-action group/complete-action hidden group-hover:flex">
 			{@render completeAction()}
@@ -51,4 +56,4 @@
 	<div class="todo-actions hidden group-hover:flex gap-2">
 		{@render action(() => deleteTodo(currentTodo.id), TrashLine)}
 	</div>
-</div>
+</button>
