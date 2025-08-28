@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { todos } from '$lib/store/todo';
+	import { getUncompletedTodos } from '$lib/utils/todos';
 	import TodoItem from './TodoItem.svelte';
 
-	let activeTodos = $derived($todos.filter((todo) => !todo.completed));
+	let activeTodos = $derived(getUncompletedTodos($todos));
 	let isTodosEmpty = $derived(activeTodos.length == 0);
 </script>
 
