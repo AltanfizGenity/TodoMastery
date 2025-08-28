@@ -1,23 +1,24 @@
 <script lang="ts">
 	import { todos } from '$lib/store/todo';
-	import { categories } from '$lib/store/userdata';
 	import { DateTime } from 'luxon';
 	import Overlay from './Overlay.svelte';
-	import { isTodoFormOpen } from '$lib/store/appstate';
+	import { isCreatingCategory, isTodoFormOpen } from '$lib/store/appstate';
 	import CategoryForm from './CategoryForm.svelte';
 	import BaseButton from './buttons/BaseButton.svelte';
+	import TodoCategoryInput from './forms/TodoCategoryInput.svelte';
+	import TodoTitleInput from './forms/TodoTitleInput.svelte';
+	import TodoDeadlineInput from './forms/TodoDeadlineInput.svelte';
 
 	let title = $state('');
 	let dueDate = $state('');
 	let category = $state<string | null>(null);
-	let isCreatingCategory = $state(false);
 
 	function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 
 		let newTodo: Todo = {
 			id: crypto.randomUUID(),
-			title: title,
+			title,
 			completed: false,
 			dueDate: dueDate || null,
 			category
@@ -27,21 +28,14 @@
 		closeForm();
 	}
 
-	function handleCategoryInputChange(event: Event) {
-		const target = event.target as HTMLSelectElement;
-		if (target.value === 'create-new-categories') {
-			isCreatingCategory = true;
-			category = null;
-		}
-	}
 	function closeForm() {
 		isTodoFormOpen.set(false);
 	}
 </script>
 
 <CategoryForm
-	isOpen={isCreatingCategory}
-	onClose={() => (isCreatingCategory = false)}
+	isOpen={$isCreatingCategory}
+	onClose={() => isCreatingCategory.set(false)}
 	onCreate={(newCategory) => {
 		category = newCategory;
 	}}
@@ -53,28 +47,11 @@
 		onsubmit={handleSubmit}
 	>
 		<div class="input-group">
-			<input
-				type="text"
-				placeholder="your todo title"
-				bind:value={title}
-				required
-				class="outline-0 w-full"
-			/>
+			<TodoTitleInput onTitleChange={(newTitle) => (title = newTitle)} {title} />
 		</div>
 		<div class="input-group">
-			<input type="date" bind:value={dueDate} min={DateTime.now().toISODate()} />
-			<select
-				name="category"
-				id="category"
-				bind:value={category}
-				onchange={handleCategoryInputChange}
-			>
-				<option value={null}>no category</option>
-				{#each $categories as category}
-					<option value={category}>{category}</option>
-				{/each}
-				<option value="create-new-categories">+ new category</option>
-			</select>
+			<TodoDeadlineInput bind:dueDate />
+			<TodoCategoryInput {category} />
 		</div>
 		<div class="action flex justify-end gap-4">
 			<BaseButton text="cancel" type="button" variant="secondary" onClick={closeForm} />
