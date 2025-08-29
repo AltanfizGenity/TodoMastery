@@ -1,17 +1,22 @@
 <script lang="ts">
-	import { todos } from '$lib/store/todo';
-	import { getUncompletedTodos } from '$lib/utils/todos';
+	import type { Todo } from '$lib/database/server/schema/todos-schema';
 	import TodoItem from './TodoItem.svelte';
 
-	let activeTodos = $derived(getUncompletedTodos($todos));
-	let isTodosEmpty = $derived(activeTodos.length == 0);
+	interface TodolistProps {
+		todos: Todo[];
+		emptyMessage?: string;
+	}
+
+	let { todos, emptyMessage }: TodolistProps = $props();
 </script>
 
-{#if isTodosEmpty}
-	<h2 class="text-gray-400">No todos yet</h2>
+{#if todos.length == 0}
+	{#if emptyMessage}
+		<h2 class="text-gray-400">{emptyMessage}</h2>
+	{/if}
 {:else}
 	<div class="todo-list flex flex-col">
-		{#each activeTodos as todo}
+		{#each todos as todo}
 			<TodoItem currentTodo={todo} />
 		{/each}
 	</div>

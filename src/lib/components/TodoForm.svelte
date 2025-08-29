@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { todos } from '$lib/store/todo';
-	import { DateTime } from 'luxon';
 	import Overlay from './Overlay.svelte';
 	import { isCreatingCategory, isTodoFormOpen } from '$lib/store/appstate';
 	import CategoryForm from './CategoryForm.svelte';
@@ -8,6 +7,7 @@
 	import TodoCategoryInput from './forms/TodoCategoryInput.svelte';
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
 	import TodoDeadlineInput from './forms/TodoDeadlineInput.svelte';
+	import type { NewTodo } from '$lib/database/server/schema/todos-schema';
 
 	let title = $state('');
 	let dueDate = $state('');
@@ -16,8 +16,7 @@
 	function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 
-		let newTodo: Todo = {
-			id: crypto.randomUUID(),
+		let newTodo: NewTodo = {
 			title,
 			completed: false,
 			dueDate: dueDate || null,
