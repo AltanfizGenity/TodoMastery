@@ -7,23 +7,36 @@
 	import TodoCategoryInput from './forms/TodoCategoryInput.svelte';
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
 	import TodoDeadlineInput from './forms/TodoDeadlineInput.svelte';
-	import type { NewTodo } from '$lib/database/server/schema/todos-schema';
+	import type { NewTodo, Todo } from '$lib/database/server/schema/todos-schema';
 
 	let title = $state('');
 	let dueDate = $state('');
 	let category = $state<string | null>(null);
 
-	function handleSubmit(event: SubmitEvent) {
+	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 
 		let newTodo: NewTodo = {
 			title,
-			completed: false,
 			dueDate: dueDate || null,
 			category
 		};
 
-		todos.update((todos) => [...todos, newTodo]);
+		// request database update to the server
+		try {
+			let response = await fetch('/api/todos', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(newTodo)
+			});
+
+			let result = (await response.json()) as Todo[];
+			todos.update((currentTodos) => [...currentTodos, ...result]);
+		} catch (error) {
+			alert(error);
+		}
 		closeForm();
 	}
 
@@ -50,7 +63,7 @@
 		</div>
 		<div class="input-group">
 			<TodoDeadlineInput bind:dueDate />
-			<TodoCategoryInput {category} />
+			<TodoCategoryInput bind:category />
 		</div>
 		<div class="action flex justify-end gap-4">
 			<BaseButton text="cancel" type="button" variant="secondary" onClick={closeForm} />

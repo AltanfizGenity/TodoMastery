@@ -2,6 +2,7 @@
 	import { completeTodo, deleteTodo, incompleteTodo } from '$lib/store/todo';
 	import { CircleLine, CircleCheckLine, TrashLine, CloseCircleLine } from './icons/line';
 	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
+	import type { Todo } from '$lib/database/server/schema/todos-schema';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
@@ -41,9 +42,17 @@
 	{/if}
 {/snippet}
 
-<button
-	class="todo flex justify-between hover:bg-gray-50 p-2 cursor-pointer group"
+<div
+	role="button"
+	tabindex="0"
+	class="todo flex justify-between hover:bg-gray-50 p-2 cursor-pointer group w-full text-left"
+	aria-label="Edit todo"
 	onclick={editTodo}
+	onkeydown={(e) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			editTodo();
+		}
+	}}
 >
 	<div class="todo-information flex gap-2 items-center">
 		<div class="complete-action group/complete-action hidden group-hover:flex">
@@ -56,4 +65,4 @@
 	<div class="todo-actions hidden group-hover:flex gap-2">
 		{@render action(() => deleteTodo(currentTodo.id), TrashLine)}
 	</div>
-</button>
+</div>

@@ -5,7 +5,7 @@ export const todosTable = pgTable('todos', {
 	title: text().notNull(),
 	category: text(),
 	dueDate: date(),
-	completed: boolean().notNull().default(false),
+	completed: boolean().default(false).notNull(),
 	createdAt: timestamp().defaultNow().notNull()
 });
 

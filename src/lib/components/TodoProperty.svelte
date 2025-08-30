@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Todo } from '$lib/database/server/schema/todos-schema';
 	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
 	import { todos } from '$lib/store/todo';
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
@@ -8,7 +9,7 @@
 
 	function closeModal() {
 		isTodoPropertyOpen.set(false);
-		todoPropertyId.set('');
+		todoPropertyId.set(null);
 	}
 
 	function changeTodoTitle(newTitle: string) {
