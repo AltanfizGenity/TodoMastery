@@ -8,6 +8,7 @@
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
 	import TodoDeadlineInput from './forms/TodoDeadlineInput.svelte';
 	import type { NewTodo, Todo } from '$lib/database/server/schema/todos-schema';
+	import { createTodo } from '$lib/database/client/todo/todo-db';
 
 	let title = $state('');
 	let dueDate = $state('');
@@ -23,20 +24,14 @@
 		};
 
 		// request database update to the server
-		try {
-			let response = await fetch('/api/todos', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(newTodo)
-			});
+		let result = await createTodo(newTodo);
 
-			let result = (await response.json()) as Todo[];
-			todos.update((currentTodos) => [...currentTodos, ...result]);
-		} catch (error) {
-			alert(error);
+		if (!result.success) {
+			alert('There something error on server');
+		} else {
+			todos.update((currentTodos) => [...currentTodos, ...result.data]);
 		}
+
 		closeForm();
 	}
 
