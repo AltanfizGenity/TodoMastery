@@ -4,6 +4,7 @@
 	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
 	import type { Todo } from '$lib/database/server/schema/todos-schema';
 	import { deleteTodoFromDatabase } from '$lib/api/todos/delete';
+	import { makeTodoCompleteToDatabase } from '$lib/api/todos/modify';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
@@ -29,7 +30,10 @@
 {#snippet action(callback: () => void, Icon: SvelteComponent, className?: string)}
 	<button
 		class={`cursor-pointer flex items-center justify-center hover:text-amber-500 ${className} w-6 h-6`}
-		onclick={callback}
+		onclick={(event) => {
+			event.stopPropagation();
+			callback();
+		}}
 	>
 		<Icon />
 	</button>
@@ -39,13 +43,9 @@
 	{#if currentTodo.completed}
 		{@render action(() => incompleteTodo(currentTodo.id), CloseCircleLine)}
 	{:else}
+		{@render action(() => {}, CircleLine, 'group-hover/complete-action:hidden')}
 		{@render action(
-			() => completeTodo(currentTodo.id),
-			CircleLine,
-			'group-hover/complete-action:hidden'
-		)}
-		{@render action(
-			() => completeTodo(currentTodo.id),
+			() => makeTodoCompleteToDatabase(currentTodo.id),
 			CircleCheckLine,
 			'hidden group-hover/complete-action:flex'
 		)}

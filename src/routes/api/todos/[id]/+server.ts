@@ -19,3 +19,23 @@ export async function DELETE({ params }) {
 	const deletedTodos = await db.delete(todosTable).where(eq(todosTable.id, todoId)).returning();
 	return json(deletedTodos[0], { status: 200 });
 }
+
+export async function PATCH({ params, request }) {
+	const todoId = Number(params.id);
+	const body = await request.json();
+
+	if (isNaN(todoId)) {
+		throw error(400, 'Invalid task ID');
+	}
+
+	const updates: Record<string, any> = {};
+
+	if ('completed' in body) updates.completed = body.completed;
+
+	if (Object.keys(updates).length === 0) {
+		throw error(400, 'No valid field to update');
+	}
+
+	await db.update(todosTable).set(updates).where(eq(todosTable.id, todoId));
+	return json({ status: 200 });
+}
