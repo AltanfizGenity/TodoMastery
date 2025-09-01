@@ -5,11 +5,16 @@ import { and, eq } from 'drizzle-orm';
 
 export async function GET({ url }) {
 	let completedParam = url.searchParams.get('completed');
+	let dueDateParam = url.searchParams.get('dueDate');
 	let filteredData = [];
 
 	if (completedParam) {
 		const completed = completedParam === 'true';
 		filteredData.push(eq(todosTable.completed, completed));
+	}
+
+	if (dueDateParam) {
+		filteredData.push(eq(todosTable.dueDate, dueDateParam));
 	}
 
 	const todos = await db
