@@ -1,6 +1,8 @@
+import type { Todo } from '$lib/database/server/schema/todos-schema.js';
+
 export async function load({ fetch }) {
 	const response = await fetch('/api/todos');
-	const todos = await response.json();
+	const todos = (await response.json()) as Todo[];
 	return {
 		todos,
 		pageTitle: 'todos'

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { completeTodo, deleteTodo, incompleteTodo } from '$lib/store/todo';
+	import { completeTodo, incompleteTodo, todos } from '$lib/store/todo';
 	import { CircleLine, CircleCheckLine, TrashLine, CloseCircleLine } from './icons/line';
 	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
 	import type { Todo } from '$lib/database/server/schema/todos-schema';
+	import { deleteTodoFromDatabase } from '$lib/api/todos/delete';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
@@ -13,6 +14,15 @@
 	function editTodo() {
 		todoPropertyId.set(currentTodo.id);
 		isTodoPropertyOpen.set(true);
+	}
+
+	async function deleteTodo(todoId: number) {
+		let result = await deleteTodoFromDatabase(todoId);
+		if (!result.success) {
+			alert('delete failed');
+			console.log('delete failed: ', result.errorMessage);
+		}
+		todos.update((prev) => prev.filter((todo) => todo.id !== todoId));
 	}
 </script>
 

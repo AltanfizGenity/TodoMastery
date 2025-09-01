@@ -1,4 +1,5 @@
-interface ResponseResult<T> {
+type ResponseResult<T> = {
 	success: boolean;
-	data: T;
-}
+	data: T | null;
+	errorMessage?: string;
+};
