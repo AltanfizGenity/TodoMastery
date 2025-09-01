@@ -1,5 +1,13 @@
 <script lang="ts">
 	import TodoCompletedList from '$lib/components/TodoCompletedList.svelte';
+	import { todos } from '$lib/store/todo.js';
+	import { onMount } from 'svelte';
+
+	let { data } = $props();
+
+	onMount(() => {
+		todos.set(data.todos);
+	});
 </script>
 
 <div class="todo-container flex flex-col gap-8">
