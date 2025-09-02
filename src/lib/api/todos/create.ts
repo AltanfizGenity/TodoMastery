@@ -1,6 +1,6 @@
 import type { NewTodo, Todo } from '$lib/database/server/schema/todos-schema';
 
-export async function createTodoIntoDatabase(newTodo: NewTodo): Promise<ResponseResult<Todo[]>> {
+export async function createTodoIntoDatabase(newTodo: NewTodo): Promise<ApiResponseResult<Todo[]>> {
 	try {
 		let response = await fetch('/api/todos', {
 			method: 'POST',

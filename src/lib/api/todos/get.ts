@@ -1,6 +1,6 @@
 import type { Todo } from '$lib/database/server/schema/todos-schema';
 
-export async function fetchTodosFromDatabase() {
+export async function fetchTodosFromDatabase(): Promise<ApiResponseResult<Todo[]>> {
 	try {
 		const response = await fetch('/api/todos');
 

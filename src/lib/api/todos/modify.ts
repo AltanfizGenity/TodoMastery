@@ -1,6 +1,9 @@
 import type { Todo } from '$lib/database/server/schema/todos-schema';
 
-export async function makeTodoCompleteToDatabase(todoId: number, completed: boolean = true) {
+export async function makeTodoCompleteToDatabase(
+	todoId: number,
+	completed: boolean = true
+): Promise<ApiResponseResult<Todo>> {
 	try {
 		if (!Number.isFinite(todoId)) {
 			return { success: false, errorMessage: 'Invalid todo ID', data: null };

@@ -1,6 +1,6 @@
 import type { Todo } from '$lib/database/server/schema/todos-schema';
 
-export async function deleteTodoFromDatabase(todoId: number): Promise<ResponseResult<Todo[]>> {
+export async function deleteTodoFromDatabase(todoId: number): Promise<ApiResponseResult<Todo[]>> {
 	try {
 		if (!Number.isFinite(todoId)) {
 			return { success: false, errorMessage: 'Invalid todo ID', data: null };
