@@ -36,6 +36,10 @@ export async function PATCH({ params, request }) {
 		throw error(400, 'No valid field to update');
 	}
 
-	await db.update(todosTable).set(updates).where(eq(todosTable.id, todoId));
-	return json({ status: 200 });
+	let updatedTodos = await db
+		.update(todosTable)
+		.set(updates)
+		.where(eq(todosTable.id, todoId))
+		.returning();
+	return json(updatedTodos[0], { status: 200 });
 }

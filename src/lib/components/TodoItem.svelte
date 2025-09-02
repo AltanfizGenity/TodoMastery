@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { completeTodo, incompleteTodo, todos } from '$lib/store/todo';
+	import { todos } from '$lib/store/todo';
 	import { CircleLine, CircleCheckLine, TrashLine, CloseCircleLine } from './icons/line';
 	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
 	import type { Todo } from '$lib/database/server/schema/todos-schema';
@@ -17,13 +17,25 @@
 		isTodoPropertyOpen.set(true);
 	}
 
-	async function deleteTodo(todoId: number) {
-		let result = await deleteTodoFromDatabase(todoId);
+	async function deleteTodo() {
+		let result = await deleteTodoFromDatabase(currentTodo.id);
 		if (!result.success) {
-			alert('delete failed');
 			console.log('delete failed: ', result.errorMessage);
+			return;
 		}
-		todos.update((prev) => prev.filter((todo) => todo.id !== todoId));
+		todos.update((prev) => prev.filter((todo) => todo.id !== currentTodo.id));
+	}
+
+	async function updateTodoCompletion(completed: boolean = true) {
+		let result = await makeTodoCompleteToDatabase(currentTodo.id, completed);
+
+		if (!result.success) {
+			console.log('complete failed: ', result.errorMessage);
+			return;
+		}
+
+		let updatedTodo = result.data as Todo;
+		todos.update((prev) => prev.map((todo) => (todo.id === currentTodo.id ? updatedTodo : todo)));
 	}
 </script>
 
@@ -41,11 +53,11 @@
 
 {#snippet completeAction()}
 	{#if currentTodo.completed}
-		{@render action(() => incompleteTodo(currentTodo.id), CloseCircleLine)}
+		{@render action(() => updateTodoCompletion(false), CloseCircleLine)}
 	{:else}
 		{@render action(() => {}, CircleLine, 'group-hover/complete-action:hidden')}
 		{@render action(
-			() => makeTodoCompleteToDatabase(currentTodo.id),
+			() => updateTodoCompletion(),
 			CircleCheckLine,
 			'hidden group-hover/complete-action:flex'
 		)}
@@ -73,6 +85,6 @@
 		</h3>
 	</div>
 	<div class="todo-actions hidden group-hover:flex gap-2">
-		{@render action(() => deleteTodo(currentTodo.id), TrashLine)}
+		{@render action(deleteTodo, TrashLine)}
 	</div>
 </div>

@@ -1,6 +1,6 @@
 import type { Todo } from '$lib/database/server/schema/todos-schema';
 
-export async function makeTodoCompleteToDatabase(todoId: number) {
+export async function makeTodoCompleteToDatabase(todoId: number, completed: boolean = true) {
 	try {
 		if (!Number.isFinite(todoId)) {
 			return { success: false, errorMessage: 'Invalid todo ID', data: null };
@@ -8,7 +8,7 @@ export async function makeTodoCompleteToDatabase(todoId: number) {
 		const response = await fetch(`/api/todos/${todoId}`, {
 			method: 'PATCH',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ completed: true })
+			body: JSON.stringify({ completed })
 		});
 
 		if (!response.ok) {
@@ -16,7 +16,7 @@ export async function makeTodoCompleteToDatabase(todoId: number) {
 			return { success: false, errorMessage, data: null };
 		}
 
-		let data = (await response.json()) as Todo[];
+		let data = (await response.json()) as Todo;
 		return { success: true, data };
 	} catch (error) {
 		return { success: false, data: null, errorMessage: 'Network or server error' };
