@@ -3,8 +3,8 @@
 	import { CircleLine, CircleCheckLine, TrashLine, CloseCircleLine } from './icons/line';
 	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
 	import type { Todo } from '$lib/database/server/schema/todos-schema';
-	import { deleteTodoFromDatabase } from '$lib/api/todos/delete';
-	import { makeTodoCompleteToDatabase } from '$lib/api/todos/modify';
+	import { deleteTodoFromDatabase } from '$lib/api/db/todos/delete';
+	import { makeTodoCompleteToDatabase } from '$lib/api/db/todos/modify';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
