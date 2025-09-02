@@ -8,7 +8,7 @@
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
 	import TodoDeadlineInput from './forms/TodoDeadlineInput.svelte';
 	import type { NewTodo } from '$lib/database/server/schema/todos-schema';
-	import { createTodoIntoDatabase } from '$lib/api/todos/create';
+	import { createTodoIntoDatabase } from '$lib/api/db/todos/create';
 
 	let title = $state('');
 	let dueDate = $state('');
