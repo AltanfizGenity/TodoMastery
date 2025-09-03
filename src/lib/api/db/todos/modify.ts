@@ -1,7 +1,7 @@
 import type { Todo } from '$lib/database/server/schema/todos-schema';
 import { apiFetch } from '$lib/utils/api';
 
-export async function makeTodoCompleteToDatabase(
+export async function updateTodoCompletionDB(
 	todoId: number,
 	completed: boolean = true
 ): Promise<ApiResponseResult<Todo>> {

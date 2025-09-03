@@ -1,3 +1,5 @@
+import type { Todo } from '$lib/database/server/schema/todos-schema';
+
 export function getUncompletedTodos(todos: Todo[]) {
 	return todos.filter((todo) => !todo.completed);
 }

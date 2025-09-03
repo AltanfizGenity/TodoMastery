@@ -3,8 +3,8 @@
 	import { CircleLine, CircleCheckLine, TrashLine, CloseCircleLine } from './icons/line';
 	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
 	import type { Todo } from '$lib/database/server/schema/todos-schema';
-	import { deleteTodoFromDatabase } from '$lib/api/db/todos/delete';
-	import { makeTodoCompleteToDatabase } from '$lib/api/db/todos/modify';
+	import { deleteTodoDB } from '$lib/api/db/todos/delete';
+	import { updateTodoCompletionDB } from '$lib/api/db/todos/modify';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
@@ -18,7 +18,7 @@
 	}
 
 	async function deleteTodo() {
-		let result = await deleteTodoFromDatabase(currentTodo.id);
+		let result = await deleteTodoDB(currentTodo.id);
 		if (!result.success) {
 			console.log('delete failed: ', result.errorMessage);
 			return;
@@ -27,7 +27,7 @@
 	}
 
 	async function updateTodoCompletion(completed: boolean = true) {
-		let result = await makeTodoCompleteToDatabase(currentTodo.id, completed);
+		let result = await updateTodoCompletionDB(currentTodo.id, completed);
 
 		if (!result.success) {
 			console.log('complete failed: ', result.errorMessage);
