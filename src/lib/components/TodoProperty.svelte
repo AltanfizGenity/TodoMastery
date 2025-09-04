@@ -19,16 +19,30 @@
 		todoPropertyId.set(null);
 	}
 
+	function shouldUpdate(original: Todo, updated: Todo) {
+		return JSON.stringify(original) !== JSON.stringify(updated);
+	}
+
 	async function changeTodoTitle(newTitle: string) {
-		await updateTodoProperty('title', newTitle);
+		let tempUpdatedTodo: Todo = { ...selectedTodo!, title: newTitle };
+
+		if (shouldUpdate(selectedTodo!, tempUpdatedTodo)) {
+			await updateTodoProperty('title', newTitle);
+		}
 	}
 
 	async function changeDueDate(newDate: string) {
-		await updateTodoProperty('dueDate', newDate);
+		let tempUpdatedTodo: Todo = { ...selectedTodo!, dueDate: newDate };
+		if (shouldUpdate(selectedTodo!, tempUpdatedTodo)) {
+			await updateTodoProperty('dueDate', newDate);
+		}
 	}
 
 	async function changeCategory(newCategory: string) {
-		await updateTodoProperty('category', newCategory);
+		let tempUpdatedTodo: Todo = { ...selectedTodo!, category: newCategory };
+		if (shouldUpdate(selectedTodo!, tempUpdatedTodo)) {
+			await updateTodoProperty('category', newCategory);
+		}
 	}
 
 	async function updateTodoProperty<K extends keyof Todo>(key: K, value: Todo[K]) {
@@ -39,6 +53,7 @@
 		}
 
 		let response = await updateTodoDB(selectedTodo.id, updatedField);
+		console.log(true);
 		let updatedTodo = response.data as Todo;
 		todos.update((prev) => prev.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo)));
 	}
