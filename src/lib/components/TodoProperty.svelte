@@ -6,6 +6,7 @@
 	import TodoCategoryInput from './forms/TodoCategoryInput.svelte';
 	import TodoDeadlineInput from './forms/TodoDeadlineInput.svelte';
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
+	import { CloseLine } from './icons/line';
 	import Overlay from './Overlay.svelte';
 
 	let selectedTodo = $state<Todo>();
@@ -56,10 +57,12 @@
 	<Overlay isOpen={$isTodoPropertyOpen} onClosed={() => {}}>
 		<div class="todo-property-container bg-white p-6 max-w-4/5 w-128 rounded-xl">
 			<header class="flex justify-end">
-				<button onclick={closeModal}>❌</button>
+				<button onclick={closeModal} class="w-6 cursor-pointer hover:text-amber-500">
+					<CloseLine />
+				</button>
 			</header>
 			<br />
-			<div class="properties">
+			<div class="properties flex flex-col gap-4">
 				<div class="title">
 					<TodoTitleInput
 						title={selectedTodo.title}
