@@ -1,6 +1,5 @@
 <script lang="ts">
 	import TodoList from '$lib/components/TodoList.svelte';
-	import TodoProperty from '$lib/components/TodoProperty.svelte';
 	import { todos } from '$lib/store/todo.js';
 	import { onMount } from 'svelte';
 
