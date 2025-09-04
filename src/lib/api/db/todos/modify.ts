@@ -11,3 +11,14 @@ export async function updateTodoCompletionDB(
 		body: JSON.stringify({ completed })
 	});
 }
+
+export async function updateTodoDB(
+	todoId: number,
+	updateField: Partial<Todo>
+): Promise<ApiResponseResult<Todo>> {
+	return apiFetch(`/api/todos/${todoId}`, {
+		method: 'PATCH',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ ...updateField })
+	});
+}
