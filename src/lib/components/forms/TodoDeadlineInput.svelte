@@ -2,10 +2,21 @@
 	import { DateTime } from 'luxon';
 
 	interface InputProps {
-		dueDate: string;
+		dueDate: string | null;
+		onInputChange?: (newDate: string) => void;
 	}
 
-	let { dueDate = $bindable() }: InputProps = $props();
+	let { dueDate = $bindable(), onInputChange }: InputProps = $props();
+
+	const handleDateChange = (event: Event) => {
+		let newDate = (event.target as HTMLInputElement).value;
+		onInputChange?.(newDate);
+	};
 </script>
 
-<input type="date" bind:value={dueDate} min={DateTime.now().toISODate()} />
+<input
+	type="date"
+	bind:value={dueDate}
+	min={DateTime.now().toISODate()}
+	oninput={handleDateChange}
+/>

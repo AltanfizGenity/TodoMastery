@@ -4,20 +4,22 @@
 
 	interface InputProps {
 		category: string | null;
+		onInputChange?: (newCategory: string) => void;
 	}
 
-	let { category = $bindable() }: InputProps = $props();
+	let { category = $bindable(), onInputChange }: InputProps = $props();
 
 	function handleCategoryInputChange(event: Event) {
-		const target = event.target as HTMLSelectElement;
-		if (target.value === 'create-new-categories') {
+		const newCategory = (event.target as HTMLSelectElement).value;
+		if (newCategory === 'create-new-categories') {
 			isCreatingCategory.set(true);
 			category = null;
 		}
+		onInputChange?.(newCategory);
 	}
 </script>
 
-<select name="category" id="category" bind:value={category} onchange={handleCategoryInputChange}>
+<select name="category" id="category" bind:value={category} oninput={handleCategoryInputChange}>
 	<option value={null}>no category</option>
 	{#each $categories as category}
 		<option value={category}>{category}</option>
