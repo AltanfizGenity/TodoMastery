@@ -1,4 +1,5 @@
 import { boolean, date, integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { createInsertSchema } from 'drizzle-zod';
 
 export const todosTable = pgTable('todos', {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -9,5 +10,6 @@ export const todosTable = pgTable('todos', {
 	createdAt: timestamp().defaultNow().notNull()
 });
 
+export const TodoSchema = createInsertSchema(todosTable);
 export type Todo = typeof todosTable.$inferSelect;
 export type NewTodo = typeof todosTable.$inferInsert;
