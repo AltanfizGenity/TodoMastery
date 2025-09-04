@@ -15,5 +15,4 @@
 <div class="todo-container flex flex-col gap-8">
 	<h1 class="text-2xl font-bold">Todos</h1>
 	<TodoList todos={uncompletedTodos} emptyMessage="There nothing to do" />
-	<TodoProperty />
 </div>

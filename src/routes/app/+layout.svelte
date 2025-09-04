@@ -1,6 +1,7 @@
 <script lang="ts">
 	import AsideNavigation from '$lib/components/AsideNavigation.svelte';
 	import TodoForm from '$lib/components/TodoForm.svelte';
+	import TodoProperty from '$lib/components/TodoProperty.svelte';
 
 	let { children } = $props();
 </script>
@@ -11,4 +12,5 @@
 		{@render children()}
 	</main>
 	<TodoForm />
+	<TodoProperty />
 </div>
