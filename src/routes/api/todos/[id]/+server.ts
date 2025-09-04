@@ -1,5 +1,5 @@
 import { db } from '$lib/database/server';
-import { todosTable } from '$lib/database/server/schema/todos-schema';
+import { TodoSchema, todosTable, type Todo } from '$lib/database/server/schema/todos-schema';
 import { error, json } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 
@@ -22,7 +22,7 @@ export async function DELETE({ params }) {
 
 export async function PATCH({ params, request }) {
 	const todoId = Number(params.id);
-	const body = await request.json();
+	const body = (await request.json()) as Partial<Todo>;
 
 	if (isNaN(todoId)) {
 		throw error(400, 'Invalid task ID');
@@ -30,7 +30,13 @@ export async function PATCH({ params, request }) {
 
 	const updates: Record<string, any> = {};
 
-	if ('completed' in body) updates.completed = body.completed;
+	let todoKeys = TodoSchema.keyof().options as Array<string>;
+
+	Object.keys(body).forEach((key) => {
+		if (todoKeys.includes(key)) {
+			updates[key] = body[key as keyof Todo];
+		}
+	});
 
 	if (Object.keys(updates).length === 0) {
 		throw error(400, 'No valid field to update');
