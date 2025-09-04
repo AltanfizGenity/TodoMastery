@@ -19,8 +19,8 @@
 		todoPropertyId.set(null);
 	}
 
-	function shouldUpdate(original: Todo, updated: Todo) {
-		return JSON.stringify(original) !== JSON.stringify(updated);
+	function shouldUpdate<K extends keyof Todo>(original: Todo, key: K, newValue: Todo[K]) {
+		return original[key] !== newValue;
 	}
 
 	const changeTodoTitle = async (newTitle: string) => {
@@ -41,9 +41,8 @@
 		}
 
 		let updatedField = { [key]: value };
-		let tempUpdatedTodo: Todo = { ...selectedTodo, ...updatedField };
 
-		if (!shouldUpdate(selectedTodo, tempUpdatedTodo)) {
+		if (!shouldUpdate(selectedTodo, key, value)) {
 			return;
 		}
 
