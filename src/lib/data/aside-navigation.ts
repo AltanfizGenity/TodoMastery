@@ -7,7 +7,7 @@ export type AsideNavigation = {
 	Icon: SvelteComponent;
 };
 
-export let asideNavigationData: AsideNavigation[] = [
+export let mainAsideNav: AsideNavigation[] = [
 	{
 		title: 'todos',
 		href: '/app/todos',
@@ -22,5 +22,13 @@ export let asideNavigationData: AsideNavigation[] = [
 		title: 'completed',
 		href: '/app/completed',
 		Icon: CompleteLine
+	}
+];
+
+export let customizationAsideNav: AsideNavigation[] = [
+	{
+		title: 'categories',
+		href: '/app/categories',
+		Icon: TodoLine
 	}
 ];
