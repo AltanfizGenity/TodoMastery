@@ -9,18 +9,20 @@
 	import TodoDeadlineInput from './forms/TodoDeadlineInput.svelte';
 	import type { NewTodo } from '$lib/database/server/schema/todos-schema';
 	import { createTodoDB } from '$lib/api/db/todos/create';
+	import { categories } from '$lib/store/userdata';
 
 	let title = $state('');
 	let dueDate = $state('');
-	let category = $state<string | null>(null);
+	let categoryId = $state<number | null>(null);
 
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 
+		let category = $categories.find((category) => category.id === categoryId);
 		let newTodo: NewTodo = {
 			title,
 			dueDate: dueDate || null,
-			category
+			category: category?.name || null
 		};
 
 		// request database update to the server
@@ -43,9 +45,12 @@
 
 <CategoryForm
 	isOpen={$isCreatingCategory}
-	onClose={() => isCreatingCategory.set(false)}
+	onClose={() => {
+		isCreatingCategory.set(false);
+		categoryId = null;
+	}}
 	onCreate={(newCategory) => {
-		category = newCategory;
+		categoryId = newCategory.id;
 	}}
 />
 
@@ -59,7 +64,10 @@
 		</div>
 		<div class="input-group">
 			<TodoDeadlineInput bind:dueDate />
-			<TodoCategoryInput bind:category />
+			<TodoCategoryInput
+				onInputChange={(newCategoryId) => (categoryId = newCategoryId)}
+				bind:categoryId
+			/>
 		</div>
 		<div class="action flex justify-end gap-4">
 			<BaseButton text="cancel" type="button" variant="secondary" onClick={closeForm} />

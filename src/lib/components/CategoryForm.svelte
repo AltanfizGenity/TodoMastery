@@ -1,11 +1,12 @@
 <script lang="ts">
+	import type { Category, NewCategory } from '$lib/database/server/schema/categories-schema';
 	import { categories } from '$lib/store/userdata';
 	import Overlay from './Overlay.svelte';
 
 	interface CategoryFormProps {
 		isOpen: boolean;
 		onClose: () => void;
-		onCreate?: (newCategory: string) => void;
+		onCreate?: (newCategory: Category) => void;
 	}
 
 	let categoryInput = $state('');
@@ -13,8 +14,19 @@
 
 	function createCategory(event: SubmitEvent) {
 		event.preventDefault();
-		categories.update((categories) => [...categories, categoryInput]);
-		onCreate?.(categoryInput);
+		const newCategory: NewCategory = {
+			name: categoryInput
+		};
+
+		let fakeCategory: Category = {
+			id: $categories.length + 1,
+			name: newCategory.name,
+			updated_at: new Date(),
+			created_at: new Date()
+		};
+
+		categories.update((categories) => [...categories, fakeCategory]);
+		onCreate?.(fakeCategory);
 		closeForm();
 	}
 

@@ -3,8 +3,8 @@
 	import { isCreatingCategory } from '$lib/store/appstate';
 	import { categories } from '$lib/store/userdata';
 
-	function deleteCategory(categoryName: string) {
-		categories.update((categories) => categories.filter((category) => category !== categoryName));
+	function deleteCategory() {
+		// categories.update((categories) => categories.filter((category) => category !== categoryName));
 	}
 
 	function openCategoryForm() {
@@ -18,12 +18,11 @@
 		{#each $categories as category}
 			<li class="flex justify-between w-128 max-w-3/4">
 				<div class="property flex gap-2">
-					<div class="icon">icon</div>
-					<div class="title">{category}</div>
+					<div class="title">{category.name}</div>
 				</div>
 				<div class="actions">
 					<button>edit</button>
-					<button onclick={() => deleteCategory(category)}>delete</button>
+					<button onclick={() => deleteCategory()}>delete</button>
 				</div>
 			</li>
 		{/each}

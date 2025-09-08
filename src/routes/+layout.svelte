@@ -1,19 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import './app.css';
-	import { todos } from '$lib/store/todo';
-	import { fetchCategories, saveCateogies, saveTodos } from '$lib/database/todo';
-	import { categories } from '$lib/store/userdata';
+	// import { todos } from '$lib/store/todo';
+	// import { fetchCategories, saveTodos } from '$lib/database/todo';
 	let { children } = $props();
 
 	onMount(() => {
-		categories.set(fetchCategories());
+		// It fetct all required data from database
+		// categories.set(fetchCategories());
 	});
 
-	$effect(() => {
-		saveTodos($todos);
-		saveCateogies($categories);
-	});
+	// $effect(() => {
+	// 	saveTodos($todos);
+	// });
 </script>
 
 <div class="app">
