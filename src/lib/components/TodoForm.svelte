@@ -22,7 +22,7 @@
 		let newTodo: NewTodo = {
 			title,
 			dueDate: dueDate || null,
-			category: category?.name || null
+			category_id: category?.id || null
 		};
 
 		// request database update to the server

@@ -2,8 +2,14 @@
 	import AsideNavigation from '$lib/components/AsideNavigation.svelte';
 	import TodoForm from '$lib/components/TodoForm.svelte';
 	import TodoProperty from '$lib/components/TodoProperty.svelte';
+	import { categories } from '$lib/store/userdata';
+	import { onMount } from 'svelte';
 
-	let { children } = $props();
+	let { children, data } = $props();
+
+	onMount(() => {
+		categories.set(data.categories);
+	});
 </script>
 
 <div class="app-container flex min-h-screen h-screen">
