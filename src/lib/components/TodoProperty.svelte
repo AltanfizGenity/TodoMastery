@@ -32,8 +32,8 @@
 		await updateTodoProperty('dueDate', newDate);
 	};
 
-	const changeCategory = async (newCategory: string) => {
-		await updateTodoProperty('category', newCategory);
+	const changeCategory = async (newCategoryId: number) => {
+		await updateTodoProperty('category_id', newCategoryId);
 	};
 
 	async function updateTodoProperty<K extends keyof Todo>(key: K, value: Todo[K]) {
@@ -72,7 +72,7 @@
 				</div>
 				<ul class="property-list">
 					<TodoDeadlineInput bind:dueDate={selectedTodo.dueDate} onInputChange={changeDueDate} />
-					<TodoCategoryInput bind:category={selectedTodo.category} onInputChange={changeCategory} />
+					<TodoCategoryInput categoryId={selectedTodo.category_id} onInputChange={changeCategory} />
 				</ul>
 			</div>
 		</div>
