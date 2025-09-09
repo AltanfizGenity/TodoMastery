@@ -1,13 +1,12 @@
-import { integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, text } from 'drizzle-orm/pg-core';
+import { created_at, id, updated_at } from './common-schema';
 import { createInsertSchema } from 'drizzle-zod';
 
 export const categoriesTable = pgTable('categories', {
-	id: integer().primaryKey().generatedAlwaysAsIdentity(),
+	id,
 	name: text().notNull().unique(),
-	updated_at: timestamp()
-		.defaultNow()
-		.$onUpdate(() => new Date()),
-	created_at: timestamp().defaultNow().notNull()
+	created_at,
+	updated_at
 });
 
 export const CategorySchema = createInsertSchema(categoriesTable);

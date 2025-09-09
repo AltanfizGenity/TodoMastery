@@ -1,17 +1,16 @@
-import { boolean, date, integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { boolean, date, integer, pgTable, text } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { categoriesTable } from './categories-schema';
+import { created_at, id, updated_at } from './common-schema';
 
 export const todosTable = pgTable('todos', {
-	id: integer().primaryKey().generatedAlwaysAsIdentity(),
+	id,
 	title: text().notNull(),
 	category_id: integer().references(() => categoriesTable.id),
 	dueDate: date(),
 	completed: boolean().default(false).notNull(),
-	update_at: timestamp()
-		.defaultNow()
-		.$onUpdate(() => new Date()),
-	created_at: timestamp().defaultNow().notNull()
+	created_at,
+	updated_at
 });
 
 export const TodoSchema = createInsertSchema(todosTable);
