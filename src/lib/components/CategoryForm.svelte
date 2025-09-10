@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { createCategoryDB } from '$lib/api/db/category/create';
 	import type { Category, NewCategory } from '$lib/database/server/schema/categories-schema';
 	import { categories } from '$lib/store/userdata';
 	import Overlay from './Overlay.svelte';
@@ -12,21 +13,21 @@
 	let categoryInput = $state('');
 	let { isOpen, onClose, onCreate }: CategoryFormProps = $props();
 
-	function createCategory(event: SubmitEvent) {
+	async function createCategory(event: SubmitEvent) {
 		event.preventDefault();
 		const newCategory: NewCategory = {
 			name: categoryInput
 		};
+		let result = await createCategoryDB(newCategory);
 
-		let fakeCategory: Category = {
-			id: $categories.length + 1,
-			name: newCategory.name,
-			updated_at: new Date(),
-			created_at: new Date()
-		};
+		if (!result.success) {
+			console.log('create category failed: ', result.errorMessage);
+			return;
+		}
 
-		categories.update((categories) => [...categories, fakeCategory]);
-		onCreate?.(fakeCategory);
+		let yieldedCategory = result.data as Category;
+		categories.update((categories) => [...categories, yieldedCategory]);
+		onCreate?.(yieldedCategory);
 		closeForm();
 	}
 
