@@ -21,7 +21,7 @@
 
 <li class="flex justify-between w-128 max-w-3/4 group px-4 py-2 hover:bg-gray-50">
 	<div class="property flex gap-2">
-		<div class="title">{currentCategory.name}</div>
+		<div class="title capitalize">{currentCategory.name}</div>
 	</div>
 	<div class="actions gap-2 hidden group-hover:flex">
 		<IconButton Icon={EditBoxLine} />
