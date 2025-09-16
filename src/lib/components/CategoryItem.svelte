@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { deleteCategoryDB } from '$lib/api/db/category/delete';
 	import type { Category } from '$lib/database/server/schema/categories-schema';
 	import { categories } from '$lib/store/userdata';
 	import IconButton from './buttons/IconButton.svelte';
@@ -10,8 +11,13 @@
 
 	let { currentCategory }: CategoryItemProps = $props();
 
-	function deleteCategory() {
-		// TODO : implement category deletion on database
+	async function deleteCategory() {
+		let result = await deleteCategoryDB(currentCategory.id);
+
+		if (!result.success) {
+			console.log('delete category failed: ', result.errorMessage);
+			return;
+		}
 
 		categories.update((categories) =>
 			categories.filter((category) => category.id !== currentCategory.id)
