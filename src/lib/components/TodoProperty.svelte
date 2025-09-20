@@ -70,7 +70,7 @@
 						preventEmpty={true}
 					/>
 				</div>
-				<ul class="property-list">
+				<ul class="p roperty-list">
 					<TodoDeadlineInput bind:dueDate={selectedTodo.dueDate} onInputChange={changeDueDate} />
 					<TodoCategoryInput categoryId={selectedTodo.category_id} onInputChange={changeCategory} />
 				</ul>
