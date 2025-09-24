@@ -2,7 +2,7 @@
 	import { todos } from '$lib/store/todo';
 	import Overlay from './Overlay.svelte';
 	import { isCreatingCategory, isTodoFormOpen } from '$lib/store/appstate';
-	import CategoryForm from './CategoryForm.svelte';
+
 	import BaseButton from './buttons/BaseButton.svelte';
 	import TodoCategoryInput from './forms/TodoCategoryInput.svelte';
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
@@ -15,6 +15,12 @@
 	let dueDate = $state('');
 	let categoryId = $state<number | null>(null);
 
+	$effect(() => {
+		if (!$isCreatingCategory) {
+			categoryId = null;
+		}
+	});
+
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 
@@ -25,9 +31,7 @@
 			category_id: category?.id || null
 		};
 
-		// request database update to the server
 		let result = await createTodoDB(newTodo);
-
 		if (!result.success) {
 			alert('There something error on server');
 		} else {
@@ -42,17 +46,6 @@
 		isTodoFormOpen.set(false);
 	}
 </script>
-
-<CategoryForm
-	isOpen={$isCreatingCategory}
-	onClose={() => {
-		isCreatingCategory.set(false);
-		categoryId = null;
-	}}
-	onCreate={(newCategory) => {
-		categoryId = newCategory.id;
-	}}
-/>
 
 <Overlay isOpen={$isTodoFormOpen} onClosed={() => {}}>
 	<form

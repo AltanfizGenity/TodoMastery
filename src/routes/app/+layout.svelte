@@ -1,7 +1,9 @@
 <script lang="ts">
 	import AsideNavigation from '$lib/components/AsideNavigation.svelte';
+	import CategoryForm from '$lib/components/CategoryForm.svelte';
 	import TodoForm from '$lib/components/TodoForm.svelte';
 	import TodoProperty from '$lib/components/TodoProperty.svelte';
+	import { isCreatingCategory } from '$lib/store/appstate.js';
 	import { categories } from '$lib/store/userdata';
 	import { onMount } from 'svelte';
 
@@ -19,4 +21,10 @@
 	</main>
 	<TodoForm />
 	<TodoProperty />
+	<CategoryForm
+		isOpen={$isCreatingCategory}
+		onClose={() => {
+			isCreatingCategory.set(false);
+		}}
+	/>
 </div>
