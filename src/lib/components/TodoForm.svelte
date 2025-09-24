@@ -44,6 +44,13 @@
 
 	function closeForm() {
 		isTodoFormOpen.set(false);
+		resetForm();
+	}
+
+	function resetForm() {
+		title = '';
+		dueDate = '';
+		categoryId = null;
 	}
 </script>
 
