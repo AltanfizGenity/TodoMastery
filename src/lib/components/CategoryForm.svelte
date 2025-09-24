@@ -2,6 +2,7 @@
 	import { createCategoryDB } from '$lib/api/db/category/create';
 	import type { Category, NewCategory } from '$lib/database/server/schema/categories-schema';
 	import { categories } from '$lib/store/userdata';
+	import { trapFocus } from '$lib/utils/svelte/action.svelte';
 	import Overlay from './Overlay.svelte';
 
 	interface CategoryFormProps {
@@ -45,6 +46,7 @@
 	<form
 		onsubmit={createCategory}
 		class="gap-4 p-4 bg-gray-50 flex flex-col w-1/2 rounded-xl absolute top-1/4"
+		use:trapFocus
 	>
 		<h1 class="text-xl text-center font-bold">New Category</h1>
 		<div class="input-group">

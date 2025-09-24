@@ -10,6 +10,7 @@
 	import type { NewTodo } from '$lib/database/server/schema/todos-schema';
 	import { createTodoDB } from '$lib/api/db/todos/create';
 	import { categories } from '$lib/store/userdata';
+	import { trapFocus } from '$lib/utils/svelte/action.svelte';
 
 	let title = $state('');
 	let dueDate = $state('');
@@ -58,6 +59,7 @@
 	<form
 		class="todo-form gap-4 p-4 bg-gray-50 flex flex-col w-1/2 rounded-xl absolute top-1/4"
 		onsubmit={handleSubmit}
+		use:trapFocus
 	>
 		<div class="input-group">
 			<TodoTitleInput onTitleChange={(newTitle) => (title = newTitle)} {title} />
