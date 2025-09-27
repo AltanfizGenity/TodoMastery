@@ -11,6 +11,7 @@
 	import { createTodoDB } from '$lib/api/db/todos/create';
 	import { categories } from '$lib/store/userdata';
 	import { trapFocus } from '$lib/utils/svelte/action.svelte';
+	import { validateTodoTitle } from '$lib/utils/validation';
 
 	let title = $state('');
 	let dueDate = $state('');
@@ -25,9 +26,15 @@
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 
+		let validatedTitle = validateTodoTitle(title);
+		if (!validatedTitle) {
+			alert('cannot create todo with empty title');
+			return;
+		}
+
 		let category = $categories.find((category) => category.id === categoryId);
 		let newTodo: NewTodo = {
-			title,
+			title: validatedTitle,
 			dueDate: dueDate || null,
 			category_id: category?.id || null
 		};
