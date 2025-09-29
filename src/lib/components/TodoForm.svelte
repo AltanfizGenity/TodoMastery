@@ -12,14 +12,24 @@
 	import { categories } from '$lib/store/userdata';
 	import { trapFocus } from '$lib/utils/svelte/action.svelte';
 	import { validateTodoTitle } from '$lib/utils/validation';
+	import { page } from '$app/state';
+	import { DateTime } from 'luxon';
 
 	let title = $state('');
 	let dueDate = $state('');
 	let categoryId = $state<number | null>(null);
 
+	// TODO: Delete this code because the category form was moved to parent
 	$effect(() => {
 		if (!$isCreatingCategory) {
 			categoryId = null;
+		}
+
+		if ($isTodoFormOpen) {
+			let pageTitle = (page.data.pageTitle as string) || null;
+			if (pageTitle && pageTitle === 'today') {
+				dueDate = DateTime.now().toISODate();
+			}
 		}
 	});
 
