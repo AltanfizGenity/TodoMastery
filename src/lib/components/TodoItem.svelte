@@ -5,6 +5,7 @@
 	import type { Todo } from '$lib/database/server/schema/todos-schema';
 	import { deleteTodoDB } from '$lib/api/db/todos/delete';
 	import { updateTodoCompletionDB } from '$lib/api/db/todos/modify';
+	import { categories } from '$lib/store/userdata';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
@@ -67,7 +68,7 @@
 <div
 	role="button"
 	tabindex="0"
-	class="todo flex justify-between hover:bg-gray-50 p-2 cursor-pointer group w-full text-left"
+	class="todo flex justify-between items-center hover:bg-gray-50 p-2 cursor-pointer group w-full text-left"
 	aria-label="Edit todo"
 	onclick={editTodo}
 	onkeydown={(e) => {
@@ -80,9 +81,23 @@
 		<div class="complete-action group/complete-action hidden group-hover:flex">
 			{@render completeAction()}
 		</div>
-		<h3 class={`${currentTodo.completed ? 'line-through' : ''} group-hover:text-amber-500`}>
-			{currentTodo.title}
-		</h3>
+		<div class="todo-property">
+			<h3 class={`${currentTodo.completed ? 'line-through' : ''} group-hover:text-amber-500`}>
+				{currentTodo.title}
+			</h3>
+			<div class="other-properties flex gap-4">
+				{#if currentTodo.category_id}
+					<div class="category text-[.75rem] text-gray-400">
+						{$categories.find((category) => category.id === currentTodo.category_id)?.name}
+					</div>
+				{/if}
+				{#if currentTodo.dueDate}
+					<div class="overdue text-[.75rem] text-gray-400">
+						{currentTodo.dueDate}
+					</div>
+				{/if}
+			</div>
+		</div>
 	</div>
 	<div class="todo-actions hidden group-hover:flex gap-2">
 		{@render action(deleteTodo, TrashLine)}
