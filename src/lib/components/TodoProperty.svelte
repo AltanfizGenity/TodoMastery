@@ -33,7 +33,7 @@
 	};
 
 	const changeCategory = async (newCategoryId: number) => {
-		await updateTodoProperty('category_id', newCategoryId);
+		await updateTodoProperty('category_id', newCategoryId > 0 ? newCategoryId : null);
 	};
 
 	async function updateTodoProperty<K extends keyof Todo>(key: K, value: Todo[K]) {
