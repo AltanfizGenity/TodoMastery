@@ -17,7 +17,7 @@
 	async function createCategory(event: SubmitEvent) {
 		event.preventDefault();
 		const newCategory: NewCategory = {
-			name: categoryInput
+			name: categoryInput.toLowerCase()
 		};
 		let result = await createCategoryDB(newCategory);
 

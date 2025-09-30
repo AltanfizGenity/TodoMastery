@@ -22,7 +22,7 @@
 <select name="category" id="category" oninput={handleCategoryInputChange} bind:value={categoryId}>
 	<option value={null}>no category</option>
 	{#each $categories as category}
-		<option value={category.id}>{category.name}</option>
+		<option value={category.id}>{category.name.toLowerCase()}</option>
 	{/each}
 	<option value="create-new-categories">+ new category</option>
 </select>
