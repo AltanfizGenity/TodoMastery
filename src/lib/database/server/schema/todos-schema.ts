@@ -6,9 +6,9 @@ import { created_at, id, updated_at } from './common-schema';
 export const todosTable = pgTable('todos', {
 	id,
 	title: text().notNull(),
-	category_id: integer().references(() => categoriesTable.id),
 	dueDate: date(),
 	completed: boolean().default(false).notNull(),
+	category_id: integer().references(() => categoriesTable.id, { onDelete: 'set null' }),
 	created_at,
 	updated_at
 });
