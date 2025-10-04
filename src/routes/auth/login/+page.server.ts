@@ -1,9 +1,7 @@
-import { db } from '$lib/database/server/index.js';
-import { usersTable } from '$lib/database/server/schema/users.js';
 import { fail } from '@sveltejs/kit';
 import { verify } from 'argon2';
-import { eq } from 'drizzle-orm';
-import { createAccessToken, createRefreshToken } from '$lib/utils/jwt.js';
+import { createAccessToken, createRefreshToken, sendRefreshToken } from '$lib/utils/jwt.js';
+import { getUserByEmail } from '$lib/api/db/user/get.js';
 
 export const actions = {
 	login: async ({ request, cookies }) => {
@@ -16,8 +14,7 @@ export const actions = {
 		}
 
 		try {
-			const users = await db.select().from(usersTable).where(eq(usersTable.email, email));
-			const user = users[0];
+			const user = await getUserByEmail(email);
 
 			if (!user) {
 				return fail(404, { message: 'User not found' });
@@ -30,14 +27,7 @@ export const actions = {
 
 			const accessToken = await createAccessToken(user.id.toString());
 			const refreshToken = await createRefreshToken(user.id.toString());
-
-			cookies.set('refreshtoken', refreshToken, {
-				httpOnly: true,
-				secure: true,
-				sameSite: 'strict',
-				path: '/',
-				maxAge: 60 * 60 * 24 * 30
-			});
+			sendRefreshToken(cookies, refreshToken);
 
 			return { accessToken, refreshToken, success: true };
 		} catch (error) {
