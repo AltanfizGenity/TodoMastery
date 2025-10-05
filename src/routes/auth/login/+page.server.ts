@@ -20,7 +20,6 @@ export const actions = {
 
 		try {
 			const user = await getUserByEmail(email);
-
 			if (!user) {
 				return fail(404, { message: 'User not found' });
 			}
@@ -34,7 +33,7 @@ export const actions = {
 			const refreshToken = await createRefreshToken(user.id.toString());
 			sendRefreshToken(cookies, refreshToken);
 			sendAccessToken(cookies, accessToken);
-			return { accessToken, refreshToken, success: true };
+			return { success: true };
 		} catch (error) {
 			console.error(error);
 			return fail(500, { message: 'Error logging in!' });

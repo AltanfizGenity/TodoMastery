@@ -4,7 +4,17 @@
 </script>
 
 <h1>Login to Todomastery</h1>
-<form method="POST" use:enhance action="?/login">
+<form
+	method="POST"
+	use:enhance={() => {
+		return async ({ result }) => {
+			if (result.type === 'success') {
+				window.location.href = '/app/';
+			}
+		};
+	}}
+	action="?/login"
+>
 	<input type="email" name="email" placeholder="example@mail.com" required />
 	<input type="password" name="password" placeholder="password" required />
 	<button type="submit">Login</button>
