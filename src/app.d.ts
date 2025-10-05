@@ -7,6 +7,13 @@ declare global {
 	type LuxonTime = DateTime;
 	type SvelteComponent = Component;
 	type AppPage = 'inbox' | 'today' | 'completed' | 'none';
+	declare namespace App {
+		interface Locals {
+			user?: {
+				[id: string]: any;
+			};
+		}
+	}
 }
 
 export {};
