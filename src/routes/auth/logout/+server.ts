@@ -1,7 +1,7 @@
-import { json } from '@sveltejs/kit';
+import { json, redirect } from '@sveltejs/kit';
 
 export async function GET({ cookies }) {
 	cookies.delete('refreshtoken', { path: '/' });
 	cookies.delete('accessToken', { path: '/' });
-	return json({ success: true, message: 'Logout successful' });
+	return redirect(302, '/');
 }

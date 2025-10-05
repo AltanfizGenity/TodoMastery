@@ -2,13 +2,21 @@
 	import { page } from '$app/state';
 	import { customizationAsideNav, mainAsideNav } from '$lib/data/aside-navigation';
 	import type { AsideNavigation } from '$lib/data/aside-navigation';
+	import type { User } from '$lib/database/server/schema/users';
 	import { isTodoFormOpen } from '$lib/store/appstate';
 	import AsideNavigationRegion from './AsideNavigationRegion.svelte';
+	import BaseButton from './buttons/BaseButton.svelte';
 	import AddCircleSolid from './icons/solid/AddCircleSolid.svelte';
+	import { goto } from '$app/navigation';
 	function handleNewTodo() {
 		isTodoFormOpen.set(true);
 	}
 	let pageTitle = $derived(page.data.pageTitle);
+	let user = page.data.user as User;
+
+	function logout() {
+		goto('/auth/logout');
+	}
 </script>
 
 {#snippet NavList(navigationData: AsideNavigation[])}
@@ -35,7 +43,7 @@
 {/snippet}
 
 <aside class="sidebar w-64 border-r border-1 border-amber-100 p-3 bg-amber-50/10 h-full">
-	<div class="items-list flex flex-col gap-4 items-center">
+	<div class="items-list flex flex-col gap-4 items-center h-full">
 		<AsideNavigationRegion>
 			<button
 				class="w-full hover:bg-gray-100 p-2 text-sm capitalize flex gap-2 items-center cursor-pointer"
@@ -53,5 +61,9 @@
 		<AsideNavigationRegion title="customization">
 			{@render NavList(customizationAsideNav)}
 		</AsideNavigationRegion>
+		<div class="user-info mt-auto w-full flex flex-col gap-2">
+			<div class="username">{user.name}</div>
+			<BaseButton text="logout" onClick={logout} variant="primary" />
+		</div>
 	</div>
 </aside>
