@@ -7,8 +7,6 @@ const { verify } = jwt;
 
 export async function handle({ event, resolve }) {
 	const token = event.cookies.get('accessToken');
-	console.log(token);
-
 	if (event.url.pathname.startsWith('/app')) {
 		if (!token) {
 			throw redirect(303, '/auth/login/');

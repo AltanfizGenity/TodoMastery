@@ -22,9 +22,6 @@ export async function GET({ cookies }) {
 		const newAccessToken = await createAccessToken(userId);
 		const newRefreshToken = await createRefreshToken(userId);
 		sendRefreshToken(cookies, newRefreshToken);
-
-		console.log(newAccessToken, newRefreshToken);
-
 		return json({ success: true, accessToken: newAccessToken });
 	} catch (error) {
 		console.error(error);
