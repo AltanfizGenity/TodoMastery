@@ -1,6 +1,11 @@
 import { fail } from '@sveltejs/kit';
 import { verify } from 'argon2';
-import { createAccessToken, createRefreshToken, sendRefreshToken } from '$lib/utils/jwt.js';
+import {
+	createAccessToken,
+	createRefreshToken,
+	sendAccessToken,
+	sendRefreshToken
+} from '$lib/utils/jwt.js';
 import { getUserByEmail } from '$lib/api/db/user/get.js';
 
 export const actions = {
@@ -28,7 +33,7 @@ export const actions = {
 			const accessToken = await createAccessToken(user.id.toString());
 			const refreshToken = await createRefreshToken(user.id.toString());
 			sendRefreshToken(cookies, refreshToken);
-
+			sendAccessToken(cookies, accessToken);
 			return { accessToken, refreshToken, success: true };
 		} catch (error) {
 			console.error(error);

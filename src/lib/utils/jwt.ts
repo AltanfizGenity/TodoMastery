@@ -28,3 +28,13 @@ export const sendRefreshToken = (cookies: Cookies, refreshToken: string) => {
 		maxAge: 60 * 60 * 24 * 30
 	});
 };
+
+export const sendAccessToken = (cookies: Cookies, accessToken: string) => {
+	cookies.set('accessToken', accessToken, {
+		httpOnly: true,
+		secure: true,
+		sameSite: 'strict',
+		path: '/',
+		maxAge: 60 * 60
+	});
+};
