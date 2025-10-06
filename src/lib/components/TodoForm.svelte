@@ -14,6 +14,9 @@
 	import { validateTodoTitle } from '$lib/utils/validation';
 	import { page } from '$app/state';
 	import { DateTime } from 'luxon';
+	import type { User } from '$lib/database/server/schema/users';
+
+	let user = page.data.user as User;
 
 	let title = $state('');
 	let dueDate = $state('');
@@ -44,6 +47,7 @@
 
 		let category = $categories.find((category) => category.id === categoryId);
 		let newTodo: NewTodo = {
+			user_id: user.id,
 			title: validatedTitle,
 			dueDate: dueDate || null,
 			category_id: category?.id || null
