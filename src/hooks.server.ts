@@ -1,6 +1,6 @@
 import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from '$env/static/private';
 import { sendAccessToken } from '$lib/utils/jwt';
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 
 const { verify } = jwt;
@@ -29,6 +29,19 @@ export async function handle({ event, resolve }) {
 			}
 			console.error(error);
 			throw redirect(303, '/auth/login/');
+		}
+	}
+
+	if (event.url.pathname.startsWith('/api/')) {
+		if (!token) {
+			throw error(401, 'Unauthorized');
+		}
+
+		try {
+			const payload = verify(token, ACCESS_TOKEN_SECRET) as jwt.JwtPayload;
+			event.locals.user = payload;
+		} catch (err) {
+			throw error(500, 'Internal Server Error');
 		}
 	}
 
