@@ -30,7 +30,6 @@ export async function GET({ url, locals }) {
 			.from(todosTable)
 			.where(and(...filteredData));
 
-		console.log(todos);
 		return json(todos);
 	} catch (error) {
 		throw fail(500, { message: 'server error' });

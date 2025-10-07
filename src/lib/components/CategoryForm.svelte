@@ -4,6 +4,10 @@
 	import { categories } from '$lib/store/userdata';
 	import { trapFocus } from '$lib/utils/svelte/action.svelte';
 	import Overlay from './Overlay.svelte';
+	import { page } from '$app/state';
+	import type { User } from '$lib/database/server/schema/users';
+
+	let user = page.data.user as User;
 
 	interface CategoryFormProps {
 		isOpen: boolean;
@@ -17,7 +21,8 @@
 	async function createCategory(event: SubmitEvent) {
 		event.preventDefault();
 		const newCategory: NewCategory = {
-			name: categoryInput.toLowerCase()
+			name: categoryInput.toLowerCase(),
+			user_id: user.id
 		};
 		let result = await createCategoryDB(newCategory);
 
