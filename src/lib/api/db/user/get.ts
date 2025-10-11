@@ -7,7 +7,7 @@ export async function getUserByEmail(email: string) {
 	const user = users[0];
 
 	if (!user) {
-		throw new Error('User not found');
+		return null;
 	}
 
 	return user;
@@ -18,7 +18,7 @@ export async function getUserById(id: number) {
 	const user = users[0];
 
 	if (!user) {
-		throw new Error('User not found');
+		return null;
 	}
 
 	return user;
