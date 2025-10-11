@@ -21,7 +21,7 @@ export const actions = {
 		try {
 			const user = await getUserByEmail(email);
 			if (!user) {
-				return fail(404, { message: 'User not found' });
+				return fail(401, { message: 'User not found' });
 			}
 
 			const isPasswordCorrect = await verify(user.password, password);

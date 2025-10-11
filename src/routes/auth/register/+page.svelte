@@ -4,8 +4,6 @@
 	import InputGroup from '$lib/components/forms/InputGroup.svelte';
 
 	let errorMessage = $state('');
-
-	$inspect(errorMessage);
 </script>
 
 <div class="sign-up grid grid-cols-[1fr_0.8fr] p-8 w-full gap-8 min-h-svh bg-white">
@@ -34,7 +32,9 @@
 				<header class="flex flex-col gap-2">
 					<h1 class="font-bold text-3xl">Create an account</h1>
 					<p class="text-sm">
-						Already have an account? <a href="/auth/login" class="text-amber-500">Login</a>
+						Already have an account? <a href="/auth/login" class="text-amber-500 hover:underline"
+							>Sign In</a
+						>
 					</p>
 				</header>
 				<div class="input-container flex flex-col gap-6">
