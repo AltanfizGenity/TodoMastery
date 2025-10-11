@@ -27,6 +27,6 @@
 
 <button
 	onclick={handleClick}
-	class={`${classname} ${variantTailwindClasses[variant]} capitalize py-1 px-4 cursor-pointer rounded-lg`}
+	class={`${variantTailwindClasses[variant]} capitalize py-1 px-4 cursor-pointer rounded-lg ${classname} `}
 	{type}>{text}</button
 >

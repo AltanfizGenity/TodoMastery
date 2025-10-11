@@ -18,7 +18,7 @@ export const actions = {
 		try {
 			const user = await db.select().from(usersTable).where(eq(usersTable.email, email));
 			if (user.length > 0) {
-				return fail(500, { message: 'User already exists' });
+				return fail(500, { message: 'User with this email already exists' });
 			}
 
 			const hashedPassword = await hash(password);
