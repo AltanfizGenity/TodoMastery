@@ -1,4 +1,4 @@
-import { CompleteLine, TodoLine } from '$lib/components/icons/line';
+import { CompleteLine, ProfileLine, TodoLine } from '$lib/components/icons/line';
 import TodayLine from '$lib/components/icons/line/TodayLine.svelte';
 
 export type AsideNavigation = {
@@ -30,5 +30,10 @@ export let customizationAsideNav: AsideNavigation[] = [
 		title: 'categories',
 		href: '/app/categories',
 		Icon: TodoLine
+	},
+	{
+		title: 'profile',
+		href: '/app/profile',
+		Icon: ProfileLine
 	}
 ];

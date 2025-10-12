@@ -6,6 +6,7 @@ import CompleteLine from './CompleteLine.svelte';
 import EditBoxLine from './EditBoxLine.svelte';
 import TodoLine from './TodoLine.svelte';
 import TrashLine from './TrashLine.svelte';
+import ProfileLine from './ProfileLine.svelte';
 
 export {
 	CircleCheckLine,
@@ -15,5 +16,6 @@ export {
 	CompleteLine,
 	TodoLine,
 	CloseLine,
-	EditBoxLine
+	EditBoxLine,
+	ProfileLine
 };

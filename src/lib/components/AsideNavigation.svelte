@@ -2,7 +2,6 @@
 	import { page } from '$app/state';
 	import { customizationAsideNav, mainAsideNav } from '$lib/data/aside-navigation';
 	import type { AsideNavigation } from '$lib/data/aside-navigation';
-	import type { User } from '$lib/database/server/schema/users';
 	import { isTodoFormOpen } from '$lib/store/appstate';
 	import AsideNavigationRegion from './AsideNavigationRegion.svelte';
 	import BaseButton from './buttons/BaseButton.svelte';
@@ -12,7 +11,6 @@
 		isTodoFormOpen.set(true);
 	}
 	let pageTitle = $derived(page.data.pageTitle);
-	let user = page.data.user as User;
 
 	function logout() {
 		goto('/auth/logout');
@@ -55,15 +53,14 @@
 				<p class="title">New Todo</p>
 			</button>
 		</AsideNavigationRegion>
-		<AsideNavigationRegion title="todo list">
+		<AsideNavigationRegion title="app">
 			{@render NavList(mainAsideNav)}
 		</AsideNavigationRegion>
 		<AsideNavigationRegion title="customization">
 			{@render NavList(customizationAsideNav)}
 		</AsideNavigationRegion>
 		<div class="user-info mt-auto w-full flex flex-col gap-2">
-			<div class="username">{user.name}</div>
-			<BaseButton text="logout" onClick={logout} variant="primary" />
+			<BaseButton text="sign out" onClick={logout} variant="primary" />
 		</div>
 	</div>
 </aside>
