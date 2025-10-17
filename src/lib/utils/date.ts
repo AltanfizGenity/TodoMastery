@@ -2,20 +2,20 @@ import type { CalendarDay } from '$lib/types/date';
 import { DateTime } from 'luxon';
 let now = DateTime.local();
 
-export function buildCalendarDays() {
+export function buildCalendarDays(date: DateTime = now) {
 	let dateRenders: CalendarDay[] = [];
 
-	let month = now.month;
-	let year = now.year;
+	let month = date.month;
+	let year = date.year;
 
-	let lastPreviousMonth = now.set({ day: 0, hour: 0 });
-	let firstNextMonth = now.set({ month: month + 1, day: 1, hour: 0 });
+	let lastPreviousMonth = date.set({ day: 0, hour: 0 });
+	let firstNextMonth = date.set({ month: month + 1, day: 1, hour: 0 });
 
 	let totalPreviousDay = lastPreviousMonth.weekday + 1;
 
 	if (totalPreviousDay < 7) {
 		for (let x = 1; x <= totalPreviousDay; x++) {
-			let time = now.set({
+			let time = date.set({
 				year,
 				month: lastPreviousMonth.month,
 				day: lastPreviousMonth.day - totalPreviousDay + x
@@ -29,8 +29,8 @@ export function buildCalendarDays() {
 		}
 	}
 
-	for (let x = 1; x <= now.daysInMonth!; x++) {
-		let time = now.set({ day: x });
+	for (let x = 1; x <= date.daysInMonth!; x++) {
+		let time = date.set({ day: x });
 		dateRenders.push({
 			time,
 			isToday: isToday(time),
@@ -42,7 +42,7 @@ export function buildCalendarDays() {
 
 	if (totalMissingDaysOfNextMonth > 0) {
 		for (let x = totalMissingDaysOfNextMonth; x < 7; x++) {
-			let time = now.set({
+			let time = date.set({
 				year,
 				month: month + 1,
 				day: firstNextMonth.day - totalMissingDaysOfNextMonth + x
