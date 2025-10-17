@@ -16,21 +16,57 @@
 
 	let currentDate = $state(DateTime.local());
 	let selectedDate = $state<DateTime | null>(null);
+	let today = $state(DateTime.local());
 
 	let calendarDate = $derived.by<CalendarDay[]>(() => buildCalendarDays(currentDate));
 
 	let placeholders = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-	let quickAccessData = ['today', 'tomorrow', 'this weekend', 'next week', 'last month'];
+	let quickAccessData = [
+		{
+			name: 'today',
+			callback: () => {
+				selectedDate = today;
+			}
+		},
+		{
+			name: 'tomorrow',
+			callback: () => {
+				selectedDate = currentDate.minus({ day: 1 });
+			}
+		},
+		{
+			name: 'this weekend',
+			callback: () => {
+				selectedDate = today.set({ weekday: 6 });
+			}
+		},
+		{
+			name: 'next week',
+			callback: () => {
+				selectedDate = today.plus({ week: 1 });
+			}
+		},
+		{
+			name: 'end of month',
+			callback: () => {
+				selectedDate = currentDate.set({ day: currentDate.daysInMonth });
+			}
+		}
+	];
 	let optionsData = [
 		{
 			name: 'no date',
 			Icon: CalendarCloseLine,
-			callback: () => {}
+			callback: () => {
+				selectedDate = null;
+			}
 		},
 		{
 			name: 'repeat',
 			Icon: RepeatLine,
-			callback: () => {}
+			callback: () => {
+				console.log('repeat');
+			}
 		}
 	];
 
@@ -40,20 +76,18 @@
 	function goNextMonth() {
 		currentDate = currentDate.plus({ month: 1 });
 	}
-	function handleQuickAccess(dateValue: DateTime) {}
 </script>
 
 <Overlay isOpen={true} onClosed={() => {}}>
 	<div class="datepicker flex bg-white flex-col gap-4 w-auto min-w-1/2 h-auto p-6">
 		<div class="picker-container flex gap-24">
 			<div class="quickaccess flex flex-col gap-6">
-				<!-- CHECKPOINT: Styling quick access part -->
 				{#each quickAccessData as quickAccess}
 					<button
 						class="text-left first-letter:capitalize hover:text-amber-400 cursor-pointer"
-						onclick={() => handleQuickAccess(DateTime.now())}
+						onclick={() => quickAccess.callback()}
 					>
-						{quickAccess}
+						{quickAccess.name}
 					</button>
 				{/each}
 			</div>
@@ -85,14 +119,14 @@
 				</div>
 				<div class="date-inputfield grid grid-cols-7 gap-4 grid-rows-6">
 					{#each calendarDate as date}
-						{@const isSelected = selectedDate?.equals(date.time)}
+						{@const isSelected = selectedDate?.hasSame(date.time, 'day')}
 						{@const isToday = date.isToday}
 						{@const isDisabled = date.isDisabled}
 						<button
 							type="button"
 							disabled={isDisabled}
 							onclick={() => (selectedDate = date.time)}
-							class={`day-input w-8 h-8 cursor-pointer rounded-full border-none disabled:pointer-events-none disabled:opacity-25 disabled:select-none hover:text-amber-400 ${isToday ? 'bg-amber-100 text-amber-400' : ''} ${isSelected ? 'selected bg-amber-400 text-white hover:text-white' : ''}`}
+							class={`day-input w-8 h-8 cursor-pointer rounded-full border-none disabled:pointer-events-none disabled:opacity-25 disabled:select-none hover:text-amber-400 ${isToday && !isSelected ? 'bg-amber-100 text-amber-400' : ''} ${isSelected ? 'selected bg-amber-400 text-white hover:text-white' : ''}`}
 						>
 							{date.time.day}
 						</button>
