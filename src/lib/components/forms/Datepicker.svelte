@@ -14,8 +14,10 @@
 	} from '../icons/line';
 	import BaseButton from '../buttons/BaseButton.svelte';
 
-	let calendarDate = $state<CalendarDay[]>(buildCalendarDays());
-	let selectedDateIndex = $state<DateTime | null>(null);
+	let currentDate = $state(DateTime.local());
+	let selectedDate = $state<DateTime | null>(null);
+
+	let calendarDate = $derived.by<CalendarDay[]>(() => buildCalendarDays(currentDate));
 
 	let placeholders = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 	let quickAccessData = ['today', 'tomorrow', 'this weekend', 'next week', 'last month'];
@@ -32,8 +34,12 @@
 		}
 	];
 
-	function goPreviousMonth() {}
-	function goNextMonth() {}
+	function goPreviousMonth() {
+		currentDate = currentDate.minus({ month: 1 });
+	}
+	function goNextMonth() {
+		currentDate = currentDate.plus({ month: 1 });
+	}
 	function handleQuickAccess(dateValue: DateTime) {}
 </script>
 
@@ -55,13 +61,13 @@
 				<header class="flex justify-between w-5/6">
 					<IconButton Icon={ArrowLeftSLine} onclick={goPreviousMonth} />
 					<button class="month-input flex justify-center items-center cursor-pointer group">
-						<div class="month">October</div>
+						<div class="month">{currentDate.monthLong}</div>
 						<div class="icon w-6 h-6 text-gray-400 group-hover:text-amber-400">
 							<ArrowDownSLine />
 						</div>
 					</button>
 					<button class="year-input flex justify-center items-center cursor-pointer group">
-						<div class="month">2025</div>
+						<div class="month">{currentDate.year}</div>
 						<div class="icon w-6 h-6 text-gray-400 group-hover:text-amber-400">
 							<ArrowDownSLine />
 						</div>
@@ -77,15 +83,15 @@
 						</div>
 					{/each}
 				</div>
-				<div class="date-inputfield grid grid-cols-7 gap-4">
+				<div class="date-inputfield grid grid-cols-7 gap-4 grid-rows-6">
 					{#each calendarDate as date}
-						{@const isSelected = selectedDateIndex?.equals(date.time)}
+						{@const isSelected = selectedDate?.equals(date.time)}
 						{@const isToday = date.isToday}
 						{@const isDisabled = date.isDisabled}
 						<button
 							type="button"
 							disabled={isDisabled}
-							onclick={() => (selectedDateIndex = date.time)}
+							onclick={() => (selectedDate = date.time)}
 							class={`day-input w-8 h-8 cursor-pointer rounded-full border-none disabled:pointer-events-none disabled:opacity-25 disabled:select-none hover:text-amber-400 ${isToday ? 'bg-amber-100 text-amber-400' : ''} ${isSelected ? 'selected bg-amber-400 text-white hover:text-white' : ''}`}
 						>
 							{date.time.day}
