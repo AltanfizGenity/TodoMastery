@@ -7,7 +7,12 @@ import EditBoxLine from './EditBoxLine.svelte';
 import TodoLine from './TodoLine.svelte';
 import TrashLine from './TrashLine.svelte';
 import ProfileLine from './ProfileLine.svelte';
-
+import ArrowLeftSLine from './ArrowLeftSLine.svelte';
+import ArrowRightSLine from './ArrowRightSLine.svelte';
+import ArrowDownSLine from './ArrowDownSLine.svelte';
+import CalendarCloseLine from './CalendarCloseLine.svelte';
+import RepeatLine from './RepeatLine.svelte';
+import CalendarLine from './CalendarLine.svelte';
 export {
 	CircleCheckLine,
 	CircleLine,
@@ -17,5 +22,11 @@ export {
 	TodoLine,
 	CloseLine,
 	EditBoxLine,
-	ProfileLine
+	ProfileLine,
+	ArrowLeftSLine,
+	ArrowRightSLine,
+	ArrowDownSLine,
+	CalendarCloseLine,
+	RepeatLine,
+	CalendarLine
 };
