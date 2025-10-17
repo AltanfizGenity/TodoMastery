@@ -8,7 +8,7 @@
 	}
 
 	let variantTailwindClasses = {
-		primary: 'bg-amber-400 text-black hover:bg-amber-500',
+		primary: 'bg-amber-500 text-white hover:bg-amber-600',
 		secondary: 'bg-gray-100 text-gray-800 hover:bg-gray-200'
 	};
 
