@@ -1,6 +1,7 @@
 <script lang="ts">
 	import AsideNavigation from '$lib/components/AsideNavigation.svelte';
 	import CategoryForm from '$lib/components/CategoryForm.svelte';
+	import Datepicker from '$lib/components/forms/Datepicker.svelte';
 	import TodoForm from '$lib/components/TodoForm.svelte';
 	import TodoProperty from '$lib/components/TodoProperty.svelte';
 	import { isCreatingCategory } from '$lib/store/appstate.js';
@@ -27,4 +28,5 @@
 			isCreatingCategory.set(false);
 		}}
 	/>
+	<Datepicker />
 </div>
