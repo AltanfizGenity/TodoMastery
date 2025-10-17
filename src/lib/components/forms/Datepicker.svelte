@@ -21,7 +21,7 @@
 	let calendarDate = $derived.by<CalendarDay[]>(() => buildCalendarDays(currentDate));
 
 	let placeholders = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-	let quickAccessData = [
+	let shortcutsData = [
 		{
 			name: 'today',
 			dateValue: today
@@ -68,7 +68,7 @@
 		currentDate = currentDate.plus({ month: 1 });
 	}
 
-	function handleQuickAccess(dateValue: DateTime) {
+	function handleShortcut(dateValue: DateTime) {
 		selectedDate = dateValue;
 		currentDate = dateValue;
 	}
@@ -77,14 +77,14 @@
 <Overlay isOpen={true} onClosed={() => {}}>
 	<div class="datepicker flex bg-white flex-col gap-4 w-auto min-w-1/2 h-auto p-6">
 		<div class="picker-container flex gap-24">
-			<div class="quickaccess flex flex-col gap-6">
-				{#each quickAccessData as quickAccess}
-					{@const selected = selectedDate?.hasSame(quickAccess.dateValue, 'day')}
+			<div class="shortcut flex flex-col gap-6">
+				{#each shortcutsData as shortcut}
+					{@const selected = selectedDate?.hasSame(shortcut.dateValue, 'day')}
 					<button
 						class={`text-left first-letter:capitalize hover:text-amber-400 cursor-pointer ${selected && 'text-amber-500'}`}
-						onclick={() => handleQuickAccess(quickAccess.dateValue)}
+						onclick={() => handleShortcut(shortcut.dateValue)}
 					>
-						{quickAccess.name}
+						{shortcut.name}
 					</button>
 				{/each}
 			</div>
