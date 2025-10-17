@@ -70,6 +70,7 @@
 
 	function handleQuickAccess(dateValue: DateTime) {
 		selectedDate = dateValue;
+		currentDate = dateValue;
 	}
 </script>
 
