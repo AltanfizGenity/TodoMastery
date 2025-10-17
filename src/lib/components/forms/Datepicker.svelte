@@ -24,33 +24,24 @@
 	let quickAccessData = [
 		{
 			name: 'today',
-			callback: () => {
-				selectedDate = today;
-			}
+			dateValue: today
 		},
 		{
 			name: 'tomorrow',
-			callback: () => {
-				selectedDate = currentDate.minus({ day: 1 });
-			}
+			dateValue: today.minus({ day: 1 })
 		},
 		{
 			name: 'this weekend',
-			callback: () => {
-				selectedDate = today.set({ weekday: 6 });
-			}
+			dateValue: (selectedDate = today.set({ weekday: 6 }))
 		},
 		{
 			name: 'next week',
-			callback: () => {
-				selectedDate = today.plus({ week: 1 });
-			}
+
+			dateValue: (selectedDate = today.plus({ week: 1 }))
 		},
 		{
 			name: 'end of month',
-			callback: () => {
-				selectedDate = currentDate.set({ day: currentDate.daysInMonth });
-			}
+			dateValue: (selectedDate = today.set({ day: today.daysInMonth }))
 		}
 	];
 	let optionsData = [
@@ -76,6 +67,10 @@
 	function goNextMonth() {
 		currentDate = currentDate.plus({ month: 1 });
 	}
+
+	function handleQuickAccess(dateValue: DateTime) {
+		selectedDate = dateValue;
+	}
 </script>
 
 <Overlay isOpen={true} onClosed={() => {}}>
@@ -83,9 +78,10 @@
 		<div class="picker-container flex gap-24">
 			<div class="quickaccess flex flex-col gap-6">
 				{#each quickAccessData as quickAccess}
+					{@const selected = selectedDate?.hasSame(quickAccess.dateValue, 'day')}
 					<button
-						class="text-left first-letter:capitalize hover:text-amber-400 cursor-pointer"
-						onclick={() => quickAccess.callback()}
+						class={`text-left first-letter:capitalize hover:text-amber-400 cursor-pointer ${selected && 'text-amber-500'}`}
+						onclick={() => handleQuickAccess(quickAccess.dateValue)}
 					>
 						{quickAccess.name}
 					</button>
