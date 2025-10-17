@@ -5,7 +5,6 @@
 	import { DateTime } from 'luxon';
 	import IconButton from '../buttons/IconButton.svelte';
 	import {
-		ArrowDownSLine,
 		ArrowLeftSLine,
 		ArrowRightSLine,
 		CalendarCloseLine,
@@ -14,11 +13,23 @@
 	} from '../icons/line';
 	import BaseButton from '../buttons/BaseButton.svelte';
 
+	interface DatepickerProps {
+		dateValue: DateTime | null;
+		disablePastDates?: boolean;
+	}
+
+	let { disablePastDates = true, dateValue = null }: DatepickerProps = $props();
+
 	let currentDate = $state(DateTime.local());
-	let selectedDate = $state<DateTime | null>(null);
+	let selectedDate = $state<DateTime | null>(dateValue);
 	let today = $state(DateTime.local());
 
 	let calendarDate = $derived.by<CalendarDay[]>(() => buildCalendarDays(currentDate));
+	let canGoPreviousMonth = $derived.by<boolean>(
+		() => disablePastDates && currentDate.diff(today, 'month').months <= 0
+	);
+
+	$inspect(selectedDate);
 
 	let placeholders = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 	let shortcutsData = [
@@ -28,20 +39,19 @@
 		},
 		{
 			name: 'tomorrow',
-			dateValue: today.minus({ day: 1 })
+			dateValue: today.plus({ day: 1 })
 		},
 		{
 			name: 'this weekend',
-			dateValue: (selectedDate = today.set({ weekday: 6 }))
+			dateValue: today.set({ weekday: 6 })
 		},
 		{
 			name: 'next week',
-
-			dateValue: (selectedDate = today.plus({ week: 1 }))
+			dateValue: today.plus({ week: 1 })
 		},
 		{
 			name: 'end of month',
-			dateValue: (selectedDate = today.set({ day: today.daysInMonth }))
+			dateValue: today.set({ day: today.daysInMonth })
 		}
 	];
 	let optionsData = [
@@ -90,18 +100,16 @@
 			</div>
 			<div class="picker flex flex-col gap-4 items-center">
 				<header class="flex justify-between w-5/6">
-					<IconButton Icon={ArrowLeftSLine} onclick={goPreviousMonth} />
-					<button class="month-input flex justify-center items-center cursor-pointer group">
+					<IconButton
+						Icon={ArrowLeftSLine}
+						onclick={goPreviousMonth}
+						class={`${canGoPreviousMonth && 'opacity-20 pointer-events-none'}`}
+					/>
+					<button class={`month-input flex justify-center items-center group`}>
 						<div class="month">{currentDate.monthLong}</div>
-						<div class="icon w-6 h-6 text-gray-400 group-hover:text-amber-400">
-							<ArrowDownSLine />
-						</div>
 					</button>
-					<button class="year-input flex justify-center items-center cursor-pointer group">
+					<button class="year-input flex justify-center items-center group">
 						<div class="month">{currentDate.year}</div>
-						<div class="icon w-6 h-6 text-gray-400 group-hover:text-amber-400">
-							<ArrowDownSLine />
-						</div>
 					</button>
 					<IconButton Icon={ArrowRightSLine} onclick={goNextMonth} />
 				</header>
@@ -118,7 +126,8 @@
 					{#each calendarDate as date}
 						{@const isSelected = selectedDate?.hasSame(date.time, 'day')}
 						{@const isToday = date.isToday}
-						{@const isDisabled = date.isDisabled}
+						{@const isDisabled =
+							date.isDisabled || (disablePastDates && date.time.diff(today).milliseconds < 0)}
 						<button
 							type="button"
 							disabled={isDisabled}
