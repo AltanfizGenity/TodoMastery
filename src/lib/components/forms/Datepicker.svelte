@@ -108,10 +108,12 @@
 		<div class="divider w-full h-0.5 bg-gray-100 mt-4"></div>
 		<div class="picker-actions flex justify-between">
 			<div class="overview flex gap-2">
-				<div class="icon w-6 text-amber-400">
-					<CalendarLine />
-				</div>
-				<p>16 October 2025</p>
+				{#if selectedDate}
+					<div class="icon w-6 text-amber-400">
+						<CalendarLine />
+					</div>
+					<p>{selectedDate.toLocaleString(DateTime.DATE_FULL)}</p>
+				{/if}
 			</div>
 			<div class="cta flex gap-4">
 				<BaseButton text="cancel" variant="secondary" />
