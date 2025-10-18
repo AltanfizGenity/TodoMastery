@@ -108,7 +108,7 @@
 </script>
 
 <Overlay {isOpen}>
-	<div class="datepicker flex bg-white flex-col gap-4 w-auto min-w-1/2 h-auto p-6">
+	<div class="datepicker flex bg-white flex-col gap-4 w-auto h-auto p-6">
 		<div class="picker-container flex gap-24">
 			<div class="shortcut flex flex-col gap-6">
 				{#each shortcutsData as shortcut}
