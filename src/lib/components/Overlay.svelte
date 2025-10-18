@@ -2,7 +2,7 @@
 	interface OverlayProps extends Props {
 		index?: number;
 		isOpen: boolean;
-		onClosed: () => void;
+		onClosed?: () => void;
 	}
 
 	let { isOpen, children, index = 100 }: OverlayProps = $props();

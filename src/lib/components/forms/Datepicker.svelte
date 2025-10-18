@@ -16,9 +16,18 @@
 	interface DatepickerProps {
 		dateValue: DateTime | null;
 		disablePastDates?: boolean;
+		oncancel: () => void;
+		onconfirm: (datevalue: DateTime | null) => void;
+		isOpen: boolean;
 	}
 
-	let { disablePastDates = true, dateValue = null }: DatepickerProps = $props();
+	let {
+		disablePastDates = true,
+		dateValue = null,
+		isOpen = true,
+		oncancel,
+		onconfirm
+	}: DatepickerProps = $props();
 
 	let currentDate = $state(DateTime.local());
 	let selectedDate = $state<DateTime | null>(dateValue);
@@ -28,8 +37,6 @@
 	let canGoPreviousMonth = $derived.by<boolean>(
 		() => disablePastDates && currentDate.diff(today, 'month').months <= 0
 	);
-
-	$inspect(selectedDate);
 
 	let placeholders = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 	let shortcutsData = [
@@ -82,9 +89,19 @@
 		selectedDate = dateValue;
 		currentDate = dateValue;
 	}
+
+	function handleCancel() {
+		oncancel();
+		selectedDate = null;
+	}
+
+	function handleConfirm() {
+		onconfirm(selectedDate);
+		selectedDate = null;
+	}
 </script>
 
-<Overlay isOpen={true} onClosed={() => {}}>
+<Overlay {isOpen}>
 	<div class="datepicker flex bg-white flex-col gap-4 w-auto min-w-1/2 h-auto p-6">
 		<div class="picker-container flex gap-24">
 			<div class="shortcut flex flex-col gap-6">
@@ -156,8 +173,8 @@
 				{/if}
 			</div>
 			<div class="cta flex gap-4">
-				<BaseButton text="cancel" variant="secondary" />
-				<BaseButton text="confirm" variant="primary" />
+				<BaseButton text="cancel" variant="secondary" onClick={handleCancel} />
+				<BaseButton text="confirm" variant="primary" onClick={handleConfirm} />
 			</div>
 		</div>
 	</div>
