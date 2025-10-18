@@ -28,5 +28,4 @@
 			isCreatingCategory.set(false);
 		}}
 	/>
-	<Datepicker />
 </div>

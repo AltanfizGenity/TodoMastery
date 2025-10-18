@@ -22,8 +22,8 @@
 	}
 
 	let {
-		disablePastDates = true,
-		dateValue = null,
+		disablePastDates = false,
+		dateValue = $bindable(),
 		isOpen = true,
 		oncancel,
 		onconfirm
@@ -78,6 +78,12 @@
 		}
 	];
 
+	$effect(() => {
+		if (isOpen) {
+			selectedDate = dateValue;
+		}
+	});
+
 	function goPreviousMonth() {
 		currentDate = currentDate.minus({ month: 1 });
 	}
@@ -110,6 +116,7 @@
 					<button
 						class={`text-left first-letter:capitalize hover:text-amber-400 cursor-pointer ${selected && 'text-amber-500'}`}
 						onclick={() => handleShortcut(shortcut.dateValue)}
+						type="button"
 					>
 						{shortcut.name}
 					</button>
@@ -122,12 +129,12 @@
 						onclick={goPreviousMonth}
 						class={`${canGoPreviousMonth && 'opacity-20 pointer-events-none'}`}
 					/>
-					<button class={`month-input flex justify-center items-center group`}>
+					<div class={`month-input flex justify-center items-center group`}>
 						<div class="month">{currentDate.monthLong}</div>
-					</button>
-					<button class="year-input flex justify-center items-center group">
+					</div>
+					<div class="year-input flex justify-center items-center group">
 						<div class="month">{currentDate.year}</div>
-					</button>
+					</div>
 					<IconButton Icon={ArrowRightSLine} onclick={goNextMonth} />
 				</header>
 				<div class="date-placeholder grid grid-cols-7 gap-4">

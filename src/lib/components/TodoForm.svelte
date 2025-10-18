@@ -6,7 +6,6 @@
 	import BaseButton from './buttons/BaseButton.svelte';
 	import TodoCategoryInput from './forms/TodoCategoryInput.svelte';
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
-	import TodoDeadlineInput from './forms/TodoDeadlineInput.svelte';
 	import type { NewTodo } from '$lib/database/server/schema/todos-schema';
 	import { createTodoDB } from '$lib/api/db/todos/create';
 	import { categories } from '$lib/store/userdata';
@@ -15,11 +14,12 @@
 	import { page } from '$app/state';
 	import { DateTime } from 'luxon';
 	import type { User } from '$lib/database/server/schema/users';
+	import DeadlineInput from './forms/DeadlineInput.svelte';
 
 	let user = page.data.user as User;
 
 	let title = $state('');
-	let dueDate = $state('');
+	let dueDate = $state<string | null>('');
 	let categoryId = $state<number | null>(null);
 
 	// TODO: Delete this code because the category form was moved to parent
@@ -49,7 +49,7 @@
 		let newTodo: NewTodo = {
 			user_id: user.id,
 			title: validatedTitle,
-			dueDate: dueDate || null,
+			dueDate: dueDate,
 			category_id: category?.id || null
 		};
 
@@ -85,8 +85,8 @@
 		<div class="input-group">
 			<TodoTitleInput onTitleChange={(newTitle) => (title = newTitle)} {title} />
 		</div>
-		<div class="input-group">
-			<TodoDeadlineInput bind:dueDate />
+		<div class="input-group flex gap-2">
+			<DeadlineInput ondatechange={(newDate) => (dueDate = newDate?.toISO()!)} />
 			<TodoCategoryInput
 				onInputChange={(newCategoryId) => (categoryId = newCategoryId)}
 				bind:categoryId
