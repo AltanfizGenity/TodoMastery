@@ -3,8 +3,9 @@
 	import type { Todo } from '$lib/database/server/schema/todos-schema';
 	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
 	import { todos } from '$lib/store/todo';
+	import { DateTime } from 'luxon';
+	import DeadlineInput from './forms/DeadlineInput.svelte';
 	import TodoCategoryInput from './forms/TodoCategoryInput.svelte';
-	import TodoDeadlineInput from './forms/TodoDeadlineInput.svelte';
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
 	import { CloseLine } from './icons/line';
 	import Overlay from './Overlay.svelte';
@@ -28,8 +29,11 @@
 		await updateTodoProperty('title', newTitle);
 	};
 
-	const changeDueDate = async (newDate: string) => {
-		await updateTodoProperty('dueDate', newDate);
+	const changeDuedate = async (newDate: DateTime | null) => {
+		if (!newDate) {
+			return await updateTodoProperty('dueDate', null);
+		}
+		await updateTodoProperty('dueDate', newDate.toISO());
 	};
 
 	const changeCategory = async (newCategoryId: number) => {
@@ -70,8 +74,12 @@
 						preventEmpty={true}
 					/>
 				</div>
-				<ul class="p roperty-list">
-					<TodoDeadlineInput bind:dueDate={selectedTodo.dueDate} onInputChange={changeDueDate} />
+				<ul class="property-list flex gap-4">
+					<DeadlineInput
+						ondatechange={changeDuedate}
+						initialValue={selectedTodo.dueDate ? DateTime.fromISO(selectedTodo.dueDate) : null}
+					/>
+					<!-- <TodoDeadlineInput bind:dueDate={selectedTodo.dueDate} onInputChange={changeDueDate} /> -->
 					<TodoCategoryInput categoryId={selectedTodo.category_id} onInputChange={changeCategory} />
 				</ul>
 			</div>

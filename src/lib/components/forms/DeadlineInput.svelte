@@ -2,12 +2,14 @@
 	import { DateTime } from 'luxon';
 	import Datepicker from './Datepicker.svelte';
 	import { CalendarLine } from '../icons/line';
+	import { onMount } from 'svelte';
 
 	interface InputProps {
 		ondatechange: (newDate: DateTime | null) => void;
+		initialValue?: DateTime | null;
 	}
 
-	let { ondatechange }: InputProps = $props();
+	let { ondatechange, initialValue }: InputProps = $props();
 
 	let isDatepickerOpen = $state(false);
 	let dateinput = $state<DateTime | null>(null);
@@ -17,6 +19,12 @@
 		}
 
 		return dateinput.toLocaleString(DateTime.DATE_MED);
+	});
+
+	onMount(() => {
+		if (initialValue !== undefined) {
+			dateinput = initialValue;
+		}
 	});
 
 	function handleclick() {
