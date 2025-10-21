@@ -13,6 +13,8 @@ import ArrowDownSLine from './ArrowDownSLine.svelte';
 import CalendarCloseLine from './CalendarCloseLine.svelte';
 import RepeatLine from './RepeatLine.svelte';
 import CalendarLine from './CalendarLine.svelte';
+import AddLine from './AddLine.svelte';
+import SearchLine from './SearchLine.svelte';
 export {
 	CircleCheckLine,
 	CircleLine,
@@ -28,5 +30,7 @@ export {
 	ArrowDownSLine,
 	CalendarCloseLine,
 	RepeatLine,
-	CalendarLine
+	CalendarLine,
+	AddLine,
+	SearchLine
 };
