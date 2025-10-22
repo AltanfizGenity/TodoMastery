@@ -4,6 +4,7 @@
 	import BaseButton from '../buttons/BaseButton.svelte';
 	import { categories } from '$lib/store/userdata';
 	import type { Category } from '$lib/database/server/schema/categories-schema';
+	import { isCreatingCategory } from '$lib/store/appstate';
 
 	interface PickerProps {
 		oncancel: () => void;
@@ -36,7 +37,7 @@
 </script>
 
 <Overlay {isOpen}>
-	<div class="category=picker flex bg-white flex-col gap-8 w-auto h-auto p-8 min-w-2/5">
+	<div class="category=picker flex bg-white flex-col gap-8 w-auto h-auto p-8 min-w-2/5 max-h-4/5">
 		<h2 class="font-bold text-xl">Select Categories</h2>
 		<form
 			class="search py-2 px-4 rounded-full flex gap-2 items-center w-full shadow-md has-[input:focus]:[&]:shadow-lg group has-[input:focus]:[&_.icon]:text-amber-500 group"
@@ -54,7 +55,7 @@
 				class="w-full outline-none input"
 			/>
 		</form>
-		<div class="picker-container flex flex-col">
+		<div class="picker-container w-full flex flex-col">
 			{#if $categories.length < 0}
 				<p>No categories found</p>
 			{:else}
@@ -63,17 +64,20 @@
 					class={`capitalize text-left p-2 hover:bg-gray-50 cursor-pointer ${!selectedCategory ? 'text-amber-500 bg-gray-50' : ''}`}
 					onclick={() => handleSelectCategory(null)}>No category</button
 				>
-				{#each $categories as category}
-					<button
-						type="button"
-						class={`capitalize text-left p-2 hover:bg-gray-50 cursor-pointer ${selectedCategory?.id === category.id ? 'text-amber-500 bg-gray-50' : ''}`}
-						onclick={() => handleSelectCategory(category)}>{category.name}</button
-					>
-				{/each}
+				<div class="picker max-h-[16rem] overflow-y-scroll flex flex-col">
+					{#each $categories as category}
+						<button
+							type="button"
+							class={`capitalize text-left p-2 hover:bg-gray-50 cursor-pointer ${selectedCategory?.id === category.id ? 'text-amber-500 bg-gray-50' : ''}`}
+							onclick={() => handleSelectCategory(category)}>{category.name}</button
+						>
+					{/each}
+				</div>
 			{/if}
 			<button
 				type="button"
 				class="capitalize flex gap-2 items-center p-2 hover:bg-gray-100 cursor-pointer"
+				onclick={() => isCreatingCategory.set(true)}
 			>
 				<div class="icon w-5 text-amber-500">
 					<AddLine />
