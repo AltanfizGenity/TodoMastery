@@ -5,10 +5,12 @@
 	import { todos } from '$lib/store/todo';
 	import { DateTime } from 'luxon';
 	import DeadlineInput from './forms/DeadlineInput.svelte';
-	import TodoCategoryInput from './forms/TodoCategoryInput.svelte';
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
 	import { CloseLine } from './icons/line';
 	import Overlay from './Overlay.svelte';
+	import CategoryInput from './forms/CategoryInput.svelte';
+	import type { Category } from '$lib/database/server/schema/categories-schema';
+	import { categories } from '$lib/store/userdata';
 
 	let selectedTodo = $state<Todo>();
 
@@ -36,8 +38,8 @@
 		await updateTodoProperty('dueDate', newDate.toISO());
 	};
 
-	const changeCategory = async (newCategoryId: number) => {
-		await updateTodoProperty('category_id', newCategoryId > 0 ? newCategoryId : null);
+	const changeCategory = async (newCategory: Category | null) => {
+		await updateTodoProperty('category_id', newCategory?.id || null);
 	};
 
 	async function updateTodoProperty<K extends keyof Todo>(key: K, value: Todo[K]) {
@@ -79,8 +81,12 @@
 						ondatechange={changeDuedate}
 						initialValue={selectedTodo.dueDate ? DateTime.fromISO(selectedTodo.dueDate) : null}
 					/>
-					<!-- <TodoDeadlineInput bind:dueDate={selectedTodo.dueDate} onInputChange={changeDueDate} /> -->
-					<TodoCategoryInput categoryId={selectedTodo.category_id} onInputChange={changeCategory} />
+					<CategoryInput
+						onvaluechange={changeCategory}
+						initialValue={$categories.find(
+							(category) => category.id == selectedTodo?.category_id || null
+						)}
+					/>
 				</ul>
 			</div>
 		</div>
