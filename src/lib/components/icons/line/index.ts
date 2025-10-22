@@ -15,6 +15,8 @@ import RepeatLine from './RepeatLine.svelte';
 import CalendarLine from './CalendarLine.svelte';
 import AddLine from './AddLine.svelte';
 import SearchLine from './SearchLine.svelte';
+import CategoryLine from './CategoryLine.svelte';
+
 export {
 	CircleCheckLine,
 	CircleLine,
@@ -32,5 +34,6 @@ export {
 	RepeatLine,
 	CalendarLine,
 	AddLine,
-	SearchLine
+	SearchLine,
+	CategoryLine
 };
