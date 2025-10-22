@@ -16,8 +16,8 @@
 
 	$effect(() => {});
 
-	function handleSelectCategory(newCategory: Category) {
-		if (selectedCategory?.id === newCategory.id) {
+	function handleSelectCategory(newCategory: Category | null) {
+		if (selectedCategory?.id === newCategory?.id) {
 			selectedCategory = null;
 			return;
 		}
@@ -55,10 +55,14 @@
 			/>
 		</form>
 		<div class="picker-container flex flex-col">
-			<!-- TODO: add fallback if categories is empty -->
 			{#if $categories.length < 0}
 				<p>No categories found</p>
 			{:else}
+				<button
+					type="button"
+					class={`capitalize text-left p-2 hover:bg-gray-50 cursor-pointer ${!selectedCategory ? 'text-amber-500 bg-gray-50' : ''}`}
+					onclick={() => handleSelectCategory(null)}>No category</button
+				>
 				{#each $categories as category}
 					<button
 						type="button"
