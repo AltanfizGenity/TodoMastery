@@ -68,7 +68,7 @@
 					class={`capitalize text-left p-2 hover:bg-gray-50 cursor-pointer ${!selectedCategory ? 'text-amber-500 bg-gray-50' : ''}`}
 					onclick={() => handleSelectCategory(null)}>No category</button
 				>
-				<div class="picker max-h-[16rem] overflow-y-scroll flex flex-col">
+				<div class="picker max-h-[16rem] overflow-y-auto flex flex-col">
 					{#each $categories as category}
 						<button
 							type="button"
