@@ -3,15 +3,39 @@
 	import { AddLine, SearchLine } from '../icons/line';
 	import BaseButton from '../buttons/BaseButton.svelte';
 	import { categories } from '$lib/store/userdata';
+	import type { Category } from '$lib/database/server/schema/categories-schema';
+
+	interface PickerProps {
+		oncancel: () => void;
+		onconfirm: (newCategory: Category | null) => void;
+		isOpen: boolean;
+	}
+
+	let { oncancel, onconfirm, isOpen }: PickerProps = $props();
+	let selectedCategory = $state<Category | null>(null);
 
 	$effect(() => {});
 
-	function handleCancel() {}
+	function handleSelectCategory(newCategory: Category) {
+		if (selectedCategory?.id === newCategory.id) {
+			selectedCategory = null;
+			return;
+		}
 
-	function handleConfirm() {}
+		selectedCategory = newCategory;
+	}
+
+	function handleCancel() {
+		oncancel();
+		selectedCategory = null;
+	}
+
+	function handleConfirm() {
+		onconfirm(selectedCategory);
+	}
 </script>
 
-<Overlay isOpen={true}>
+<Overlay {isOpen}>
 	<div class="category=picker flex bg-white flex-col gap-8 w-auto h-auto p-8 min-w-2/5">
 		<h2 class="font-bold text-xl">Select Categories</h2>
 		<form
@@ -31,11 +55,18 @@
 			/>
 		</form>
 		<div class="picker-container flex flex-col">
-			{#each $categories as category}
-				<button type="button" class={`capitalize text-left p-2 hover:bg-gray-50 cursor-pointer`}
-					>{category.name}</button
-				>
-			{/each}
+			<!-- TODO: add fallback if categories is empty -->
+			{#if $categories.length < 0}
+				<p>No categories found</p>
+			{:else}
+				{#each $categories as category}
+					<button
+						type="button"
+						class={`capitalize text-left p-2 hover:bg-gray-50 cursor-pointer ${selectedCategory?.id === category.id ? 'text-amber-500 bg-gray-50' : ''}`}
+						onclick={() => handleSelectCategory(category)}>{category.name}</button
+					>
+				{/each}
+			{/if}
 			<button
 				type="button"
 				class="capitalize flex gap-2 items-center p-2 hover:bg-gray-100 cursor-pointer"
