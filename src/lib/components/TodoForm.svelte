@@ -4,7 +4,6 @@
 	import { isCreatingCategory, isTodoFormOpen } from '$lib/store/appstate';
 
 	import BaseButton from './buttons/BaseButton.svelte';
-	import TodoCategoryInput from './forms/TodoCategoryInput.svelte';
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
 	import type { NewTodo } from '$lib/database/server/schema/todos-schema';
 	import { createTodoDB } from '$lib/api/db/todos/create';
@@ -15,6 +14,7 @@
 	import { DateTime } from 'luxon';
 	import type { User } from '$lib/database/server/schema/users';
 	import DeadlineInput from './forms/DeadlineInput.svelte';
+	import CategoryInput from './forms/CategoryInput.svelte';
 
 	let user = page.data.user as User;
 
@@ -87,10 +87,7 @@
 		</div>
 		<div class="input-group flex gap-2">
 			<DeadlineInput ondatechange={(newDate) => (dueDate = newDate?.toISO()!)} />
-			<TodoCategoryInput
-				onInputChange={(newCategoryId) => (categoryId = newCategoryId)}
-				bind:categoryId
-			/>
+			<CategoryInput onvaluechange={(newCategory) => (categoryId = newCategory?.id || null)} />
 		</div>
 		<div class="action flex justify-end gap-4">
 			<BaseButton text="cancel" type="button" variant="secondary" onClick={closeForm} />

@@ -10,12 +10,17 @@
 		oncancel: () => void;
 		onconfirm: (newCategory: Category | null) => void;
 		isOpen: boolean;
+		categoryValue: Category | null;
 	}
 
-	let { oncancel, onconfirm, isOpen }: PickerProps = $props();
+	let { oncancel, onconfirm, isOpen, categoryValue }: PickerProps = $props();
 	let selectedCategory = $state<Category | null>(null);
 
-	$effect(() => {});
+	$effect(() => {
+		if (isOpen) {
+			selectedCategory = categoryValue;
+		}
+	});
 
 	function handleSelectCategory(newCategory: Category | null) {
 		if (selectedCategory?.id === newCategory?.id) {
@@ -28,7 +33,6 @@
 
 	function handleCancel() {
 		oncancel();
-		selectedCategory = null;
 	}
 
 	function handleConfirm() {

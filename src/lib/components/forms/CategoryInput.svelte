@@ -53,5 +53,10 @@
 		</div>
 		<p class="capitalize">{label}</p>
 	</button>
-	<CategoryPicker oncancel={closepicker} onconfirm={handleNewCategory} isOpen={isPickerOpen} />
+	<CategoryPicker
+		oncancel={closepicker}
+		onconfirm={handleNewCategory}
+		isOpen={isPickerOpen}
+		categoryValue={categoryInput}
+	/>
 </div>
