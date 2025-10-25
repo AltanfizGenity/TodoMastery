@@ -8,6 +8,6 @@
 	const { children, classname, gap = 2 }: Props = $props();
 </script>
 
-<div class={`input-group flex flex-col ${`gap-${gap}`} ${classname}`}>
+<div class={`input-group w-full flex flex-col ${`gap-${gap}`} ${classname}`}>
 	{@render children?.()}
 </div>

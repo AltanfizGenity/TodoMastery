@@ -2,6 +2,7 @@
 	import type { Category } from '$lib/database/server/schema/categories-schema';
 	import { categoryPropertyId } from '$lib/store/appstate';
 	import { categories } from '$lib/store/userdata';
+	import InputGroup from './forms/InputGroup.svelte';
 	import TextInput from './forms/TextInput.svelte';
 	import Overlay from './Overlay.svelte';
 
@@ -31,13 +32,13 @@
 	<Overlay isOpen={selectedCategory !== null} onClosed={() => {}} index={110}>
 		<div class="gap-4 p-4 bg-gray-50 flex flex-col w-1/2 rounded-xl absolute top-1/4">
 			<h1 class="text-xl text-center font-bold">Edit Category</h1>
-			<div class="input-group">
+			<InputGroup>
 				<TextInput
 					text={selectedCategory.name}
 					placeholder="category name"
 					onchange={changeCategoryName}
 				/>
-			</div>
+			</InputGroup>
 			<div class="action flex justify-end gap-4">
 				<button
 					class="bg-gray-100 text-black capitalize py-1 px-4 cursor-pointer"

@@ -6,6 +6,7 @@
 	import Overlay from './Overlay.svelte';
 	import { page } from '$app/state';
 	import type { User } from '$lib/database/server/schema/users';
+	import TextInput from './forms/TextInput.svelte';
 
 	let user = page.data.user as User;
 
@@ -55,13 +56,7 @@
 	>
 		<h1 class="text-xl text-center font-bold">New Category</h1>
 		<div class="input-group">
-			<input
-				type="text"
-				placeholder="ex: work, personal"
-				bind:value={categoryInput}
-				required
-				class="outline-0"
-			/>
+			<TextInput bind:text={categoryInput} placeholder="ex: work, personal" />
 		</div>
 		<div class="action flex justify-end gap-4">
 			<button

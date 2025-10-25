@@ -29,4 +29,10 @@
 	};
 </script>
 
-<input class={classname} bind:value={text} required {placeholder} onblur={handleChange} />
+<input
+	class={`${classname} w-full outline-none`}
+	bind:value={text}
+	required
+	{placeholder}
+	onblur={handleChange}
+/>

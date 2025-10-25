@@ -22,7 +22,7 @@
 </script>
 
 <input
-	class="text-2xl"
+	class="text-2xl w-full outline-none"
 	bind:value={title}
 	required
 	placeholder="your todo title"
