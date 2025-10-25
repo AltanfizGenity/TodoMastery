@@ -13,7 +13,7 @@
 	import { page } from '$app/state';
 	import { DateTime } from 'luxon';
 	import type { User } from '$lib/database/server/schema/users';
-	import DeadlineInput from './forms/DeadlineInput.svelte';
+	import DuedateInput from './forms/DuedateInput.svelte';
 	import CategoryInput from './forms/CategoryInput.svelte';
 
 	let user = page.data.user as User;
@@ -86,7 +86,7 @@
 			<TodoTitleInput onTitleChange={(newTitle) => (title = newTitle)} {title} />
 		</div>
 		<div class="input-group flex gap-2">
-			<DeadlineInput ondatechange={(newDate) => (dueDate = newDate?.toISO()!)} />
+			<DuedateInput ondatechange={(newDate) => (dueDate = newDate?.toISO()!)} />
 			<CategoryInput onvaluechange={(newCategory) => (categoryId = newCategory?.id || null)} />
 		</div>
 		<div class="action flex justify-end gap-4">

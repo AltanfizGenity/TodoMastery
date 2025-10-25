@@ -42,7 +42,7 @@
 	}
 </script>
 
-<div class="deadline-input">
+<div class="duedate-input">
 	<button
 		type="button"
 		class="flex items-center gap-2 px-2 py-1 rounded-xl outline-gray-400 outline-1 cursor-pointer text-gray-600 hover:outline-gray-600 hover:text-gray-800"

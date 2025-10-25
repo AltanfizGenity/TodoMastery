@@ -4,7 +4,7 @@
 	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
 	import { todos } from '$lib/store/todo';
 	import { DateTime } from 'luxon';
-	import DeadlineInput from './forms/DeadlineInput.svelte';
+	import DuedateInput from './forms/DuedateInput.svelte';
 	import TodoTitleInput from './forms/TodoTitleInput.svelte';
 	import { CloseLine } from './icons/line';
 	import Overlay from './Overlay.svelte';
@@ -77,7 +77,7 @@
 					/>
 				</div>
 				<ul class="property-list flex gap-4">
-					<DeadlineInput
+					<DuedateInput
 						ondatechange={changeDuedate}
 						initialValue={selectedTodo.dueDate ? DateTime.fromISO(selectedTodo.dueDate) : null}
 					/>
