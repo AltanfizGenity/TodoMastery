@@ -61,3 +61,45 @@ export function buildCalendarDays(date: DateTime = now) {
 export function isToday(time: DateTime) {
 	return time.hasSame(now, 'day');
 }
+
+function getMonthNames(format: 'long' | 'short' | 'narrow' = 'long'): string[] {
+	const monthNames: string[] = [];
+	let time = DateTime.local(2023, 1, 1);
+
+	for (let x = 0; x < 12; x++) {
+		monthNames.push(time.toLocaleString({ month: format }));
+		time = time.set({ month: time.month + 1 });
+	}
+
+	return monthNames;
+}
+
+// export function
+export function hasTimePassed(date: DateTime): boolean {
+	return date.diff(now).milliseconds < 0;
+}
+
+export function isDateInCurrentWeek(date: DateTime): boolean {
+	return date.weekNumber === now.weekNumber && date.year === now.year;
+}
+
+export function formatTime(time: DateTime): string {
+	let isOnSameYear: boolean = time.hasSame(now, 'year');
+	let isTimeOnSameMonth: boolean = time.hasSame(now, 'month');
+	let isToday: boolean = isTimeOnSameMonth && time.hasSame(now, 'day');
+	let isTomorrow: boolean = isTimeOnSameMonth && time.day - now.day == 1;
+
+	if (isToday) {
+		return 'Today';
+	}
+
+	if (isTomorrow) {
+		return 'Tomorrow';
+	}
+
+	if (isDateInCurrentWeek(time) && !hasTimePassed(time)) {
+		return time.toLocaleString({ weekday: 'long' });
+	}
+
+	return `${time.day} ${getMonthNames()[time.month - 1]} ${isOnSameYear ? '' : time.year}`;
+}

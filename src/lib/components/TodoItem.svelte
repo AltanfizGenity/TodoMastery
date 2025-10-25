@@ -6,6 +6,8 @@
 	import { deleteTodoDB } from '$lib/api/db/todos/delete';
 	import { updateTodoCompletionDB } from '$lib/api/db/todos/modify';
 	import { categories } from '$lib/store/userdata';
+	import { formatTime } from '$lib/utils/date';
+	import { DateTime } from 'luxon';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
@@ -93,7 +95,7 @@
 				{/if}
 				{#if currentTodo.dueDate}
 					<div class="overdue text-[.75rem] text-gray-400">
-						{currentTodo.dueDate}
+						{formatTime(DateTime.fromISO(currentTodo.dueDate))}
 					</div>
 				{/if}
 			</div>
