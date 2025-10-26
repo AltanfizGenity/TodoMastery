@@ -16,6 +16,7 @@ import CalendarLine from './CalendarLine.svelte';
 import AddLine from './AddLine.svelte';
 import SearchLine from './SearchLine.svelte';
 import CategoryLine from './CategoryLine.svelte';
+import AddLargeLine from './AddLargeLine.svelte';
 
 export {
 	CircleCheckLine,
@@ -35,5 +36,6 @@ export {
 	CalendarLine,
 	AddLine,
 	SearchLine,
-	CategoryLine
+	CategoryLine,
+	AddLargeLine
 };

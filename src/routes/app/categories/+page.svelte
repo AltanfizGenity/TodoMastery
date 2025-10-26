@@ -1,7 +1,8 @@
 <script lang="ts">
-	import BaseButton from '$lib/components/buttons/BaseButton.svelte';
+	import IconButton from '$lib/components/buttons/IconButton.svelte';
 	import CategoryItem from '$lib/components/CategoryItem.svelte';
 	import CategoryProperty from '$lib/components/CategoryProperty.svelte';
+	import { AddLargeLine, AddLine } from '$lib/components/icons/line';
 	import { isCreatingCategory } from '$lib/store/appstate';
 	import { categories } from '$lib/store/userdata';
 
@@ -21,8 +22,8 @@
 			{/each}
 		{/if}
 	</ul>
-	<div class="action flex gap-4">
-		<BaseButton text="add category" type="button" variant="primary" onClick={openCategoryForm} />
+	<div class="action flex px-4">
+		<IconButton Icon={AddLargeLine} text="New Category" onclick={openCategoryForm} />
 	</div>
 </div>
 
