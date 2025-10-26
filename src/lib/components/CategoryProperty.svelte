@@ -2,6 +2,7 @@
 	import type { Category } from '$lib/database/server/schema/categories-schema';
 	import { categoryPropertyId } from '$lib/store/appstate';
 	import { categories } from '$lib/store/userdata';
+	import BaseButton from './buttons/BaseButton.svelte';
 	import InputGroup from './forms/InputGroup.svelte';
 	import TextInput from './forms/TextInput.svelte';
 	import Overlay from './Overlay.svelte';
@@ -40,11 +41,7 @@
 				/>
 			</InputGroup>
 			<div class="action flex justify-end gap-4">
-				<button
-					class="bg-gray-100 text-black capitalize py-1 px-4 cursor-pointer"
-					type="button"
-					onclick={closeModal}>close</button
-				>
+				<BaseButton text="close" variant="secondary" onClick={closeModal} />
 			</div>
 		</div>
 	</Overlay>
