@@ -20,7 +20,7 @@ export const createRefreshToken = async (id: string) => {
 };
 
 export const sendRefreshToken = (cookies: Cookies, refreshToken: string) => {
-	cookies.set('refreshtoken', refreshToken, {
+	cookies.set('refreshToken', refreshToken, {
 		httpOnly: true,
 		secure: true,
 		sameSite: 'strict',

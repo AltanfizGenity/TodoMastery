@@ -2,7 +2,7 @@
 	import IconButton from '$lib/components/buttons/IconButton.svelte';
 	import CategoryItem from '$lib/components/CategoryItem.svelte';
 	import CategoryProperty from '$lib/components/CategoryProperty.svelte';
-	import { AddLargeLine, AddLine } from '$lib/components/icons/line';
+	import { AddLargeLine } from '$lib/components/icons/line';
 	import { isCreatingCategory } from '$lib/store/appstate';
 	import { categories } from '$lib/store/userdata';
 

@@ -6,9 +6,9 @@ import pkg from 'jsonwebtoken';
 const { verify } = pkg;
 export async function GET({ cookies }) {
 	try {
-		const refreshToken = cookies.get('refreshtoken');
+		const refreshToken = cookies.get('refreshToken');
 		if (!refreshToken) {
-			return json({ success: false, message: 'Refresh token not found' });
+			return json({ success: false, message: 'Refresh accessToken not found' });
 		}
 
 		const payload = verify(refreshToken, REFRESH_TOKEN_SECRET) as pkg.JwtPayload;
@@ -25,6 +25,6 @@ export async function GET({ cookies }) {
 		return json({ success: true, accessToken: newAccessToken });
 	} catch (error) {
 		console.error(error);
-		return json({ success: false, message: 'Invalid refresh token' });
+		return json({ success: false, message: 'Invalid refresh accessToken' });
 	}
 }
