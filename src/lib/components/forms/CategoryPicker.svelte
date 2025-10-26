@@ -23,11 +23,6 @@
 	});
 
 	function handleSelectCategory(newCategory: Category | null) {
-		if (selectedCategory?.id === newCategory?.id) {
-			selectedCategory = null;
-			return;
-		}
-
 		selectedCategory = newCategory;
 	}
 
