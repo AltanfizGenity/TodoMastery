@@ -59,5 +59,6 @@
 		oncancel={closepicker}
 		onconfirm={handleDateChange}
 		disablePastDates
+		title="Select Due Date"
 	/>
 </div>

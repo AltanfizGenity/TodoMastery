@@ -19,6 +19,7 @@
 		oncancel: () => void;
 		onconfirm: (datevalue: DateTime | null) => void;
 		isOpen: boolean;
+		title?: string;
 	}
 
 	let {
@@ -26,7 +27,8 @@
 		dateValue = $bindable(),
 		isOpen = true,
 		oncancel,
-		onconfirm
+		onconfirm,
+		title
 	}: DatepickerProps = $props();
 
 	let currentDate = $state(DateTime.local());
@@ -109,6 +111,12 @@
 
 <Overlay {isOpen}>
 	<div class="datepicker flex bg-white flex-col gap-4 w-auto h-auto p-6">
+		{#if title}
+			<header>
+				<h3 class="text-xl font-bold">{title}</h3>
+			</header>
+			<div class="divider w-full h-0.5 bg-gray-100 mt-4"></div>
+		{/if}
 		<div class="picker-container flex gap-24">
 			<div class="shortcut flex flex-col gap-6">
 				{#each shortcutsData as shortcut}
