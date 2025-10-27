@@ -83,6 +83,7 @@
 	$effect(() => {
 		if (isOpen) {
 			selectedDate = dateValue;
+			currentDate = dateValue || DateTime.local();
 		}
 	});
 
