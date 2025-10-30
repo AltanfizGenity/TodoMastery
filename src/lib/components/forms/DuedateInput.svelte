@@ -15,7 +15,7 @@
 	let dateinput = $state<DateTime | null>(null);
 	let label = $derived.by(() => {
 		if (!dateinput) {
-			return 'No date';
+			return 'No Due Date';
 		}
 
 		return dateinput.toLocaleString(DateTime.DATE_MED);

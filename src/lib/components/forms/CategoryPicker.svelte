@@ -15,6 +15,16 @@
 
 	let { oncancel, onconfirm, isOpen, categoryValue }: PickerProps = $props();
 	let selectedCategory = $state<Category | null>(null);
+	let searchInput = $state('');
+	let searchedCategories = $derived.by<Category[] | null>(() => {
+		if (searchInput === '') {
+			return null;
+		}
+
+		return $categories.filter((category) =>
+			category.name.toLowerCase().includes(searchInput.toLowerCase())
+		);
+	});
 
 	$effect(() => {
 		if (isOpen) {
@@ -33,6 +43,10 @@
 	function handleConfirm() {
 		onconfirm(selectedCategory);
 	}
+
+	function handleSearch(event: SubmitEvent) {
+		event.preventDefault();
+	}
 </script>
 
 <Overlay {isOpen}>
@@ -40,6 +54,7 @@
 		<h2 class="font-bold text-xl">Select Categories</h2>
 		<form
 			class="search py-2 px-4 rounded-full flex gap-2 items-center w-full shadow-md has-[input:focus]:[&]:shadow-lg group has-[input:focus]:[&_.icon]:text-amber-500 group"
+			onsubmit={handleSearch}
 		>
 			<div
 				class="icon w-4 text-gray-500 has-[input:focus]:text-amber-500 group-hover:text-amber-500"
@@ -52,12 +67,12 @@
 				id="search"
 				placeholder="Search"
 				class="w-full outline-none input"
+				bind:value={searchInput}
 			/>
 		</form>
-		<div class="picker-container w-full flex flex-col">
-			{#if $categories.length < 0}
-				<p>No categories found</p>
-			{:else}
+
+		{#if !searchedCategories}
+			<div class="picker-container w-full flex flex-col">
 				<button
 					type="button"
 					class={`capitalize text-left p-2 hover:bg-gray-50 cursor-pointer ${!selectedCategory ? 'text-amber-500 bg-gray-50' : ''}`}
@@ -72,18 +87,37 @@
 						>
 					{/each}
 				</div>
-			{/if}
-			<button
-				type="button"
-				class="capitalize flex gap-2 items-center p-2 hover:bg-gray-100 cursor-pointer"
-				onclick={() => isCreatingCategory.set(true)}
-			>
-				<div class="icon w-5 text-amber-500">
-					<AddLine />
+				<button
+					type="button"
+					class="capitalize flex gap-2 items-center p-2 hover:bg-gray-100 cursor-pointer"
+					onclick={() => isCreatingCategory.set(true)}
+				>
+					<div class="icon w-5 text-amber-500">
+						<AddLine />
+					</div>
+					<p class=" text-sm">new category</p>
+				</button>
+			</div>
+		{:else if searchedCategories.length > 0}
+			<div class="picker-container w-full flex flex-col">
+				<div class="picker max-h-[16rem] overflow-y-auto flex flex-col">
+					{#each searchedCategories as category}
+						<button
+							type="button"
+							class={`capitalize text-left p-2 hover:bg-gray-50 cursor-pointer ${selectedCategory?.id === category.id ? 'text-amber-500 bg-gray-50' : ''}`}
+							onclick={() => handleSelectCategory(category)}>{category.name}</button
+						>
+					{/each}
 				</div>
-				<p class=" text-sm">new category</p>
-			</button>
-		</div>
+			</div>
+		{:else}
+			<div class="picker-container w-full flex flex-col">
+				<div class="picker max-h-[16rem] overflow-y-auto flex flex-col">
+					<p class="capitalize text-left p-2 hover:bg-gray-50 cursor-pointer">No category found</p>
+				</div>
+			</div>
+		{/if}
+
 		<div class="divider w-full h-0.5 bg-gray-100 mt-4"></div>
 		<div class="picker-actions flex justify-end">
 			<div class="cta flex gap-4">
