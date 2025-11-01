@@ -3,6 +3,8 @@
 	import Datepicker from './Datepicker.svelte';
 	import { CalendarLine } from '../icons/line';
 	import { onMount } from 'svelte';
+	import { hasTimePassed } from '$lib/utils/date';
+	import Tag from '../Tag.svelte';
 
 	interface InputProps {
 		ondatechange: (newDate: DateTime | null) => void;
@@ -19,6 +21,9 @@
 		}
 
 		return dateinput.toLocaleString(DateTime.DATE_MED);
+	});
+	let overdue = $derived.by(() => {
+		return dateinput && hasTimePassed(dateinput);
 	});
 
 	onMount(() => {
@@ -51,7 +56,12 @@
 		<div class="icon w-4">
 			<CalendarLine />
 		</div>
-		<p>{label}</p>
+		<div class="label flex gap-2 items-center">
+			<p>{label}</p>
+			{#if overdue}
+				<Tag text="Overdue" tagColor="red" />
+			{/if}
+		</div>
 	</button>
 	<Datepicker
 		bind:dateValue={dateinput}

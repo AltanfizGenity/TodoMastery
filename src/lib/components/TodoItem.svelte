@@ -6,8 +6,9 @@
 	import { deleteTodoDB } from '$lib/api/db/todos/delete';
 	import { updateTodoCompletionDB } from '$lib/api/db/todos/modify';
 	import { categories } from '$lib/store/userdata';
-	import { formatTime } from '$lib/utils/date';
+	import { formatTime, hasTimePassed } from '$lib/utils/date';
 	import { DateTime } from 'luxon';
+	import Tag from './Tag.svelte';
 
 	interface TodoItemProps {
 		currentTodo: Todo;
@@ -84,7 +85,7 @@
 			{@render completeAction()}
 		</div>
 		<div class="todo-property">
-			<h3 class={`${currentTodo.completed ? 'line-through' : ''} group-hover:text-amber-500`}>
+			<h3 class={`${currentTodo.completed ? 'line-through' : ''} `}>
 				{currentTodo.title}
 			</h3>
 			<div class="other-properties flex gap-4">
@@ -94,9 +95,15 @@
 					</div>
 				{/if}
 				{#if currentTodo.dueDate}
-					<div class="overdue text-[.75rem] text-gray-400">
-						{formatTime(DateTime.fromISO(currentTodo.dueDate))}
-					</div>
+					{@const overdue = hasTimePassed(DateTime.fromISO(currentTodo.dueDate))}
+					{@const formattedTime = formatTime(DateTime.fromISO(currentTodo.dueDate))}
+					{#if overdue}
+						<Tag text={formattedTime} tagColor="red" />
+					{:else}
+						<div class={`duedate text-[.75rem] text-gray-400`}>
+							{formattedTime}
+						</div>
+					{/if}
 				{/if}
 			</div>
 		</div>
