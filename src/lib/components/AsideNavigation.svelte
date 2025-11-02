@@ -7,6 +7,7 @@
 	import BaseButton from './buttons/BaseButton.svelte';
 	import AddCircleSolid from './icons/solid/AddCircleSolid.svelte';
 	import { goto } from '$app/navigation';
+	import Alert from './Alert.svelte';
 	function handleNewTodo() {
 		isTodoFormOpen.set(true);
 	}
