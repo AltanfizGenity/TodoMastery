@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { todos } from '$lib/store/todo';
-	import { CircleLine, CircleCheckLine, TrashLine, CloseCircleLine } from './icons/line';
+	import {
+		CircleLine,
+		CircleCheckLine,
+		TrashLine,
+		CloseCircleLine,
+		CategoryLine,
+		CalendarLine
+	} from './icons/line';
 	import { isTodoPropertyOpen, todoPropertyId } from '$lib/store/appstate';
 	import type { Todo } from '$lib/database/server/schema/todos-schema';
 	import { deleteTodoDB } from '$lib/api/db/todos/delete';
@@ -90,20 +97,30 @@
 			</h3>
 			<div class="other-properties flex gap-4">
 				{#if currentTodo.category_id}
-					<div class="category text-[.75rem] text-gray-400">
-						{$categories.find((category) => category.id === currentTodo.category_id)?.name}
+					<div class="category-property flex items-center gap-1">
+						<div class="icon w-4 text-gray-400">
+							<CategoryLine />
+						</div>
+						<div class="category text-[.75rem] text-gray-400">
+							{$categories.find((category) => category.id === currentTodo.category_id)?.name}
+						</div>
 					</div>
 				{/if}
 				{#if currentTodo.dueDate}
 					{@const overdue = hasTimePassed(DateTime.fromISO(currentTodo.dueDate))}
 					{@const formattedTime = formatTime(DateTime.fromISO(currentTodo.dueDate))}
-					{#if overdue}
-						<Tag text={formattedTime} tagColor="red" />
-					{:else}
-						<div class={`duedate text-[.75rem] text-gray-400`}>
-							{formattedTime}
-						</div>
-					{/if}
+					<div class="duedate-property flex items-center gap-1">
+						{#if overdue}
+							<Tag text={formattedTime} tagColor="red" Icon={CalendarLine} />
+						{:else}
+							<div class="icon w-4 text-gray-400">
+								<CalendarLine />
+							</div>
+							<div class={`duedate text-[.75rem] text-gray-400`}>
+								{formattedTime}
+							</div>
+						{/if}
+					</div>
 				{/if}
 			</div>
 		</div>
